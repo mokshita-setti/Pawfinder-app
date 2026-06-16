@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(extract-text \"/Users/mokshitasetti/Documents/Pawfinder-prd 12.51.23 PM.docx\")",
+      "Bash(pandoc \"/Users/mokshitasetti/Documents/Pawfinder-prd 12.51.23 PM.docx\" -t markdown)",
+      "Bash(ls \"/Users/mokshitasetti/Documents/\" | grep -i paw)",
+      "Bash(python3 -c ' *)",
+      "Bash(cp \"/Users/mokshitasetti/Documents/Pawfinder-prd 12.51.23 PM.docx\" /tmp/pawfinder_prd.docx)",
+      "Bash(python3)",
+      "Bash(xargs -0 ls -la)",
+      "mcp__visualize__read_me",
+      "mcp__visualize__show_widget",
+      "Bash(ls /opt/homebrew/bin/node /usr/local/bin/node ~/.nvm/versions/node/*/bin/node 2>/dev/null | head -5 *)",
+      "Bash(find /usr /opt /Library -name \"node\" -type f 2>/dev/null | head -5)",
+      "Bash(brew --version)",
+      "WebFetch(domain:api.anthropic.com)",
+      "Bash(cp \"/Users/mokshitasetti/.claude/projects/-Users-mokshitasetti-Documents-Pawfinder-project/26fafe88-fa0a-4bf0-8b76-7776c54def6f/tool-results/webfetch-1781589818550-n3hvjr.bin\" /tmp/pawfinder_design.gz)",
+      "Bash(gunzip -f /tmp/pawfinder_design.gz)",
+      "Read(//tmp/**)",
+      "Read(//private/tmp/**)",
+      "Bash(tar xf *)",
+      "Bash(cat)",
+      "Bash(chmod +x .husky/pre-commit)",
+      "Bash(node -e ' *)"
+    ]
+  }
+}
