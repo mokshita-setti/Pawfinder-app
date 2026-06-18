@@ -7,6 +7,7 @@ import PetProfileScreen from '@/components/PetProfileScreen';
 import ScanFlowScreen from '@/components/ScanFlowScreen';
 import NotifScreen from '@/components/NotifScreen';
 import ProfileScreen from '@/components/ProfileScreen';
+import DemoScreen from '@/components/DemoScreen';
 
 type Screen = 'home' | 'register' | 'pets' | 'petprofile' | 'scan' | 'notif' | 'me' | 'demo';
 
@@ -35,20 +36,7 @@ export default function Home() {
     scan: <ScanFlowScreen nav={nav} />,
     notif: <NotifScreen nav={nav} />,
     me: <ProfileScreen nav={nav} />,
-    demo: (
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          height: '100%',
-          color: '#8B5CF6',
-          fontWeight: 700,
-        }}
-      >
-        Demo Profiles
-      </div>
-    ),
+    demo: <DemoScreen nav={nav} />,
   };
 
   return (

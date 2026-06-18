@@ -319,59 +319,17 @@ export default function HomeScreen({ nav }: { nav: (s: Screen, petId?: string) =
               border: '6px solid #fff',
               boxShadow: '0 20px 60px rgba(139,92,246,.25)',
               background: 'linear-gradient(135deg,#EDE9FE,#DDD6FE)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              position: 'relative',
+              flexShrink: 0,
             }}
           >
-            {/* Dog illustration fallback */}
-            <svg viewBox="0 0 200 200" width="200" height="200" style={{ position: 'absolute' }}>
-              <circle cx="100" cy="100" r="100" fill="#EDE9FE" />
-              {/* simplified dog face */}
-              <ellipse cx="100" cy="115" rx="55" ry="50" fill="#F59E0B" />
-              <ellipse
-                cx="70"
-                cy="80"
-                rx="22"
-                ry="30"
-                fill="#F59E0B"
-                transform="rotate(-10 70 80)"
-              />
-              <ellipse
-                cx="130"
-                cy="80"
-                rx="22"
-                ry="30"
-                fill="#F59E0B"
-                transform="rotate(10 130 80)"
-              />
-              <ellipse
-                cx="70"
-                cy="80"
-                rx="14"
-                ry="22"
-                fill="#D97706"
-                transform="rotate(-10 70 80)"
-              />
-              <ellipse
-                cx="130"
-                cy="80"
-                rx="14"
-                ry="22"
-                fill="#D97706"
-                transform="rotate(10 130 80)"
-              />
-              <circle cx="88" cy="108" r="8" fill="#1E293B" />
-              <circle cx="112" cy="108" r="8" fill="#1E293B" />
-              <circle cx="90" cy="106" r="3" fill="#fff" />
-              <circle cx="114" cy="106" r="3" fill="#fff" />
-              <ellipse cx="100" cy="125" rx="18" ry="12" fill="#D97706" />
-              <ellipse cx="100" cy="128" rx="10" ry="8" fill="#EC4899" />
-              <circle cx="88" cy="118" r="2.5" fill="#92400E" />
-              <circle cx="100" cy="116" r="2.5" fill="#92400E" />
-              <circle cx="112" cy="118" r="2.5" fill="#92400E" />
-            </svg>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://images.unsplash.com/photo-1552053831-71594a27632d?w=560&h=560&fit=crop&crop=face"
+              alt="Happy dog"
+              width={280}
+              height={280}
+              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+            />
           </div>
 
           {/* Bottom card */}
