@@ -11,7 +11,7 @@ import {
   NavProfile,
 } from './Icons';
 
-type Screen = 'home' | 'register' | 'pets' | 'petprofile' | 'scan' | 'notif' | 'me';
+type Screen = 'home' | 'register' | 'pets' | 'petprofile' | 'scan' | 'notif' | 'me' | 'demo';
 
 export const PfBtn = ({
   children,
@@ -48,17 +48,21 @@ export const PfBtn = ({
   };
   const variants: Record<string, React.CSSProperties> = {
     primary: {
-      background: 'linear-gradient(135deg,#A78BFA 0%,#8B5CF6 100%)',
+      background: 'var(--color-brand)',
       color: '#fff',
       boxShadow: '0 4px 16px rgba(139,92,246,.35)',
     },
     secondary: {
       background: '#fff',
-      color: '#8B5CF6',
-      border: '1.5px solid #E5E7EB',
+      color: 'var(--color-brand)',
+      border: '1.5px solid var(--color-border)',
       boxShadow: '0 2px 8px rgba(0,0,0,.06)',
     },
-    outline: { background: 'transparent', color: '#8B5CF6', border: '1.5px solid #DDD6FE' },
+    outline: {
+      background: 'transparent',
+      color: 'var(--color-brand)',
+      border: '1.5px solid var(--color-brand-border)',
+    },
   };
   return (
     <button style={{ ...base, ...variants[variant] }} onClick={onClick} disabled={disabled}>

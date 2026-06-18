@@ -1,9 +1,9 @@
 'use client';
 import { PfTopBar, BottomNav } from './UI';
 
-type Screen = 'home' | 'register' | 'pets' | 'petprofile' | 'scan' | 'notif' | 'me';
+type Screen = 'home' | 'register' | 'pets' | 'petprofile' | 'scan' | 'notif' | 'me' | 'demo';
 
-export default function NotifScreen({ nav }: { nav: (s: Screen) => void }) {
+export default function NotifScreen({ nav }: { nav: (s: Screen, petId?: string) => void }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
       <PfTopBar />

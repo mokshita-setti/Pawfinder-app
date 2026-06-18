@@ -1,9 +1,46 @@
 @import 'tailwindcss';
 
+/* ── Design tokens — violet/purple brand ── */
+:root {
+  --color-brand: oklch(0.55 0.2 295);
+  --color-brand-dark: oklch(0.44 0.195 295);
+  --color-brand-light: oklch(0.67 0.185 295);
+  --color-brand-xlight: oklch(0.94 0.048 295);
+  --color-brand-subtle: oklch(0.975 0.014 295);
+  --color-brand-border: oklch(0.87 0.09 295);
+  --color-ink: oklch(0.2 0.01 295);
+  --color-ink-secondary: oklch(0.38 0.01 295);
+  --color-ink-muted: oklch(0.47 0.008 295);
+  --color-ink-faint: oklch(0.68 0.006 295);
+  --color-surface: oklch(1 0 0);
+  --color-surface-soft: oklch(0.978 0.006 295);
+  --color-border-soft: oklch(0.95 0.01 295);
+  --color-border: oklch(0.91 0.015 295);
+  --color-success: oklch(0.46 0.145 148);
+  --color-success-bg: oklch(0.96 0.038 148);
+  --color-success-text: oklch(0.34 0.11 148);
+  --color-warning: oklch(0.54 0.168 60);
+  --color-warning-bg: oklch(0.964 0.05 60);
+  --color-warning-border: oklch(0.87 0.095 60);
+  --color-warning-text: oklch(0.4 0.1 60);
+  --color-error: oklch(0.47 0.215 25);
+  --color-error-bg: oklch(0.968 0.038 25);
+  --color-error-text: oklch(0.35 0.17 25);
+}
+
 *,
 *::before,
 *::after {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+  overflow-x: hidden;
+  max-width: 100vw;
 }
 
 body {
@@ -12,15 +49,25 @@ body {
     -apple-system,
     BlinkMacSystemFont,
     sans-serif;
-  background:
-    radial-gradient(ellipse at 20% 30%, #ede9fe 0%, transparent 55%),
-    radial-gradient(ellipse at 80% 70%, #dbeafe 0%, transparent 55%),
-    radial-gradient(ellipse at 50% 50%, #f0fdf4 0%, transparent 70%), #f1f5f9;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 24px 16px;
+  background: #f8fafc;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 ::-webkit-scrollbar {
@@ -28,4 +75,13 @@ body {
 }
 * {
   scrollbar-width: none;
+}
+
+.pf-dev-nav {
+  display: flex;
+}
+@media (max-width: 768px) {
+  .pf-dev-nav {
+    display: none;
+  }
 }

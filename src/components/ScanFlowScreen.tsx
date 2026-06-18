@@ -4,7 +4,7 @@ import { PawIcon, IcoArrowLeft, IcoCheck, IcoPhone, HeartFill } from './Icons';
 import { PfBtn, PfInput, PfTextarea, PfCard, BottomNav } from './UI';
 import { AvatarBella } from './Avatars';
 
-type Screen = 'home' | 'register' | 'pets' | 'petprofile' | 'scan' | 'notif' | 'me';
+type Screen = 'home' | 'register' | 'pets' | 'petprofile' | 'scan' | 'notif' | 'me' | 'demo';
 type Step = 'found' | 'profile' | 'form' | 'thanks';
 
 const TopBar = ({ onBack }: { onBack: () => void }) => (
@@ -47,7 +47,7 @@ const TopBar = ({ onBack }: { onBack: () => void }) => (
   </div>
 );
 
-export default function ScanFlowScreen({ nav }: { nav: (s: Screen) => void }) {
+export default function ScanFlowScreen({ nav }: { nav: (s: Screen, petId?: string) => void }) {
   const [step, setStep] = useState<Step>('found');
   const [f, setF] = useState({ name: '', phone: '', location: '', notes: '' });
   const set = (k: string) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>

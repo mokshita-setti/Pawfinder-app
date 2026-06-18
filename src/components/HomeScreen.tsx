@@ -15,7 +15,7 @@ import { PfTopBar, PfBtn, BottomNav } from './UI';
 import { HeroDog } from './Illustrations';
 import { HOW_STEPS, WHY_QR } from '@/data/pets';
 
-type Screen = 'home' | 'register' | 'pets' | 'petprofile' | 'scan' | 'notif' | 'me';
+type Screen = 'home' | 'register' | 'pets' | 'petprofile' | 'scan' | 'notif' | 'me' | 'demo';
 
 const STEP_SVGS = [
   <StepSvg1 key="s1" />,
@@ -25,7 +25,7 @@ const STEP_SVGS = [
 ];
 const WHY_SVGS = [<WhySvg1 key="w1" />, <WhySvg2 key="w2" />, <WhySvg3 key="w3" />];
 
-export default function HomeScreen({ nav }: { nav: (s: Screen) => void }) {
+export default function HomeScreen({ nav }: { nav: (s: Screen, petId?: string) => void }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
       <PfTopBar />

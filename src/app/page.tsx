@@ -8,7 +8,7 @@ import ScanFlowScreen from '@/components/ScanFlowScreen';
 import NotifScreen from '@/components/NotifScreen';
 import ProfileScreen from '@/components/ProfileScreen';
 
-type Screen = 'home' | 'register' | 'pets' | 'petprofile' | 'scan' | 'notif' | 'me';
+type Screen = 'home' | 'register' | 'pets' | 'petprofile' | 'scan' | 'notif' | 'me' | 'demo';
 
 const SCREEN_LABELS: { id: Screen; label: string }[] = [
   { id: 'home', label: '① Home' },
@@ -20,16 +20,35 @@ const SCREEN_LABELS: { id: Screen; label: string }[] = [
 
 export default function Home() {
   const [cur, setCur] = useState<Screen>('home');
-  const nav = (to: Screen) => setCur(to);
+  const [activePetId, setActivePetId] = useState<string | undefined>();
+
+  const nav = (to: Screen, petId?: string) => {
+    if (petId !== undefined) setActivePetId(petId);
+    setCur(to);
+  };
 
   const screens: Record<Screen, React.ReactNode> = {
     home: <HomeScreen nav={nav} />,
     register: <RegisterScreen nav={nav} />,
     pets: <MyPetsScreen nav={nav} />,
-    petprofile: <PetProfileScreen nav={nav} />,
+    petprofile: <PetProfileScreen nav={nav} petId={activePetId} />,
     scan: <ScanFlowScreen nav={nav} />,
     notif: <NotifScreen nav={nav} />,
     me: <ProfileScreen nav={nav} />,
+    demo: (
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: '100%',
+          color: '#8B5CF6',
+          fontWeight: 700,
+        }}
+      >
+        Demo Profiles
+      </div>
+    ),
   };
 
   return (

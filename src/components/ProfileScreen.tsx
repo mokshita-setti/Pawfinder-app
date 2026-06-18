@@ -2,9 +2,9 @@
 import { PawIcon, IcoPhone, IcoShield, IcoSettings, IcoArrowRight } from './Icons';
 import { PfTopBar, PfCard, PfBadge, BottomNav } from './UI';
 
-type Screen = 'home' | 'register' | 'pets' | 'petprofile' | 'scan' | 'notif' | 'me';
+type Screen = 'home' | 'register' | 'pets' | 'petprofile' | 'scan' | 'notif' | 'me' | 'demo';
 
-export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
+export default function ProfileScreen({ nav }: { nav: (s: Screen, petId?: string) => void }) {
   const items = [
     { icon: <PawIcon size={18} color="#8B5CF6" />, label: 'My Pets', sub: '3 registered' },
     { icon: <IcoPhone size={18} color="#60A5FA" />, label: 'Contact Info', sub: 'Update details' },
