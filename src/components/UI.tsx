@@ -11,7 +11,16 @@ import {
   NavProfile,
 } from './Icons';
 
-type Screen = 'home' | 'register' | 'pets' | 'petprofile' | 'scan' | 'notif' | 'me' | 'demo';
+type Screen =
+  | 'home'
+  | 'register'
+  | 'pets'
+  | 'petprofile'
+  | 'scan'
+  | 'notif'
+  | 'me'
+  | 'demo'
+  | 'directory';
 
 export const PfBtn = ({
   children,
@@ -317,6 +326,7 @@ export const TopNav = ({ active, onNav }: { active: Screen; onNav: (s: Screen) =
   const tabs: { id: Screen; label: string; Icon: React.ComponentType<{ active: boolean }> }[] = [
     { id: 'home', label: 'Home', Icon: NavHome },
     { id: 'pets', label: 'My Pets', Icon: NavPets },
+    { id: 'directory', label: 'Directory', Icon: NavPets },
     { id: 'notif', label: 'Alerts', Icon: NavNotif },
     { id: 'me', label: 'Profile', Icon: NavProfile },
   ];

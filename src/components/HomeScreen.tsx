@@ -20,7 +20,16 @@ import { HeroDog } from './Illustrations';
 import { HOW_STEPS, WHY_QR } from '@/data/pets';
 import { useIsMobile } from '@/hooks/useIsMobile';
 
-type Screen = 'home' | 'register' | 'pets' | 'petprofile' | 'scan' | 'notif' | 'me' | 'demo';
+type Screen =
+  | 'home'
+  | 'register'
+  | 'pets'
+  | 'petprofile'
+  | 'scan'
+  | 'notif'
+  | 'me'
+  | 'demo'
+  | 'directory';
 
 const STEP_SVGS = [
   <StepSvg1 key="s1" />,

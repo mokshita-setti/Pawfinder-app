@@ -6,7 +6,16 @@ import { QRCodeSVG } from 'qrcode.react';
 import { supabase } from '@/lib/supabase';
 import { useIsMobile } from '@/hooks/useIsMobile';
 
-type Screen = 'home' | 'register' | 'pets' | 'petprofile' | 'scan' | 'notif' | 'me' | 'demo';
+type Screen =
+  | 'home'
+  | 'register'
+  | 'pets'
+  | 'petprofile'
+  | 'scan'
+  | 'notif'
+  | 'me'
+  | 'demo'
+  | 'directory';
 
 type Pet = {
   pet_id: string;

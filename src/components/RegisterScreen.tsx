@@ -6,7 +6,16 @@ import { supabase } from '@/lib/supabase';
 import { useEffect } from 'react';
 import { useIsMobile } from '@/hooks/useIsMobile';
 
-type Screen = 'home' | 'register' | 'pets' | 'petprofile' | 'scan' | 'notif' | 'me' | 'demo';
+type Screen =
+  | 'home'
+  | 'register'
+  | 'pets'
+  | 'petprofile'
+  | 'scan'
+  | 'notif'
+  | 'me'
+  | 'demo'
+  | 'directory';
 
 export default function RegisterScreen({ nav }: { nav: (s: Screen) => void }) {
   const [f, setF] = useState({

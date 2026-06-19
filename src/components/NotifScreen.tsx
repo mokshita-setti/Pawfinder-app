@@ -1,7 +1,16 @@
 'use client';
 import { TopNav } from './UI';
 
-type Screen = 'home' | 'register' | 'pets' | 'petprofile' | 'scan' | 'notif' | 'me' | 'demo';
+type Screen =
+  | 'home'
+  | 'register'
+  | 'pets'
+  | 'petprofile'
+  | 'scan'
+  | 'notif'
+  | 'me'
+  | 'demo'
+  | 'directory';
 
 export default function NotifScreen({ nav }: { nav: (s: Screen) => void }) {
   return (

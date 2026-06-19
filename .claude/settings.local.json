@@ -49,7 +49,11 @@
       "Bash(python3 -m json.tool)",
       "Bash(python3 -c 'import json; d=json.load\\(open\\('\\\\''/Users/mokshitasetti/Library/Application Support/com.vercel.cli/config.json'\\\\''\\)\\); print\\(d.get\\('\\\\''currentTeam'\\\\'','\\\\'''\\\\''\\)\\)')",
       "Bash(curl -s https://api.vercel.com/v7/deployments/dpl_69KRjyY3SAhXs4Ccj2giW9kARqjc/files?teamId=__TRACKED_VAR__ -H 'Authorization: Bearer __CMDSUB_OUTPUT__')",
-      "Bash(curl -sk https://api.vercel.com/v7/deployments/__TRACKED_VAR__/files?teamId=__TRACKED_VAR__ -H 'Authorization: Bearer __CMDSUB_OUTPUT__')"
+      "Bash(curl -sk https://api.vercel.com/v7/deployments/__TRACKED_VAR__/files?teamId=__TRACKED_VAR__ -H 'Authorization: Bearer __CMDSUB_OUTPUT__')",
+      "Bash(npm install *)",
+      "Bash(npm list *)",
+      "Bash(git commit *)",
+      "Bash(xargs sed -i '' \"s/type Screen = 'home' | 'register' | 'pets' | 'petprofile' | 'scan' | 'notif' | 'me' | 'demo';/type Screen = 'home' | 'register' | 'pets' | 'petprofile' | 'scan' | 'notif' | 'me' | 'demo' | 'directory';/g\")"
     ]
   }
 }

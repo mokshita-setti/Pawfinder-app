@@ -5,7 +5,16 @@ import { PawIcon } from './Icons';
 import { TopNav, PfCard, PfBadge } from './UI';
 import { QRCodeSVG } from 'qrcode.react';
 
-type Screen = 'home' | 'register' | 'pets' | 'petprofile' | 'scan' | 'notif' | 'me' | 'demo';
+type Screen =
+  | 'home'
+  | 'register'
+  | 'pets'
+  | 'petprofile'
+  | 'scan'
+  | 'notif'
+  | 'me'
+  | 'demo'
+  | 'directory';
 
 const DEMO_PETS = [
   {

@@ -4,7 +4,16 @@ import { IcoPlus, IcoArrowRight, PawIcon } from './Icons';
 import { PfCard, PfBadge, TopNav } from './UI';
 import { supabase } from '@/lib/supabase';
 
-type Screen = 'home' | 'register' | 'pets' | 'petprofile' | 'scan' | 'notif' | 'me' | 'demo';
+type Screen =
+  | 'home'
+  | 'register'
+  | 'pets'
+  | 'petprofile'
+  | 'scan'
+  | 'notif'
+  | 'me'
+  | 'demo'
+  | 'directory';
 
 type Pet = {
   id: string;

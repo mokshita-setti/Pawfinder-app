@@ -1,7 +1,16 @@
 'use client';
 import { PawIcon, IcoArrowLeft, IcoArrowRight } from './Icons';
 
-type Screen = 'home' | 'register' | 'pets' | 'petprofile' | 'scan' | 'notif' | 'me' | 'demo';
+type Screen =
+  | 'home'
+  | 'register'
+  | 'pets'
+  | 'petprofile'
+  | 'scan'
+  | 'notif'
+  | 'me'
+  | 'demo'
+  | 'directory';
 
 const DEMO_PETS = [
   {

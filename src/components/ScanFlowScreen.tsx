@@ -4,7 +4,16 @@ import { PawIcon, IcoCheck, IcoPhone, HeartFill } from './Icons';
 import { PfBtn, PfInput, PfTextarea, PfCard, TopNav } from './UI';
 import { AvatarBella } from './Avatars';
 
-type Screen = 'home' | 'register' | 'pets' | 'petprofile' | 'scan' | 'notif' | 'me' | 'demo';
+type Screen =
+  | 'home'
+  | 'register'
+  | 'pets'
+  | 'petprofile'
+  | 'scan'
+  | 'notif'
+  | 'me'
+  | 'demo'
+  | 'directory';
 type Step = 'found' | 'profile' | 'form' | 'thanks';
 
 export default function ScanFlowScreen({ nav }: { nav: (s: Screen) => void }) {

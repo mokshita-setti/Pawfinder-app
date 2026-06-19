@@ -4,7 +4,16 @@ import { PawIcon, IcoPhone, IcoShield, IcoSettings, IcoArrowRight } from './Icon
 import { TopNav, PfCard, PfBadge } from './UI';
 import { supabase } from '@/lib/supabase';
 
-type Screen = 'home' | 'register' | 'pets' | 'petprofile' | 'scan' | 'notif' | 'me' | 'demo';
+type Screen =
+  | 'home'
+  | 'register'
+  | 'pets'
+  | 'petprofile'
+  | 'scan'
+  | 'notif'
+  | 'me'
+  | 'demo'
+  | 'directory';
 
 export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
   const [name, setName] = useState('');

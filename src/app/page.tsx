@@ -9,8 +9,18 @@ import ScanFlowScreen from '@/components/ScanFlowScreen';
 import NotifScreen from '@/components/NotifScreen';
 import ProfileScreen from '@/components/ProfileScreen';
 import DemoProfilesScreen from '@/components/DemoProfilesScreen';
+import PetsDirectoryScreen from '@/components/PetsDirectoryScreen';
 
-type Screen = 'home' | 'register' | 'pets' | 'petprofile' | 'scan' | 'notif' | 'me' | 'demo';
+type Screen =
+  | 'home'
+  | 'register'
+  | 'pets'
+  | 'petprofile'
+  | 'scan'
+  | 'notif'
+  | 'me'
+  | 'demo'
+  | 'directory';
 
 const SCREEN_LABELS: { id: Screen; label: string }[] = [
   { id: 'home', label: '① Home' },
@@ -18,7 +28,8 @@ const SCREEN_LABELS: { id: Screen; label: string }[] = [
   { id: 'pets', label: '③ My Pets' },
   { id: 'petprofile', label: '④ Pet Profile' },
   { id: 'demo', label: '⑤ Demo Profiles' },
-  { id: 'scan', label: '⑥ Scan QR Flow' },
+  { id: 'directory', label: '⑥ Pet Directory' },
+  { id: 'scan', label: '⑦ Scan QR Flow' },
 ];
 
 export default function Home() {
@@ -36,6 +47,7 @@ export default function Home() {
     notif: <NotifScreen nav={nav} />,
     me: <ProfileScreen nav={nav} />,
     demo: <DemoProfilesScreen nav={nav} />,
+    directory: <PetsDirectoryScreen nav={nav} />,
   };
 
   return (
