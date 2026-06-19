@@ -397,15 +397,17 @@ export const TopNav = ({ active, onNav }: { active: Screen; onNav: (s: Screen) =
       )}
       {mobile ? (
         <div style={{ display: 'flex', gap: 4 }}>
-          {tabs.map(({ id, Icon }) => {
+          {tabs.map(({ id, label, Icon }) => {
             const on = active === id;
             return (
               <button
                 key={id}
+                aria-label={label}
+                aria-current={on ? 'page' : undefined}
                 onClick={() => onNav(id)}
                 style={{
-                  width: 38,
-                  height: 38,
+                  width: 44,
+                  height: 44,
                   borderRadius: '50%',
                   background: on ? '#F5F3FF' : 'transparent',
                   border: 'none',

@@ -361,7 +361,22 @@ export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             {items.map(({ icon, label, sub, onClick }) => (
               <PfCard key={label} style={{ padding: '18px 22px', cursor: 'pointer' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 16 }} onClick={onClick}>
+                <button
+                  onClick={onClick}
+                  aria-label={label}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 16,
+                    width: '100%',
+                    background: 'none',
+                    border: 'none',
+                    cursor: 'pointer',
+                    padding: 0,
+                    fontFamily: 'inherit',
+                    textAlign: 'left',
+                  }}
+                >
                   <div
                     style={{
                       width: 44,
@@ -381,7 +396,7 @@ export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
                     <div style={{ fontSize: 13, color: '#94A3B8', marginTop: 2 }}>{sub}</div>
                   </div>
                   <IcoArrowRight size={16} color="#CBD5E1" />
-                </div>
+                </button>
               </PfCard>
             ))}
           </div>
