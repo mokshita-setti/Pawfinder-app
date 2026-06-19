@@ -40,7 +40,16 @@
       "Bash(npx next *)",
       "Bash(node_modules/.bin/next build *)",
       "Bash(node node_modules/next/dist/bin/next build)",
-      "Bash(node /Users/mokshitasetti/Documents/Pawfinder-project/node_modules/next/dist/bin/next build)"
+      "Bash(node /Users/mokshitasetti/Documents/Pawfinder-project/node_modules/next/dist/bin/next build)",
+      "Bash(python3 -c 'import json; d=json.load\\(open\\('\\\\''/Users/mokshitasetti/Library/Application Support/com.vercel.cli/auth.json'\\\\''\\)\\); print\\(list\\(d.values\\(\\)\\)[0] if d else '\\\\'''\\\\''\\)')",
+      "Bash(curl -s https://api.vercel.com/v7/deployments/dpl_69KRjyY3SAhXs4Ccj2giW9kARqjc/files -H 'Authorization: Bearer __CMDSUB_OUTPUT__')",
+      "Bash(python3 -c \"import sys,json; files=json.load\\(sys.stdin\\); [print\\(f.get\\('name',''\\)\\) for f in files[:20]]\")",
+      "Bash(python3 -c 'import json; d=json.load\\(open\\('\\\\''/Users/mokshitasetti/Library/Application Support/com.vercel.cli/auth.json'\\\\''\\)\\); print\\(d['\\\\''token'\\\\'']\\)')",
+      "Bash(curl -s https://api.vercel.com/v7/deployments/dpl_69KRjyY3SAhXs4Ccj2giW9kARqjc/files?teamId=team_pawfinder -H 'Authorization: Bearer __CMDSUB_OUTPUT__')",
+      "Bash(python3 -m json.tool)",
+      "Bash(python3 -c 'import json; d=json.load\\(open\\('\\\\''/Users/mokshitasetti/Library/Application Support/com.vercel.cli/config.json'\\\\''\\)\\); print\\(d.get\\('\\\\''currentTeam'\\\\'','\\\\'''\\\\''\\)\\)')",
+      "Bash(curl -s https://api.vercel.com/v7/deployments/dpl_69KRjyY3SAhXs4Ccj2giW9kARqjc/files?teamId=__TRACKED_VAR__ -H 'Authorization: Bearer __CMDSUB_OUTPUT__')",
+      "Bash(curl -sk https://api.vercel.com/v7/deployments/__TRACKED_VAR__/files?teamId=__TRACKED_VAR__ -H 'Authorization: Bearer __CMDSUB_OUTPUT__')"
     ]
   }
 }

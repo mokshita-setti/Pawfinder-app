@@ -1,33 +1,5 @@
 @import 'tailwindcss';
 
-/* ── Design tokens — violet/purple brand ── */
-:root {
-  --color-brand: oklch(0.55 0.2 295);
-  --color-brand-dark: oklch(0.44 0.195 295);
-  --color-brand-light: oklch(0.67 0.185 295);
-  --color-brand-xlight: oklch(0.94 0.048 295);
-  --color-brand-subtle: oklch(0.975 0.014 295);
-  --color-brand-border: oklch(0.87 0.09 295);
-  --color-ink: oklch(0.2 0.01 295);
-  --color-ink-secondary: oklch(0.38 0.01 295);
-  --color-ink-muted: oklch(0.47 0.008 295);
-  --color-ink-faint: oklch(0.68 0.006 295);
-  --color-surface: oklch(1 0 0);
-  --color-surface-soft: oklch(0.978 0.006 295);
-  --color-border-soft: oklch(0.95 0.01 295);
-  --color-border: oklch(0.91 0.015 295);
-  --color-success: oklch(0.46 0.145 148);
-  --color-success-bg: oklch(0.96 0.038 148);
-  --color-success-text: oklch(0.34 0.11 148);
-  --color-warning: oklch(0.54 0.168 60);
-  --color-warning-bg: oklch(0.964 0.05 60);
-  --color-warning-border: oklch(0.87 0.095 60);
-  --color-warning-text: oklch(0.4 0.1 60);
-  --color-error: oklch(0.47 0.215 25);
-  --color-error-bg: oklch(0.968 0.038 25);
-  --color-error-text: oklch(0.35 0.17 25);
-}
-
 *,
 *::before,
 *::after {
@@ -52,24 +24,6 @@ body {
   background: #f8fafc;
 }
 
-:focus-visible {
-  outline: 2px solid var(--color-brand);
-  outline-offset: 2px;
-  border-radius: 4px;
-}
-:focus:not(:focus-visible) {
-  outline: none;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
-  }
-}
-
 ::-webkit-scrollbar {
   display: none;
 }
@@ -77,11 +31,60 @@ body {
   scrollbar-width: none;
 }
 
+/* ── Responsive layout helpers ── */
+.pf-page-pad {
+  padding: 48px 80px;
+}
+.pf-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+.pf-grid-auto {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 16px;
+}
+/* Hide dev screen switcher on mobile */
 .pf-dev-nav {
   display: flex;
 }
+
 @media (max-width: 768px) {
+  .pf-page-pad {
+    padding: 24px 16px;
+  }
+  .pf-grid-2 {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .pf-grid-auto {
+    grid-template-columns: 1fr;
+  }
   .pf-dev-nav {
     display: none;
+  }
+  /* Shrink hero padding */
+  .pf-hero {
+    padding: 36px 20px 40px !important;
+    flex-direction: column !important;
+    gap: 24px !important;
+  }
+  /* Shrink hero heading */
+  .pf-hero h1 {
+    font-size: 36px !important;
+    letter-spacing: -1px !important;
+  }
+  /* Circular dog smaller on mobile */
+  .pf-hero-dog {
+    width: 220px !important;
+    height: 220px !important;
+  }
+  /* Nav bar on mobile */
+  .pf-topnav {
+    padding: 0 16px !important;
+  }
+  .pf-topnav-links {
+    display: none !important;
   }
 }

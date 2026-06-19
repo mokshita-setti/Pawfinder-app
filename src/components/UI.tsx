@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   PawIcon,
   IcoBell,
@@ -48,21 +48,17 @@ export const PfBtn = ({
   };
   const variants: Record<string, React.CSSProperties> = {
     primary: {
-      background: 'var(--color-brand)',
+      background: 'linear-gradient(135deg,#A78BFA 0%,#8B5CF6 100%)',
       color: '#fff',
       boxShadow: '0 4px 16px rgba(139,92,246,.35)',
     },
     secondary: {
       background: '#fff',
-      color: 'var(--color-brand)',
-      border: '1.5px solid var(--color-border)',
+      color: '#8B5CF6',
+      border: '1.5px solid #E5E7EB',
       boxShadow: '0 2px 8px rgba(0,0,0,.06)',
     },
-    outline: {
-      background: 'transparent',
-      color: 'var(--color-brand)',
-      border: '1.5px solid var(--color-brand-border)',
-    },
+    outline: { background: 'transparent', color: '#8B5CF6', border: '1.5px solid #DDD6FE' },
   };
   return (
     <button style={{ ...base, ...variants[variant] }} onClick={onClick} disabled={disabled}>
@@ -308,6 +304,134 @@ export const PfBadge = ({ children }: { children: React.ReactNode }) => (
     {children}
   </span>
 );
+
+export const TopNav = ({ active, onNav }: { active: Screen; onNav: (s: Screen) => void }) => {
+  const [mobile, setMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+
+  const tabs: { id: Screen; label: string; Icon: React.ComponentType<{ active: boolean }> }[] = [
+    { id: 'home', label: 'Home', Icon: NavHome },
+    { id: 'pets', label: 'My Pets', Icon: NavPets },
+    { id: 'notif', label: 'Alerts', Icon: NavNotif },
+    { id: 'me', label: 'Profile', Icon: NavProfile },
+  ];
+
+  return (
+    <header
+      style={{
+        position: 'sticky',
+        top: 0,
+        zIndex: 50,
+        background: 'rgba(255,255,255,0.88)',
+        backdropFilter: 'blur(16px)',
+        borderBottom: '1px solid rgba(139,92,246,.08)',
+        padding: mobile ? '0 16px' : '0 40px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        height: 64,
+        flexShrink: 0,
+      }}
+    >
+      <div
+        style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer' }}
+        onClick={() => onNav('home')}
+      >
+        <PawIcon size={22} color="#8B5CF6" />
+        <span
+          style={{
+            fontSize: mobile ? 17 : 20,
+            fontWeight: 800,
+            color: '#8B5CF6',
+            letterSpacing: '-.5px',
+          }}
+        >
+          PawFinder
+        </span>
+      </div>
+      {!mobile && (
+        <nav style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+          {tabs.map(({ id, label, Icon }) => {
+            const on = active === id;
+            return (
+              <button
+                key={id}
+                onClick={() => onNav(id)}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 7,
+                  padding: '8px 16px',
+                  borderRadius: 100,
+                  background: on ? '#F5F3FF' : 'transparent',
+                  border: 'none',
+                  fontSize: 14,
+                  fontWeight: on ? 600 : 500,
+                  color: on ? '#7C3AED' : '#64748B',
+                  cursor: 'pointer',
+                  transition: 'all .15s',
+                  fontFamily: 'Inter, sans-serif',
+                }}
+              >
+                <Icon active={on} />
+                {label}
+              </button>
+            );
+          })}
+        </nav>
+      )}
+      {mobile ? (
+        <div style={{ display: 'flex', gap: 4 }}>
+          {tabs.map(({ id, Icon }) => {
+            const on = active === id;
+            return (
+              <button
+                key={id}
+                onClick={() => onNav(id)}
+                style={{
+                  width: 38,
+                  height: 38,
+                  borderRadius: '50%',
+                  background: on ? '#F5F3FF' : 'transparent',
+                  border: 'none',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <Icon active={on} />
+              </button>
+            );
+          })}
+        </div>
+      ) : (
+        <button
+          onClick={() => onNav('register')}
+          style={{
+            padding: '10px 22px',
+            borderRadius: 100,
+            background: 'linear-gradient(135deg,#A78BFA,#8B5CF6)',
+            color: '#fff',
+            border: 'none',
+            fontSize: 14,
+            fontWeight: 600,
+            cursor: 'pointer',
+            boxShadow: '0 4px 14px rgba(139,92,246,.3)',
+            fontFamily: 'Inter, sans-serif',
+          }}
+        >
+          + Register Pet
+        </button>
+      )}
+    </header>
+  );
+};
 
 export const BottomNav = ({ active, onNav }: { active: Screen; onNav: (s: Screen) => void }) => {
   const tabs: { id: Screen; label: string; Icon: React.ComponentType<{ active: boolean }> }[] = [

@@ -1,5 +1,5 @@
 export const PETS = [
-  { id: 'PF1001', name: 'Bella', breed: 'Golden Retriever', age: '4 Years Old', avatar: 'bella' },
+  { id: 'PF1001', name: 'Leo', breed: 'Golden Retriever', age: '4 Years Old', avatar: 'bella' },
   { id: 'PF1002', name: 'Bruno', breed: 'Shih Tzu', age: '2 Years Old', avatar: 'bruno' },
   { id: 'PF1003', name: 'Luna', breed: 'Persian Cat', age: '1 Year Old', avatar: 'luna' },
 ];

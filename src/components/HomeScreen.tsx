@@ -1,8 +1,9 @@
 'use client';
 import {
   PawIcon,
-  IcoScan,
+  PawFinderLogo,
   HeartFill,
+  IcoScan,
   StepSvg1,
   StepSvg2,
   StepSvg3,
@@ -10,8 +11,14 @@ import {
   WhySvg1,
   WhySvg2,
   WhySvg3,
+  NavHome,
+  NavPets,
+  NavNotif,
+  NavProfile,
 } from './Icons';
+import { HeroDog } from './Illustrations';
 import { HOW_STEPS, WHY_QR } from '@/data/pets';
+import { useIsMobile } from '@/hooks/useIsMobile';
 
 type Screen = 'home' | 'register' | 'pets' | 'petprofile' | 'scan' | 'notif' | 'me' | 'demo';
 
@@ -23,147 +30,201 @@ const STEP_SVGS = [
 ];
 const WHY_SVGS = [<WhySvg1 key="w1" />, <WhySvg2 key="w2" />, <WhySvg3 key="w3" />];
 
-export default function HomeScreen({ nav }: { nav: (s: Screen, petId?: string) => void }) {
+export default function HomeScreen({ nav }: { nav: (s: Screen) => void }) {
+  const isMobile = useIsMobile();
   return (
     <div
       style={{
-        minHeight: '100dvh',
         display: 'flex',
         flexDirection: 'column',
-        fontFamily: 'Inter, -apple-system, sans-serif',
+        minHeight: '100dvh',
+        background: '#F8FAFC',
+        overflowX: 'hidden',
       }}
     >
-      {/* Top Navbar */}
+      {/* Top Nav */}
       <header
         style={{
-          background: '#fff',
-          borderBottom: '1px solid #F1F5F9',
-          padding: '0 32px',
+          position: 'sticky',
+          top: 0,
+          zIndex: 50,
+          background: 'rgba(255,255,255,0.85)',
+          backdropFilter: 'blur(16px)',
+          borderBottom: '1px solid rgba(139,92,246,.08)',
+          padding: isMobile ? '0 16px' : '0 40px',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
           height: 64,
-          flexShrink: 0,
-          position: 'sticky',
-          top: 0,
-          zIndex: 50,
         }}
       >
         {/* Logo */}
         <div
-          style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer' }}
+          style={{ display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer' }}
           onClick={() => nav('home')}
         >
-          <div
+          <PawFinderLogo size={36} hideText />
+          <span
             style={{
-              width: 36,
-              height: 36,
-              borderRadius: 10,
-              background: '#EDE9FE',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
+              fontSize: isMobile ? 17 : 20,
+              fontWeight: 800,
+              background: 'linear-gradient(90deg,#5B9BD5,#A855C8)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              letterSpacing: '-.5px',
             }}
           >
-            <PawIcon size={20} color="#8B5CF6" />
-          </div>
-          <span style={{ fontSize: 18, fontWeight: 800, color: '#8B5CF6', letterSpacing: '-.4px' }}>
             PawFinder
           </span>
         </div>
 
-        {/* Nav links — hidden on mobile */}
-        <nav style={{ display: 'flex', alignItems: 'center', gap: 32 }} className="pf-dev-nav">
-          {[
-            { label: 'Home', screen: 'home' as Screen },
-            { label: 'My Pets', screen: 'pets' as Screen },
-            { label: 'Alerts', screen: 'notif' as Screen },
-            { label: 'Profile', screen: 'me' as Screen },
-          ].map(({ label, screen }) => (
-            <button
-              key={label}
-              onClick={() => nav(screen)}
-              style={{
-                background: 'none',
-                border: 'none',
-                cursor: 'pointer',
-                fontSize: 14,
-                fontWeight: 500,
-                color: '#64748B',
-                display: 'flex',
-                alignItems: 'center',
-                gap: 6,
-                padding: '4px 0',
-                fontFamily: 'inherit',
-              }}
-            >
-              {label}
-            </button>
-          ))}
-        </nav>
+        {/* Nav items — hidden on mobile */}
+        {!isMobile && (
+          <nav style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+            {[
+              { id: 'home' as Screen, label: 'Home', Icon: NavHome },
+              { id: 'pets' as Screen, label: 'My Pets', Icon: NavPets },
+              { id: 'notif' as Screen, label: 'Alerts', Icon: NavNotif },
+              { id: 'me' as Screen, label: 'Profile', Icon: NavProfile },
+            ].map(({ id, label, Icon }) => (
+              <button
+                key={id}
+                onClick={() => nav(id)}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 7,
+                  padding: '8px 16px',
+                  borderRadius: 100,
+                  background: 'transparent',
+                  border: 'none',
+                  fontSize: 14,
+                  fontWeight: 500,
+                  color: '#64748B',
+                  cursor: 'pointer',
+                  transition: 'all .15s',
+                  fontFamily: 'Inter, sans-serif',
+                }}
+                onMouseEnter={(e) => {
+                  (e.currentTarget as HTMLButtonElement).style.background = '#F5F3FF';
+                  (e.currentTarget as HTMLButtonElement).style.color = '#7C3AED';
+                }}
+                onMouseLeave={(e) => {
+                  (e.currentTarget as HTMLButtonElement).style.background = 'transparent';
+                  (e.currentTarget as HTMLButtonElement).style.color = '#64748B';
+                }}
+              >
+                <Icon active={false} />
+                {label}
+              </button>
+            ))}
+          </nav>
+        )}
 
-        {/* CTA */}
-        <button
-          onClick={() => nav('register')}
-          style={{
-            background: '#8B5CF6',
-            color: '#fff',
-            border: 'none',
-            borderRadius: 100,
-            padding: '10px 22px',
-            fontSize: 14,
-            fontWeight: 600,
-            cursor: 'pointer',
-            fontFamily: 'inherit',
-            boxShadow: '0 4px 14px rgba(139,92,246,.3)',
-            whiteSpace: 'nowrap',
-          }}
-        >
-          Register My Pet
-        </button>
+        {/* CTA / mobile icon nav */}
+        {isMobile ? (
+          <div style={{ display: 'flex', gap: 4 }}>
+            {[
+              { id: 'home' as Screen, Icon: NavHome },
+              { id: 'pets' as Screen, Icon: NavPets },
+              { id: 'notif' as Screen, Icon: NavNotif },
+              { id: 'me' as Screen, Icon: NavProfile },
+            ].map(({ id, Icon }) => (
+              <button
+                key={id}
+                onClick={() => nav(id)}
+                style={{
+                  width: 38,
+                  height: 38,
+                  borderRadius: '50%',
+                  background: 'transparent',
+                  border: 'none',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <Icon active={false} />
+              </button>
+            ))}
+          </div>
+        ) : (
+          <button
+            onClick={() => nav('register')}
+            style={{
+              padding: '10px 22px',
+              borderRadius: 100,
+              background: 'linear-gradient(135deg,#A78BFA,#8B5CF6)',
+              color: '#fff',
+              border: 'none',
+              fontSize: 14,
+              fontWeight: 600,
+              cursor: 'pointer',
+              boxShadow: '0 4px 14px rgba(139,92,246,.3)',
+              fontFamily: 'Inter, sans-serif',
+            }}
+          >
+            Register My Pet
+          </button>
+        )}
       </header>
 
       {/* Hero */}
       <section
         style={{
-          background: 'linear-gradient(155deg,#EDE9FE 0%,#F0EFFE 40%,#EFF6FF 100%)',
-          flex: 1,
+          background: 'linear-gradient(135deg, #EDE9FE 0%, #E0E7FF 40%, #EFF6FF 100%)',
+          padding: isMobile ? '36px 20px 40px' : '72px 80px 80px',
           display: 'flex',
           alignItems: 'center',
-          padding: '60px 48px',
-          gap: 48,
+          justifyContent: 'space-between',
+          flexDirection: isMobile ? 'column' : 'row',
+          gap: isMobile ? 32 : 48,
           position: 'relative',
           overflow: 'hidden',
-          minHeight: 480,
         }}
       >
-        {/* Background paw prints */}
-        <div style={{ position: 'absolute', top: 32, right: 200, opacity: 0.07 }}>
-          <PawIcon size={80} color="#8B5CF6" />
+        {/* Decorative paws */}
+        <div style={{ position: 'absolute', top: 24, right: 340, opacity: 0.08 }}>
+          <PawIcon size={60} color="#8B5CF6" />
         </div>
-        <div style={{ position: 'absolute', bottom: 40, left: 48, opacity: 0.05 }}>
-          <PawIcon size={50} color="#8B5CF6" />
+        <div style={{ position: 'absolute', bottom: 32, left: 60, opacity: 0.06 }}>
+          <PawIcon size={40} color="#60A5FA" />
+        </div>
+        <div style={{ position: 'absolute', top: 40, left: 200, opacity: 0.05 }}>
+          <PawIcon size={24} color="#C084FC" />
         </div>
 
-        {/* Left: text */}
+        {/* Left content */}
         <div style={{ flex: 1, maxWidth: 560 }}>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, marginBottom: 20 }}>
-            <PawIcon size={16} color="#8B5CF6" />
-            <span
-              style={{ fontSize: 13, fontWeight: 700, color: '#8B5CF6', letterSpacing: '-.1px' }}
-            >
-              PawFinder
-            </span>
-            <span style={{ fontSize: 12, color: '#94A3B8' }}>· Scan. Identify. Reunite.</span>
+          {/* Logo mark */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 28 }}>
+            <PawIcon size={28} color="#8B5CF6" />
+            <div>
+              <div
+                style={{
+                  fontSize: 22,
+                  fontWeight: 800,
+                  color: '#8B5CF6',
+                  letterSpacing: '-.5px',
+                  lineHeight: 1,
+                }}
+              >
+                PawFinder
+              </div>
+              <div style={{ fontSize: 12, color: '#94A3B8', letterSpacing: '.4px', marginTop: 3 }}>
+                Scan. Identify. Reunite.
+              </div>
+            </div>
           </div>
 
           <h1
             style={{
-              fontSize: 'clamp(36px,5vw,64px)',
+              fontSize: isMobile ? 38 : 52,
               fontWeight: 900,
-              color: '#8B5CF6',
+              color: '#7C3AED',
               lineHeight: 1.1,
-              letterSpacing: '-2px',
+              letterSpacing: isMobile ? '-1px' : '-2px',
               marginBottom: 20,
             }}
           >
@@ -171,14 +232,13 @@ export default function HomeScreen({ nav }: { nav: (s: Screen, petId?: string) =
             <br />
             Reunite.
           </h1>
-
           <p
             style={{
-              fontSize: 16,
+              fontSize: 17,
               color: '#475569',
               lineHeight: 1.7,
-              marginBottom: 32,
-              maxWidth: 480,
+              marginBottom: 36,
+              maxWidth: 460,
             }}
           >
             PawFinder gives every pet a{' '}
@@ -188,23 +248,31 @@ export default function HomeScreen({ nav }: { nav: (s: Screen, petId?: string) =
           </p>
 
           {/* CTA buttons */}
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, marginBottom: 16 }}>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: isMobile ? 'column' : 'row',
+              gap: 12,
+              flexWrap: 'wrap',
+            }}
+          >
             <button
               onClick={() => nav('register')}
               style={{
                 display: 'flex',
                 alignItems: 'center',
+                justifyContent: 'center',
                 gap: 8,
-                background: '#8B5CF6',
+                padding: '14px 28px',
+                borderRadius: 100,
+                background: 'linear-gradient(135deg,#A78BFA,#8B5CF6)',
                 color: '#fff',
                 border: 'none',
-                borderRadius: 100,
-                padding: '14px 28px',
                 fontSize: 15,
                 fontWeight: 600,
                 cursor: 'pointer',
-                fontFamily: 'inherit',
-                boxShadow: '0 4px 16px rgba(139,92,246,.35)',
+                boxShadow: '0 6px 20px rgba(139,92,246,.35)',
+                fontFamily: 'Inter, sans-serif',
               }}
             >
               <PawIcon size={16} color="#fff" /> Register My Pet →
@@ -214,16 +282,18 @@ export default function HomeScreen({ nav }: { nav: (s: Screen, petId?: string) =
               style={{
                 display: 'flex',
                 alignItems: 'center',
+                justifyContent: 'center',
                 gap: 8,
-                background: '#fff',
-                color: '#8B5CF6',
-                border: '1.5px solid #DDD6FE',
+                padding: '14px 24px',
                 borderRadius: 100,
-                padding: '14px 28px',
+                background: '#fff',
+                color: '#7C3AED',
+                border: '1.5px solid #DDD6FE',
                 fontSize: 15,
                 fontWeight: 600,
                 cursor: 'pointer',
-                fontFamily: 'inherit',
+                fontFamily: 'Inter, sans-serif',
+                boxShadow: '0 2px 8px rgba(0,0,0,.06)',
               }}
             >
               <svg
@@ -231,142 +301,144 @@ export default function HomeScreen({ nav }: { nav: (s: Screen, petId?: string) =
                 height={16}
                 viewBox="0 0 24 24"
                 fill="none"
-                stroke="#8B5CF6"
+                stroke="#7C3AED"
                 strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               >
-                <rect x="3" y="3" width="7" height="7" rx="1" />
-                <rect x="14" y="3" width="7" height="7" rx="1" />
-                <rect x="3" y="14" width="7" height="7" rx="1" />
-                <rect x="14" y="14" width="7" height="7" rx="1" />
+                <rect x="3" y="3" width="7" height="7" />
+                <rect x="14" y="3" width="7" height="7" />
+                <rect x="14" y="14" width="7" height="7" />
+                <rect x="3" y="14" width="7" height="7" />
               </svg>
               My Pets
             </button>
-          </div>
-          <button
-            onClick={() => nav('demo')}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 8,
-              background: 'transparent',
-              color: '#64748B',
-              border: '1.5px solid #E2E8F0',
-              borderRadius: 100,
-              padding: '11px 24px',
-              fontSize: 14,
-              fontWeight: 500,
-              cursor: 'pointer',
-              fontFamily: 'inherit',
-            }}
-          >
-            <svg
-              width={14}
-              height={14}
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="#64748B"
-              strokeWidth="2"
-              strokeLinecap="round"
+            <button
+              onClick={() => nav('demo')}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 8,
+                padding: '14px 24px',
+                borderRadius: 100,
+                background: '#fff',
+                color: '#64748B',
+                border: '1.5px solid #E5E7EB',
+                fontSize: 15,
+                fontWeight: 600,
+                cursor: 'pointer',
+                fontFamily: 'Inter, sans-serif',
+                boxShadow: '0 2px 8px rgba(0,0,0,.04)',
+              }}
             >
-              <circle cx="12" cy="12" r="10" />
-              <line x1="12" y1="8" x2="12" y2="12" />
-              <line x1="12" y1="16" x2="12.01" y2="16" />
-            </svg>
-            View Demo Profiles
-          </button>
+              <svg
+                width={15}
+                height={15}
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#94A3B8"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <circle cx="12" cy="12" r="10" />
+                <line x1="12" y1="8" x2="12" y2="12" />
+                <line x1="12" y1="16" x2="12.01" y2="16" />
+              </svg>
+              View Demo Profiles
+            </button>
+          </div>
         </div>
 
-        {/* Right: dog photo */}
+        {/* Right — dog illustration with bubble */}
         <div
-          style={{
-            flexShrink: 0,
-            position: 'relative',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
+          style={{ flexShrink: 0, position: 'relative', alignSelf: isMobile ? 'center' : 'auto' }}
         >
-          {/* Speech bubble */}
-          <div
-            style={{
-              position: 'absolute',
-              top: -16,
-              left: -20,
-              background: '#fff',
-              borderRadius: 16,
-              padding: '10px 16px',
-              boxShadow: '0 4px 20px rgba(0,0,0,.1)',
-              display: 'flex',
-              alignItems: 'center',
-              gap: 8,
-              zIndex: 2,
-              whiteSpace: 'nowrap',
-            }}
-          >
-            <PawIcon size={14} color="#8B5CF6" />
-            <span style={{ fontSize: 13, fontWeight: 700, color: '#1E293B' }}>
-              Hi! I&apos;m Leo!
-            </span>
-          </div>
+          {/* Speech bubble — hidden on mobile to save space */}
+          {!isMobile && (
+            <div
+              style={{
+                position: 'absolute',
+                top: -16,
+                left: -20,
+                zIndex: 2,
+                background: '#fff',
+                borderRadius: 20,
+                padding: '10px 16px',
+                boxShadow: '0 8px 24px rgba(0,0,0,.10)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 6,
+                fontSize: 14,
+                fontWeight: 700,
+                color: '#1E293B',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              <PawIcon size={14} color="#8B5CF6" /> Hi! I&apos;m Leo!
+            </div>
+          )}
 
-          {/* Circle photo */}
+          {/* Floating card — hidden on mobile */}
+          {!isMobile && (
+            <div
+              style={{
+                position: 'absolute',
+                bottom: 10,
+                right: -20,
+                zIndex: 2,
+                background: '#fff',
+                borderRadius: 16,
+                padding: '12px 16px',
+                boxShadow: '0 8px 24px rgba(0,0,0,.10)',
+                maxWidth: 180,
+              }}
+            >
+              <HeartFill size={14} color="#8B5CF6" />
+              <p style={{ fontSize: 13, color: '#475569', marginTop: 4, lineHeight: 1.4 }}>
+                One scan can bring them back home.
+              </p>
+            </div>
+          )}
+
+          {/* Circular dog photo */}
           <div
             style={{
-              width: 280,
-              height: 280,
+              width: isMobile ? 220 : 340,
+              height: isMobile ? 220 : 340,
               borderRadius: '50%',
+              border: '7px solid #fff',
+              boxShadow: '0 20px 60px rgba(139,92,246,.2), 0 0 0 2px rgba(139,92,246,.1)',
               overflow: 'hidden',
-              border: '6px solid #fff',
-              boxShadow: '0 20px 60px rgba(139,92,246,.25)',
-              background: 'linear-gradient(135deg,#EDE9FE,#DDD6FE)',
               flexShrink: 0,
             }}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://images.unsplash.com/photo-1552053831-71594a27632d?w=560&h=560&fit=crop&crop=face"
-              alt="Happy dog"
-              width={280}
-              height={280}
-              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+              src="https://images.unsplash.com/photo-1633722715463-d30f4f325e24?w=700&auto=format&fit=crop&q=80"
+              alt="Leo the Golden Retriever"
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                objectPosition: 'center top',
+              }}
             />
-          </div>
-
-          {/* Bottom card */}
-          <div
-            style={{
-              position: 'absolute',
-              bottom: -16,
-              right: -24,
-              background: '#fff',
-              borderRadius: 16,
-              padding: '12px 18px',
-              boxShadow: '0 4px 20px rgba(0,0,0,.1)',
-              maxWidth: 200,
-              zIndex: 2,
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
-              <HeartFill size={14} color="#EC4899" />
-            </div>
-            <p style={{ fontSize: 13, fontWeight: 600, color: '#1E293B', lineHeight: 1.4 }}>
-              One scan can bring them back home.
-            </p>
           </div>
         </div>
       </section>
 
       {/* About PawFinder */}
-      <section style={{ padding: '64px 48px', background: '#fff' }}>
-        <div style={{ maxWidth: 900, margin: '0 auto' }}>
+      <section style={{ padding: isMobile ? '40px 20px' : '64px 80px', background: '#fff' }}>
+        <div style={{ maxWidth: 900, margin: '0 auto', textAlign: 'center' }}>
           <div
             style={{
               display: 'inline-flex',
               alignItems: 'center',
               gap: 6,
-              background: '#EDE9FE',
+              background: '#F5F3FF',
               borderRadius: 100,
-              padding: '5px 14px 5px 8px',
+              padding: '6px 16px 6px 10px',
               marginBottom: 20,
             }}
           >
@@ -375,19 +447,35 @@ export default function HomeScreen({ nav }: { nav: (s: Screen, petId?: string) =
           </div>
           <h2
             style={{
-              fontSize: 'clamp(28px,3.5vw,44px)',
+              fontSize: 36,
               fontWeight: 900,
               color: '#1E293B',
               letterSpacing: '-1px',
-              lineHeight: 1.2,
-              marginBottom: 16,
+              marginBottom: 8,
             }}
           >
             Built for pets.
-            <br />
-            <span style={{ color: '#8B5CF6' }}>Powered by technology.</span>
           </h2>
-          <p style={{ fontSize: 16, color: '#475569', lineHeight: 1.75, maxWidth: 640 }}>
+          <h2
+            style={{
+              fontSize: 36,
+              fontWeight: 900,
+              color: '#7C3AED',
+              letterSpacing: '-1px',
+              marginBottom: 20,
+            }}
+          >
+            Powered by technology.
+          </h2>
+          <p
+            style={{
+              fontSize: 16,
+              color: '#475569',
+              lineHeight: 1.7,
+              maxWidth: 620,
+              margin: '0 auto',
+            }}
+          >
             PawFinder was created to help families reunite with their pets faster. When a pet gets
             lost, every minute matters. PawFinder uses{' '}
             <strong style={{ color: '#1E293B' }}>QR code technology</strong> to create a digital
@@ -397,15 +485,15 @@ export default function HomeScreen({ nav }: { nav: (s: Screen, petId?: string) =
       </section>
 
       {/* How It Works */}
-      <section style={{ background: '#F5F3FF', padding: '64px 48px' }}>
-        <div style={{ maxWidth: 900, margin: '0 auto' }}>
+      <section style={{ background: '#EEEDF8', padding: isMobile ? '40px 20px' : '64px 80px' }}>
+        <div style={{ maxWidth: 1000, margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: 40 }}>
             <h2
               style={{
-                fontSize: 'clamp(24px,3vw,36px)',
+                fontSize: 28,
                 fontWeight: 800,
                 color: '#1E293B',
-                letterSpacing: '-.5px',
+                letterSpacing: '-.8px',
                 marginBottom: 12,
               }}
             >
@@ -417,12 +505,12 @@ export default function HomeScreen({ nav }: { nav: (s: Screen, petId?: string) =
                 alignItems: 'center',
                 justifyContent: 'center',
                 gap: 8,
-                marginBottom: 10,
+                marginBottom: 8,
               }}
             >
-              <div style={{ height: 1, width: 40, background: '#C4B5FD' }} />
+              <div style={{ height: 1, width: 48, background: '#CBD5E1' }} />
               <PawIcon size={14} color="#8B5CF6" />
-              <div style={{ height: 1, width: 40, background: '#C4B5FD' }} />
+              <div style={{ height: 1, width: 48, background: '#CBD5E1' }} />
             </div>
             <p style={{ fontSize: 14, color: '#64748B' }}>
               Four simple steps to keep your pet safe — forever.
@@ -431,7 +519,7 @@ export default function HomeScreen({ nav }: { nav: (s: Screen, petId?: string) =
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit,minmax(200px,1fr))',
+              gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)',
               gap: 16,
             }}
           >
@@ -462,16 +550,16 @@ export default function HomeScreen({ nav }: { nav: (s: Screen, petId?: string) =
         </div>
       </section>
 
-      {/* Why QR */}
-      <section style={{ background: '#fff', padding: '64px 48px' }}>
-        <div style={{ maxWidth: 900, margin: '0 auto' }}>
+      {/* Why a QR Code? */}
+      <section style={{ padding: isMobile ? '40px 20px' : '64px 80px', background: '#fff' }}>
+        <div style={{ maxWidth: 860, margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: 36 }}>
             <h2
               style={{
-                fontSize: 'clamp(24px,3vw,36px)',
+                fontSize: 28,
                 fontWeight: 800,
                 color: '#1E293B',
-                letterSpacing: '-.5px',
+                letterSpacing: '-.8px',
                 marginBottom: 12,
               }}
             >
@@ -482,7 +570,7 @@ export default function HomeScreen({ nav }: { nav: (s: Screen, petId?: string) =
                 fontSize: 14,
                 color: '#64748B',
                 lineHeight: 1.7,
-                maxWidth: 540,
+                maxWidth: 520,
                 margin: '0 auto',
               }}
             >
@@ -495,12 +583,13 @@ export default function HomeScreen({ nav }: { nav: (s: Screen, petId?: string) =
               <div
                 key={label}
                 style={{
-                  background: '#F5F3FF',
-                  borderRadius: 16,
+                  background: '#F8FAFC',
+                  borderRadius: 18,
                   padding: '20px 24px',
                   display: 'flex',
                   gap: 18,
                   alignItems: 'flex-start',
+                  border: '1px solid #F1F5F9',
                 }}
               >
                 <div
@@ -535,17 +624,40 @@ export default function HomeScreen({ nav }: { nav: (s: Screen, petId?: string) =
         style={{
           background: '#F8FAFC',
           borderTop: '1px solid #F1F5F9',
-          padding: '24px 48px',
+          padding: isMobile ? '24px 20px' : '28px 80px',
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'center',
-          gap: 8,
+          justifyContent: 'space-between',
+          flexDirection: isMobile ? 'column' : 'row',
+          gap: isMobile ? 12 : 0,
         }}
       >
-        <PawIcon size={14} color="#8B5CF6" />
-        <span style={{ fontSize: 13, color: '#94A3B8' }}>
-          PawFinder · Built for pets, powered by technology.
-        </span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
+          <PawIcon size={16} color="#8B5CF6" />
+          <span style={{ fontSize: 14, fontWeight: 700, color: '#8B5CF6' }}>PawFinder</span>
+        </div>
+        <p style={{ fontSize: 12, color: '#94A3B8' }}>
+          © 2026 PawFinder. Keeping pets safe, one scan at a time.
+        </p>
+        <button
+          onClick={() => nav('scan')}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 6,
+            padding: '8px 16px',
+            borderRadius: 100,
+            background: 'transparent',
+            border: '1.5px solid #DDD6FE',
+            color: '#8B5CF6',
+            fontSize: 13,
+            fontWeight: 600,
+            cursor: 'pointer',
+            fontFamily: 'Inter, sans-serif',
+          }}
+        >
+          <IcoScan size={14} color="#8B5CF6" /> Scan QR Demo
+        </button>
       </footer>
     </div>
   );

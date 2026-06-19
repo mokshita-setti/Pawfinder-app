@@ -1,3 +1,117 @@
+export const PawFinderLogo = ({
+  size = 200,
+  hideText = false,
+}: {
+  size?: number;
+  hideText?: boolean;
+}) => {
+  // Icon viewbox: 0 0 200 230 (QR sticks out below paw)
+  // Full logo viewbox: 0 0 200 310 (adds text)
+  const vbH = hideText ? 210 : 310;
+  const svgH = size * (vbH / 200);
+  return (
+    <svg
+      width={size}
+      height={svgH}
+      viewBox={`0 0 200 ${vbH}`}
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <defs>
+        <linearGradient id="pg2" x1="50" y1="10" x2="160" y2="180" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#8BA8F0" />
+          <stop offset="100%" stopColor="#B87EEE" />
+        </linearGradient>
+        <linearGradient
+          id="qrcard"
+          x1="100"
+          y1="95"
+          x2="100"
+          y2="220"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop offset="0%" stopColor="#ffffff" stopOpacity="0.88" />
+          <stop offset="100%" stopColor="#E8EAFF" stopOpacity="0.88" />
+        </linearGradient>
+      </defs>
+
+      {/* === PAW === */}
+      {/* Two center toes — large, clear gap between them */}
+      <ellipse cx="77" cy="34" rx="26" ry="30" fill="url(#pg2)" />
+      <ellipse cx="123" cy="34" rx="26" ry="30" fill="url(#pg2)" />
+      {/* Two side toes — smaller, sit lower and outward */}
+      <ellipse cx="36" cy="80" rx="19" ry="23" fill="url(#pg2)" />
+      <ellipse cx="164" cy="80" rx="19" ry="23" fill="url(#pg2)" />
+      {/* Main pad — wide, bottom curves inward */}
+      <path
+        d="M100 68
+        C72 68 44 86 44 114
+        C44 138 58 158 78 166
+        C88 170 94 162 100 157
+        C106 162 112 170 122 166
+        C142 158 156 138 156 114
+        C156 86 128 68 100 68Z"
+        fill="url(#pg2)"
+      />
+
+      {/* === QR CODE — sits in lower half of pad, bottom sticks out === */}
+      <rect x="50" y="108" width="100" height="90" rx="13" fill="url(#qrcard)" />
+
+      {/* Top-left finder */}
+      <rect x="58" y="116" width="27" height="27" rx="4" fill="url(#pg2)" />
+      <rect x="61" y="119" width="21" height="21" rx="3" fill="white" />
+      <rect x="64" y="122" width="15" height="15" rx="2" fill="url(#pg2)" />
+      <rect x="67" y="125" width="9" height="9" rx="1" fill="white" />
+
+      {/* Top-right finder */}
+      <rect x="115" y="116" width="27" height="27" rx="4" fill="url(#pg2)" />
+      <rect x="118" y="119" width="21" height="21" rx="3" fill="white" />
+      <rect x="121" y="122" width="15" height="15" rx="2" fill="url(#pg2)" />
+      <rect x="124" y="125" width="9" height="9" rx="1" fill="white" />
+
+      {/* Bottom-left finder */}
+      <rect x="58" y="163" width="27" height="27" rx="4" fill="url(#pg2)" />
+      <rect x="61" y="166" width="21" height="21" rx="3" fill="white" />
+      <rect x="64" y="169" width="15" height="15" rx="2" fill="url(#pg2)" />
+      <rect x="67" y="172" width="9" height="9" rx="1" fill="white" />
+
+      {/* Centre column dots */}
+      <rect x="95" y="116" width="8" height="8" rx="1.5" fill="url(#pg2)" />
+      <rect x="95" y="128" width="8" height="8" rx="1.5" fill="url(#pg2)" />
+      <rect x="95" y="163" width="8" height="8" rx="1.5" fill="url(#pg2)" />
+      <rect x="95" y="175" width="8" height="8" rx="1.5" fill="url(#pg2)" />
+      <rect x="95" y="187" width="8" height="8" rx="1.5" fill="url(#pg2)" />
+
+      {/* Bottom-right data area */}
+      <rect x="115" y="151" width="8" height="8" rx="1.5" fill="url(#pg2)" />
+      <rect x="127" y="151" width="8" height="8" rx="1.5" fill="url(#pg2)" />
+      <rect x="139" y="151" width="8" height="8" rx="1.5" fill="url(#pg2)" />
+      <rect x="115" y="163" width="8" height="8" rx="1.5" fill="url(#pg2)" />
+      <rect x="139" y="163" width="8" height="8" rx="1.5" fill="url(#pg2)" />
+      <rect x="115" y="175" width="8" height="8" rx="1.5" fill="url(#pg2)" />
+      <rect x="127" y="175" width="8" height="8" rx="1.5" fill="url(#pg2)" />
+      <rect x="115" y="187" width="8" height="8" rx="1.5" fill="url(#pg2)" />
+      <rect x="139" y="187" width="8" height="8" rx="1.5" fill="url(#pg2)" />
+
+      {/* Text */}
+      {!hideText && (
+        <text
+          x="100"
+          y="278"
+          textAnchor="middle"
+          fontFamily="'Inter', 'Arial Black', sans-serif"
+          fontSize="52"
+          fontWeight="900"
+          letterSpacing="-1"
+        >
+          <tspan fill="#5B8FD8">Paw</tspan>
+          <tspan fill="#9B6FD8">Finder</tspan>
+        </text>
+      )}
+    </svg>
+  );
+};
+
 export const PawIcon = ({ size = 20, color = '#8B5CF6' }: { size?: number; color?: string }) => (
   <svg width={size} height={size} viewBox="0 0 100 100" fill={color} style={{ flexShrink: 0 }}>
     <ellipse cx="35" cy="14" rx="11" ry="13" />

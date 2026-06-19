@@ -15,7 +15,6 @@ type Pet = {
   age: string | null;
   medical_info: string | null;
   notes: string | null;
-  photo_url: string | null;
   status: string;
 };
 
@@ -30,7 +29,6 @@ const DEMO_PETS: Record<string, { pet: Pet; owner: OwnerInfo }> = {
       age: '4 Years Old',
       medical_info: 'Needs daily medication. Allergic to certain foods.',
       notes: null,
-      photo_url: null,
       status: 'safe',
     },
     owner: {
@@ -48,7 +46,6 @@ const DEMO_PETS: Record<string, { pet: Pet; owner: OwnerInfo }> = {
       age: '2 Years Old',
       medical_info: null,
       notes: null,
-      photo_url: null,
       status: 'safe',
     },
     owner: {
@@ -66,7 +63,6 @@ const DEMO_PETS: Record<string, { pet: Pet; owner: OwnerInfo }> = {
       age: '1 Year Old',
       medical_info: 'Indoor cat only. Sensitive stomach.',
       notes: null,
-      photo_url: null,
       status: 'safe',
     },
     owner: {
@@ -79,45 +75,31 @@ const DEMO_PETS: Record<string, { pet: Pet; owner: OwnerInfo }> = {
 };
 
 export default function PublicPetPage() {
-  const params = useParams();
-  const petId = params?.petId as string;
-
+  const { petId } = useParams<{ petId: string }>();
   const [pet, setPet] = useState<Pet | null>(null);
   const [owner, setOwner] = useState<OwnerInfo | null>(null);
   const [loading, setLoading] = useState(true);
-  const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
     async function load() {
-      if (!petId) {
+      if (petId && DEMO_PETS[petId]) {
+        setPet(DEMO_PETS[petId].pet);
+        setOwner(DEMO_PETS[petId].owner);
         setLoading(false);
         return;
       }
-
-      if (DEMO_PETS[petId]) {
-        const demo = DEMO_PETS[petId];
-        setPet(demo.pet);
-        setOwner(demo.owner);
-        setLoading(false);
-        return;
-      }
-
       const { data } = await supabase
         .from('pets')
-        .select('pet_id, pet_name, breed, age, medical_info, notes, photo_url, status')
+        .select('pet_id, pet_name, breed, age, medical_info, notes, status')
         .eq('pet_id', petId)
         .single();
-
-      if (!data) {
-        setNotFound(true);
-        setLoading(false);
-        return;
-      }
-      setPet(data);
-      try {
-        setOwner(JSON.parse(data.notes ?? '{}'));
-      } catch {
-        setOwner(null);
+      if (data) {
+        setPet(data);
+        try {
+          setOwner(JSON.parse(data.notes ?? '{}'));
+        } catch {
+          setOwner(null);
+        }
       }
       setLoading(false);
     }
@@ -129,323 +111,317 @@ export default function PublicPetPage() {
       <div
         style={{
           minHeight: '100dvh',
-          background: '#F8FAFC',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
+          background: '#F8FAFC',
+          fontFamily: 'Inter, sans-serif',
+          color: '#94A3B8',
         }}
       >
-        <div
-          style={{
-            width: 40,
-            height: 40,
-            border: '3px solid #EDE9FE',
-            borderTopColor: '#8B5CF6',
-            borderRadius: '50%',
-            animation: 'spin 0.8s linear infinite',
-          }}
-        />
-        <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
+        Loading…
       </div>
     );
 
-  if (notFound || !pet)
+  if (!pet)
     return (
       <div
         style={{
           minHeight: '100dvh',
-          background: '#F8FAFC',
           display: 'flex',
+          flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          flexDirection: 'column',
-          gap: 12,
-          padding: 24,
+          background: '#F8FAFC',
+          fontFamily: 'Inter, sans-serif',
           textAlign: 'center',
+          padding: 32,
         }}
       >
-        <p style={{ fontSize: 48 }}>🐾</p>
-        <h1 style={{ fontSize: 24, fontWeight: 800, color: '#1E293B' }}>Pet not found</h1>
-        <p style={{ fontSize: 15, color: '#64748B' }}>This QR code may be invalid or expired.</p>
+        <div style={{ fontSize: 48, marginBottom: 16 }}>🐾</div>
+        <h1 style={{ fontSize: 24, fontWeight: 800, color: '#1E293B', marginBottom: 8 }}>
+          Pet not found
+        </h1>
+        <p style={{ color: '#94A3B8' }}>This QR code may be invalid or the pet has been removed.</p>
       </div>
     );
 
-  const missing = pet.status === 'missing';
-
   return (
-    <div style={{ minHeight: '100dvh', background: '#F8FAFC' }}>
+    <div
+      style={{
+        minHeight: '100dvh',
+        background: '#F8FAFC',
+        fontFamily: 'Inter, -apple-system, sans-serif',
+      }}
+    >
       {/* Header */}
-      <div
+      <header
         style={{
-          background: '#fff',
+          background: 'rgba(255,255,255,0.9)',
+          backdropFilter: 'blur(12px)',
           borderBottom: '1px solid #F1F5F9',
-          padding: '14px 20px',
+          padding: '16px 24px',
           display: 'flex',
           alignItems: 'center',
           gap: 8,
         }}
       >
-        <svg width={20} height={20} viewBox="0 0 24 24" fill="#8B5CF6" aria-hidden="true">
+        <svg width={20} height={20} viewBox="0 0 24 24" fill="#8B5CF6">
           <circle cx="5" cy="7" r="2.5" />
           <circle cx="19" cy="7" r="2.5" />
           <circle cx="9" cy="3.5" r="2.5" />
           <circle cx="15" cy="3.5" r="2.5" />
           <path d="M12 22c-4 0-7-2.5-7-6 0-2 1.5-4 3.5-5s3.5-1 3.5-1 1.5 0 3.5 1 3.5 3 3.5 5c0 3.5-3 6-7 6z" />
         </svg>
-        <span style={{ fontSize: 16, fontWeight: 700, color: '#8B5CF6' }}>PawFinder</span>
-      </div>
+        <span style={{ fontSize: 17, fontWeight: 800, color: '#8B5CF6' }}>PawFinder</span>
+        <span style={{ fontSize: 13, color: '#94A3B8', marginLeft: 'auto' }}>Pet Profile</span>
+      </header>
 
-      {/* Missing banner */}
-      {missing && (
-        <div
-          style={{
-            background: '#FEF2F2',
-            borderBottom: '1px solid #FECACA',
-            padding: '10px 20px',
-            display: 'flex',
-            alignItems: 'center',
-            gap: 8,
-          }}
-        >
-          <svg
-            width={16}
-            height={16}
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="#DC2626"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
-            <line x1="12" y1="9" x2="12" y2="13" />
-            <line x1="12" y1="17" x2="12.01" y2="17" />
-          </svg>
-          <span style={{ fontSize: 13, fontWeight: 700, color: '#DC2626' }}>
-            THIS PET IS MISSING — please call the owner immediately
-          </span>
-        </div>
-      )}
-
-      <div style={{ maxWidth: 480, margin: '0 auto', padding: '24px 16px' }}>
+      <div style={{ maxWidth: 480, margin: '0 auto', padding: '32px 20px' }}>
         {/* Pet card */}
         <div
           style={{
             background: '#fff',
-            borderRadius: 20,
-            border: '1px solid #F1F5F9',
-            padding: 24,
+            borderRadius: 24,
+            padding: '32px 24px',
+            boxShadow: '0 4px 24px rgba(0,0,0,.07)',
             marginBottom: 16,
+            textAlign: 'center',
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
-            <div
-              style={{
-                width: 88,
-                height: 88,
-                borderRadius: '50%',
-                background: '#EDE9FE',
-                flexShrink: 0,
-                overflow: 'hidden',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              {pet.photo_url ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={pet.photo_url}
-                  alt={pet.pet_name}
-                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                />
-              ) : (
-                <svg width={44} height={44} viewBox="0 0 24 24" fill="#8B5CF6">
-                  <path d="M4.5 10.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm15 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM9 6a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm6 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM12 22c-4 0-7-2.5-7-6 0-2 1.5-4 3.5-5s3.5-1 3.5-1 1.5 0 3.5 1 3.5 3 3.5 5c0 3.5-3 6-7 6z" />
-                </svg>
-              )}
-            </div>
-            <div>
-              <h1
-                style={{
-                  fontSize: 26,
-                  fontWeight: 800,
-                  color: '#8B5CF6',
-                  letterSpacing: '-.5px',
-                  marginBottom: 4,
-                }}
-              >
-                {pet.pet_name}
-              </h1>
-              {pet.breed && (
-                <p style={{ fontSize: 14, color: '#64748B', marginBottom: 2 }}>{pet.breed}</p>
-              )}
-              {pet.age && (
-                <p style={{ fontSize: 13, color: '#94A3B8', marginBottom: 8 }}>{pet.age}</p>
-              )}
-              <div
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: 6,
-                  padding: '3px 10px',
-                  borderRadius: 100,
-                  background: missing ? '#FEF2F2' : '#F0FDF4',
-                  fontSize: 11,
-                  fontWeight: 700,
-                  color: missing ? '#DC2626' : '#16A34A',
-                  letterSpacing: '.3px',
-                }}
-                role="status"
-                aria-label={missing ? 'Status: Missing' : 'Status: Safe'}
-              >
-                <div
-                  style={{
-                    width: 6,
-                    height: 6,
-                    borderRadius: '50%',
-                    background: missing ? '#DC2626' : '#16A34A',
-                  }}
-                />
-                {missing ? 'MISSING' : 'SAFE'}
-              </div>
-            </div>
+          <div
+            style={{
+              width: 100,
+              height: 100,
+              borderRadius: '50%',
+              background: 'linear-gradient(135deg,#EDE9FE,#DDD6FE)',
+              margin: '0 auto 20px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <svg width={52} height={52} viewBox="0 0 24 24" fill="#8B5CF6">
+              <circle cx="5" cy="7" r="2.5" />
+              <circle cx="19" cy="7" r="2.5" />
+              <circle cx="9" cy="3.5" r="2.5" />
+              <circle cx="15" cy="3.5" r="2.5" />
+              <path d="M12 22c-4 0-7-2.5-7-6 0-2 1.5-4 3.5-5s3.5-1 3.5-1 1.5 0 3.5 1 3.5 3 3.5 5c0 3.5-3 6-7 6z" />
+            </svg>
           </div>
+
+          <div
+            style={{
+              display: 'inline-block',
+              padding: '4px 14px',
+              borderRadius: 100,
+              background: pet.status === 'missing' ? '#FEF2F2' : '#ECFDF5',
+              color: pet.status === 'missing' ? '#DC2626' : '#059669',
+              fontSize: 12,
+              fontWeight: 700,
+              marginBottom: 12,
+              letterSpacing: '.3px',
+            }}
+          >
+            {pet.status === 'missing' ? '🔴 MISSING' : '🟢 SAFE'}
+          </div>
+
+          <h1
+            style={{
+              fontSize: 32,
+              fontWeight: 900,
+              color: '#1E293B',
+              letterSpacing: '-.8px',
+              marginBottom: 4,
+            }}
+          >
+            {pet.pet_name}
+          </h1>
+          {pet.breed && (
+            <p style={{ fontSize: 15, color: '#64748B', marginBottom: 2 }}>{pet.breed}</p>
+          )}
+          {pet.age && <p style={{ fontSize: 14, color: '#94A3B8' }}>{pet.age}</p>}
+
+          <div
+            style={{
+              marginTop: 12,
+              padding: '6px 14px',
+              background: '#F5F3FF',
+              borderRadius: 100,
+              display: 'inline-block',
+              fontSize: 12,
+              color: '#7C3AED',
+              fontWeight: 600,
+            }}
+          >
+            ID: {pet.pet_id}
+          </div>
+        </div>
+
+        {/* Found this pet? Banner */}
+        <div
+          style={{
+            background: 'linear-gradient(135deg,#8B5CF6,#7C3AED)',
+            borderRadius: 20,
+            padding: '20px 24px',
+            marginBottom: 16,
+            color: '#fff',
+            textAlign: 'center',
+          }}
+        >
+          <p style={{ fontSize: 16, fontWeight: 800, marginBottom: 4 }}>Found {pet.pet_name}? 🐾</p>
+          <p style={{ fontSize: 13, opacity: 0.85, lineHeight: 1.5 }}>
+            Please contact the owner below so they can be reunited!
+          </p>
         </div>
 
         {/* Owner contact */}
-        <div
-          style={{
-            background: '#fff',
-            borderRadius: 20,
-            border: '1px solid #F1F5F9',
-            padding: 24,
-            marginBottom: 16,
-          }}
-        >
-          <h2
+        {owner && (owner.phone || owner.ownerName) && (
+          <div
             style={{
-              fontSize: 13,
-              fontWeight: 700,
-              color: '#64748B',
-              letterSpacing: '.5px',
+              background: '#fff',
+              borderRadius: 20,
+              padding: '20px 24px',
+              boxShadow: '0 2px 12px rgba(0,0,0,.05)',
               marginBottom: 16,
-              textTransform: 'uppercase',
             }}
           >
-            Owner Contact
-          </h2>
-          {[
-            { label: 'Owner', value: owner?.ownerName },
-            { label: 'Phone', value: owner?.phone },
-            { label: 'Emergency', value: owner?.emergency },
-            { label: 'Address', value: owner?.address },
-          ]
-            .filter((r) => r.value)
-            .map(({ label, value }) => (
+            <h2
+              style={{
+                fontSize: 14,
+                fontWeight: 700,
+                color: '#94A3B8',
+                letterSpacing: '.5px',
+                marginBottom: 16,
+                textTransform: 'uppercase',
+              }}
+            >
+              Owner Contact
+            </h2>
+            {owner.ownerName && (
               <div
-                key={label}
                 style={{
                   display: 'flex',
                   justifyContent: 'space-between',
-                  alignItems: 'flex-start',
-                  padding: '9px 0',
+                  padding: '10px 0',
                   borderBottom: '1px solid #F8FAFC',
                 }}
               >
-                <span style={{ fontSize: 12, color: '#94A3B8', fontWeight: 500 }}>{label}</span>
-                <span
-                  style={{
-                    fontSize: 13.5,
-                    color: '#1E293B',
-                    fontWeight: 500,
-                    textAlign: 'right',
-                    maxWidth: '60%',
-                  }}
-                >
-                  {value}
+                <span style={{ fontSize: 14, color: '#64748B' }}>Owner</span>
+                <span style={{ fontSize: 14, fontWeight: 600, color: '#1E293B' }}>
+                  {owner.ownerName}
                 </span>
               </div>
-            ))}
-
-          {owner?.phone && (
-            <a
-              href={`tel:${owner.phone}`}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: 8,
-                marginTop: 20,
-                padding: '13px',
-                borderRadius: 100,
-                background: '#8B5CF6',
-                color: '#fff',
-                textDecoration: 'none',
-                fontSize: 15,
-                fontWeight: 600,
-                boxShadow: '0 4px 16px rgba(139,92,246,.35)',
-              }}
-            >
-              <svg
-                width={17}
-                height={17}
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="#fff"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
+            )}
+            {owner.phone && (
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  padding: '10px 0',
+                  borderBottom: '1px solid #F8FAFC',
+                }}
               >
-                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.77a16 16 0 0 0 6.29 6.29l1.85-1.85a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
-              </svg>
-              Call Owner Now
-            </a>
-          )}
-        </div>
-
-        {pet.medical_info && (
-          <div
-            style={{
-              background: '#FFFBEB',
-              border: '1px solid #FDE68A',
-              borderRadius: 16,
-              padding: '16px 20px',
-              marginBottom: 16,
-            }}
-          >
-            <p
-              style={{
-                fontSize: 12,
-                fontWeight: 700,
-                color: '#92400E',
-                marginBottom: 6,
-                textTransform: 'uppercase',
-                letterSpacing: '.3px',
-              }}
-            >
-              Medical Notes
-            </p>
-            <p style={{ fontSize: 14, color: '#78350F', lineHeight: 1.6 }}>{pet.medical_info}</p>
+                <span style={{ fontSize: 14, color: '#64748B' }}>Phone</span>
+                <a
+                  href={`tel:${owner.phone}`}
+                  style={{
+                    fontSize: 14,
+                    fontWeight: 600,
+                    color: '#8B5CF6',
+                    textDecoration: 'none',
+                  }}
+                >
+                  {owner.phone}
+                </a>
+              </div>
+            )}
+            {owner.emergency && (
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  padding: '10px 0',
+                  borderBottom: '1px solid #F8FAFC',
+                }}
+              >
+                <span style={{ fontSize: 14, color: '#64748B' }}>Emergency</span>
+                <a
+                  href={`tel:${owner.emergency}`}
+                  style={{
+                    fontSize: 14,
+                    fontWeight: 600,
+                    color: '#8B5CF6',
+                    textDecoration: 'none',
+                  }}
+                >
+                  {owner.emergency}
+                </a>
+              </div>
+            )}
+            {owner.address && (
+              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 0' }}>
+                <span style={{ fontSize: 14, color: '#64748B' }}>Address</span>
+                <span
+                  style={{
+                    fontSize: 14,
+                    fontWeight: 500,
+                    color: '#1E293B',
+                    textAlign: 'right',
+                    maxWidth: 200,
+                  }}
+                >
+                  {owner.address}
+                </span>
+              </div>
+            )}
           </div>
         )}
 
-        {/* Found this pet? */}
-        <div
-          style={{
-            background: '#8B5CF6',
-            borderRadius: 20,
-            padding: 24,
-            textAlign: 'center',
-            color: '#fff',
-          }}
-        >
-          <p style={{ fontSize: 16, fontWeight: 800, marginBottom: 4 }}>Found {pet.pet_name}?</p>
-          <p style={{ fontSize: 13, opacity: 0.85, marginBottom: 16, lineHeight: 1.5 }}>
-            Please contact the owner using the details above. Your kindness can bring a pet home.
-          </p>
-          <p style={{ fontSize: 12, opacity: 0.7 }}>ID: {pet.pet_id} · Powered by PawFinder</p>
-        </div>
+        {/* Medical info */}
+        {pet.medical_info && (
+          <div
+            style={{
+              background: '#FFF7ED',
+              borderRadius: 20,
+              padding: '20px 24px',
+              marginBottom: 16,
+              border: '1px solid #FED7AA',
+            }}
+          >
+            <h2 style={{ fontSize: 14, fontWeight: 700, color: '#EA580C', marginBottom: 8 }}>
+              ⚠️ Medical Notes
+            </h2>
+            <p style={{ fontSize: 14, color: '#7C2D12', lineHeight: 1.6 }}>{pet.medical_info}</p>
+          </div>
+        )}
+
+        {/* Call button */}
+        {owner?.phone && (
+          <a
+            href={`tel:${owner.phone}`}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: 8,
+              padding: '16px',
+              borderRadius: 16,
+              background: 'linear-gradient(135deg,#A78BFA,#8B5CF6)',
+              color: '#fff',
+              textDecoration: 'none',
+              fontSize: 16,
+              fontWeight: 700,
+              boxShadow: '0 6px 20px rgba(139,92,246,.35)',
+            }}
+          >
+            📞 Call Owner Now
+          </a>
+        )}
+
+        <p style={{ textAlign: 'center', fontSize: 12, color: '#CBD5E1', marginTop: 24 }}>
+          Powered by PawFinder · Keeping pets safe
+        </p>
       </div>
     </div>
   );

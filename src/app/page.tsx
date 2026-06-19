@@ -1,5 +1,6 @@
 'use client';
 import { useState } from 'react';
+import { useIsMobile } from '@/hooks/useIsMobile';
 import HomeScreen from '@/components/HomeScreen';
 import RegisterScreen from '@/components/RegisterScreen';
 import MyPetsScreen from '@/components/MyPetsScreen';
@@ -7,7 +8,7 @@ import PetProfileScreen from '@/components/PetProfileScreen';
 import ScanFlowScreen from '@/components/ScanFlowScreen';
 import NotifScreen from '@/components/NotifScreen';
 import ProfileScreen from '@/components/ProfileScreen';
-import DemoScreen from '@/components/DemoScreen';
+import DemoProfilesScreen from '@/components/DemoProfilesScreen';
 
 type Screen = 'home' | 'register' | 'pets' | 'petprofile' | 'scan' | 'notif' | 'me' | 'demo';
 
@@ -16,56 +17,56 @@ const SCREEN_LABELS: { id: Screen; label: string }[] = [
   { id: 'register', label: '② Register Pet' },
   { id: 'pets', label: '③ My Pets' },
   { id: 'petprofile', label: '④ Pet Profile' },
-  { id: 'scan', label: '⑤ Scan QR Flow' },
+  { id: 'demo', label: '⑤ Demo Profiles' },
+  { id: 'scan', label: '⑥ Scan QR Flow' },
 ];
 
 export default function Home() {
   const [cur, setCur] = useState<Screen>('home');
   const [activePetId, setActivePetId] = useState<string | undefined>();
-
-  const nav = (to: Screen, petId?: string) => {
-    if (petId !== undefined) setActivePetId(petId);
-    setCur(to);
-  };
+  const isMobile = useIsMobile();
+  const nav = (to: Screen) => setCur(to);
 
   const screens: Record<Screen, React.ReactNode> = {
     home: <HomeScreen nav={nav} />,
     register: <RegisterScreen nav={nav} />,
-    pets: <MyPetsScreen nav={nav} />,
+    pets: <MyPetsScreen nav={nav} onSelectPet={(id) => setActivePetId(id)} />,
     petprofile: <PetProfileScreen nav={nav} petId={activePetId} />,
     scan: <ScanFlowScreen nav={nav} />,
     notif: <NotifScreen nav={nav} />,
     me: <ProfileScreen nav={nav} />,
-    demo: <DemoScreen nav={nav} />,
+    demo: <DemoProfilesScreen nav={nav} />,
   };
 
   return (
-    <div style={{ minHeight: '100dvh', display: 'flex', flexDirection: 'column' }}>
-      {screens[cur]}
+    <>
+      <div style={{ minHeight: '100dvh', display: 'flex', flexDirection: 'column' }}>
+        {screens[cur]}
+      </div>
 
-      {/* Dev nav — hidden on mobile via .pf-dev-nav CSS class */}
+      {/* Screen switcher — dev only, hidden on mobile */}
       <nav
-        className="pf-dev-nav"
         style={{
           position: 'fixed',
           top: '50%',
-          right: 22,
+          right: 16,
           transform: 'translateY(-50%)',
+          display: isMobile ? 'none' : 'flex',
           flexDirection: 'column',
-          gap: 7,
-          zIndex: 100,
+          gap: 6,
+          zIndex: 1000,
         }}
       >
         <div
           style={{
-            fontSize: 10,
+            fontSize: 9,
             fontWeight: 700,
-            color: 'rgba(100,116,139,.7)',
+            color: 'rgba(100,116,139,.6)',
             letterSpacing: '.8px',
             textTransform: 'uppercase',
             fontFamily: 'Inter, sans-serif',
             textAlign: 'right',
-            marginBottom: -2,
+            marginBottom: 2,
           }}
         >
           Screens
@@ -75,25 +76,27 @@ export default function Home() {
             key={id}
             onClick={() => nav(id)}
             style={{
-              padding: '7px 16px',
+              padding: '6px 14px',
               borderRadius: 100,
-              background: cur === id ? '#8B5CF6' : 'rgba(255,255,255,.92)',
-              border: cur === id ? 'none' : '1px solid rgba(139,92,246,.18)',
-              fontSize: 12,
+              background:
+                cur === id ? 'linear-gradient(135deg,#A78BFA,#8B5CF6)' : 'rgba(255,255,255,.92)',
+              border: cur === id ? 'none' : '1px solid rgba(139,92,246,.2)',
+              fontSize: 11,
               fontWeight: 600,
               color: cur === id ? '#fff' : '#8B5CF6',
               cursor: 'pointer',
               backdropFilter: 'blur(12px)',
               fontFamily: 'Inter, sans-serif',
-              transition: 'all .18s',
+              transition: 'all .15s',
               whiteSpace: 'nowrap',
               textAlign: 'right',
+              boxShadow: '0 2px 8px rgba(0,0,0,.08)',
             }}
           >
             {label}
           </button>
         ))}
       </nav>
-    </div>
+    </>
   );
 }

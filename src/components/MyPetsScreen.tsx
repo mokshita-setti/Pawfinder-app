@@ -1,269 +1,210 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { createBrowserClient } from '@supabase/ssr';
-import { IcoMenu, IcoPlus, IcoArrowRight, PawIcon } from './Icons';
-import { PfCard, PfBadge, BottomNav } from './UI';
+import { IcoPlus, IcoArrowRight, PawIcon } from './Icons';
+import { PfCard, PfBadge, TopNav } from './UI';
+import { supabase } from '@/lib/supabase';
 
 type Screen = 'home' | 'register' | 'pets' | 'petprofile' | 'scan' | 'notif' | 'me' | 'demo';
 
 type Pet = {
+  id: string;
   pet_id: string;
   pet_name: string;
   breed: string | null;
   age: string | null;
-  photo_url: string | null;
-  status: string;
 };
 
-const supabase = createBrowserClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
-
-const DEMO_PETS: Pet[] = [
-  {
-    pet_id: 'PF-DEMO01',
-    pet_name: 'Leo',
-    breed: 'Golden Retriever',
-    age: '4 Years Old',
-    photo_url: null,
-    status: 'safe',
-  },
-  {
-    pet_id: 'PF-DEMO02',
-    pet_name: 'Bruno',
-    breed: 'Shih Tzu',
-    age: '2 Years Old',
-    photo_url: null,
-    status: 'safe',
-  },
-  {
-    pet_id: 'PF-DEMO03',
-    pet_name: 'Luna',
-    breed: 'Persian Cat',
-    age: '1 Year Old',
-    photo_url: null,
-    status: 'safe',
-  },
-];
-
-export default function MyPetsScreen({ nav }: { nav: (s: Screen, petId?: string) => void }) {
+export default function MyPetsScreen({
+  nav,
+  onSelectPet,
+}: {
+  nav: (s: Screen) => void;
+  onSelectPet?: (petId: string) => void;
+}) {
   const [pets, setPets] = useState<Pet[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function load() {
+    (async () => {
       const {
         data: { user },
       } = await supabase.auth.getUser();
       if (!user) {
-        setPets(DEMO_PETS);
         setLoading(false);
         return;
       }
       const { data } = await supabase
         .from('pets')
-        .select('pet_id,pet_name,breed,age,photo_url,status')
+        .select('id, pet_id, pet_name, breed, age')
         .eq('user_id', user.id)
         .order('created_at', { ascending: false });
-      setPets(data?.length ? data : DEMO_PETS);
+      setPets(data ?? []);
       setLoading(false);
-    }
-    load();
+    })();
   }, []);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          padding: '13px 20px',
-          background: '#fff',
-          borderBottom: '1px solid #F1F5F9',
-          flexShrink: 0,
-        }}
-      >
-        <button
-          style={{
-            width: 36,
-            height: 36,
-            background: 'transparent',
-            border: 'none',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <IcoMenu size={20} />
-        </button>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-          <span
-            style={{
-              fontSize: '17px',
-              fontWeight: '800',
-              color: '#8B5CF6',
-              letterSpacing: '-.5px',
-            }}
-          >
-            PawFinder
-          </span>
-          <PawIcon size={17} color="#8B5CF6" />
-        </div>
-        <div
-          style={{
-            width: 36,
-            height: 36,
-            borderRadius: '50%',
-            background: 'linear-gradient(135deg,#A78BFA,#8B5CF6)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            cursor: 'pointer',
-          }}
-        >
-          <span style={{ fontSize: '13px', fontWeight: '700', color: '#fff' }}>SJ</span>
-        </div>
-      </div>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        minHeight: '100dvh',
+        background: '#F8FAFC',
+      }}
+    >
+      <TopNav active="pets" onNav={nav} />
 
-      <div style={{ flex: 1, overflowY: 'auto', background: '#F8FAFC', padding: '20px' }}>
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'flex-start',
-            justifyContent: 'space-between',
-            marginBottom: '20px',
-            gap: '10px',
-          }}
-        >
-          <div>
-            <h1
-              style={{
-                fontSize: '22px',
-                fontWeight: '800',
-                color: '#1E293B',
-                letterSpacing: '-.5px',
-              }}
-            >
-              My Pets
-            </h1>
-            <p style={{ fontSize: '12.5px', color: '#64748B', marginTop: '2px' }}>
-              Manage and view your pet profiles.
-            </p>
-          </div>
-          <button
-            onClick={() => nav('register')}
+      <div style={{ flex: 1, padding: 'clamp(16px, 5vw, 80px) clamp(16px, 8vw, 80px)' }}>
+        <div style={{ maxWidth: 900, margin: '0 auto' }}>
+          <div
             style={{
               display: 'flex',
-              alignItems: 'center',
-              gap: '5px',
-              padding: '8px 13px',
-              borderRadius: '100px',
-              background: '#EDE9FE',
-              border: 'none',
-              cursor: 'pointer',
-              fontSize: '12.5px',
-              fontWeight: '600',
-              color: '#8B5CF6',
-              flexShrink: 0,
+              alignItems: 'flex-start',
+              justifyContent: 'space-between',
+              marginBottom: 32,
             }}
           >
-            <IcoPlus size={13} color="#8B5CF6" /> Add New Pet
-          </button>
-        </div>
+            <div>
+              <h1
+                style={{
+                  fontSize: 32,
+                  fontWeight: 800,
+                  color: '#1E293B',
+                  letterSpacing: '-.8px',
+                  marginBottom: 6,
+                }}
+              >
+                My Pets
+              </h1>
+              <p style={{ fontSize: 15, color: '#64748B' }}>Manage and view your pet profiles.</p>
+            </div>
+            <button
+              onClick={() => nav('register')}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 6,
+                padding: '12px 20px',
+                borderRadius: 100,
+                background: 'linear-gradient(135deg,#A78BFA,#8B5CF6)',
+                border: 'none',
+                cursor: 'pointer',
+                fontSize: 13,
+                fontWeight: 600,
+                color: '#fff',
+                boxShadow: '0 4px 14px rgba(139,92,246,.3)',
+                fontFamily: 'Inter, sans-serif',
+                whiteSpace: 'nowrap',
+                flexShrink: 0,
+              }}
+            >
+              <IcoPlus size={14} color="#fff" /> Add New Pet
+            </button>
+          </div>
 
-        {loading ? (
-          <div style={{ display: 'flex', justifyContent: 'center', paddingTop: 40 }}>
+          {loading ? (
+            <div style={{ textAlign: 'center', padding: '60px 0', color: '#94A3B8', fontSize: 15 }}>
+              Loading your pets…
+            </div>
+          ) : pets.length === 0 ? (
             <div
               style={{
-                width: 32,
-                height: 32,
-                border: '3px solid #EDE9FE',
-                borderTopColor: '#8B5CF6',
-                borderRadius: '50%',
-                animation: 'spin .8s linear infinite',
+                textAlign: 'center',
+                padding: '60px 32px',
+                background: '#fff',
+                borderRadius: 20,
+                border: '1px solid #F1F5F9',
               }}
-            />
-            <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
-          </div>
-        ) : (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-            {pets.map((pet) => {
-              const missing = pet.status === 'missing';
-              return (
-                <PfCard key={pet.pet_id} style={{ padding: '15px', cursor: 'pointer' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+            >
+              <PawIcon size={48} color="#DDD6FE" />
+              <h3
+                style={{
+                  fontSize: 20,
+                  fontWeight: 700,
+                  color: '#1E293B',
+                  marginTop: 16,
+                  marginBottom: 8,
+                }}
+              >
+                No pets yet
+              </h3>
+              <p style={{ fontSize: 15, color: '#94A3B8', marginBottom: 24 }}>
+                Register your first pet to get their QR tag.
+              </p>
+              <button
+                onClick={() => nav('register')}
+                style={{
+                  padding: '12px 28px',
+                  borderRadius: 100,
+                  background: 'linear-gradient(135deg,#A78BFA,#8B5CF6)',
+                  border: 'none',
+                  cursor: 'pointer',
+                  fontSize: 14,
+                  fontWeight: 600,
+                  color: '#fff',
+                  fontFamily: 'Inter, sans-serif',
+                }}
+              >
+                + Register a Pet
+              </button>
+            </div>
+          ) : (
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))',
+                gap: 16,
+              }}
+            >
+              {pets.map((pet) => (
+                <PfCard key={pet.id} style={{ padding: '20px', cursor: 'pointer' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 18 }}>
                     <div
                       style={{
-                        width: 62,
-                        height: 62,
+                        width: 72,
+                        height: 72,
                         borderRadius: '50%',
-                        background: '#EDE9FE',
-                        flexShrink: 0,
-                        overflow: 'hidden',
+                        background: 'linear-gradient(135deg,#EDE9FE,#DDD6FE)',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
+                        flexShrink: 0,
                       }}
                     >
-                      {pet.photo_url ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
-                          src={pet.photo_url}
-                          alt={pet.pet_name}
-                          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                        />
-                      ) : (
-                        <svg width={30} height={30} viewBox="0 0 24 24" fill="#A78BFA">
-                          <path d="M4.5 10.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm15 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM9 6a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm6 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM12 22c-4 0-7-2.5-7-6 0-2 1.5-4 3.5-5s3.5-1 3.5-1 1.5 0 3.5 1 3.5 3 3.5 5c0 3.5-3 6-7 6z" />
-                        </svg>
-                      )}
+                      <PawIcon size={32} color="#8B5CF6" />
                     </div>
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <div
                         style={{
-                          fontSize: '17px',
-                          fontWeight: '700',
+                          fontSize: 20,
+                          fontWeight: 700,
                           color: '#8B5CF6',
                           letterSpacing: '-.3px',
-                          marginBottom: '2px',
+                          marginBottom: 3,
                         }}
                       >
                         {pet.pet_name}
                       </div>
                       {pet.breed && (
-                        <div style={{ fontSize: '12.5px', color: '#64748B' }}>{pet.breed}</div>
+                        <div style={{ fontSize: 14, color: '#64748B', marginBottom: 2 }}>
+                          {pet.breed}
+                        </div>
                       )}
                       {pet.age && (
-                        <div style={{ fontSize: '12px', color: '#94A3B8', marginBottom: '6px' }}>
+                        <div style={{ fontSize: 13, color: '#94A3B8', marginBottom: 8 }}>
                           {pet.age}
                         </div>
                       )}
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                        <PfBadge>ID: {pet.pet_id}</PfBadge>
-                        {missing && (
-                          <span
-                            style={{
-                              fontSize: 10,
-                              fontWeight: 700,
-                              color: '#DC2626',
-                              background: '#FEF2F2',
-                              padding: '2px 8px',
-                              borderRadius: 100,
-                            }}
-                          >
-                            MISSING
-                          </span>
-                        )}
-                      </div>
+                      <PfBadge>ID: {pet.pet_id}</PfBadge>
                     </div>
                     <button
-                      onClick={() => nav('petprofile', pet.pet_id)}
+                      onClick={() => {
+                        onSelectPet?.(pet.pet_id);
+                        nav('petprofile');
+                      }}
                       style={{
-                        width: 36,
-                        height: 36,
+                        width: 40,
+                        height: 40,
                         borderRadius: '50%',
                         background: '#EDE9FE',
                         border: 'none',
@@ -274,17 +215,35 @@ export default function MyPetsScreen({ nav }: { nav: (s: Screen, petId?: string)
                         flexShrink: 0,
                       }}
                     >
-                      <IcoArrowRight size={17} color="#8B5CF6" />
+                      <IcoArrowRight size={18} color="#8B5CF6" />
                     </button>
                   </div>
                 </PfCard>
-              );
-            })}
-          </div>
-        )}
-        <div style={{ height: 8 }} />
+              ))}
+            </div>
+          )}
+
+          {!loading && pets.length > 0 && (
+            <div
+              style={{
+                marginTop: 32,
+                padding: '24px',
+                background: '#EDE9FE',
+                borderRadius: 16,
+                textAlign: 'center',
+              }}
+            >
+              <PawIcon size={28} color="#A78BFA" />
+              <p style={{ fontSize: 14, color: '#7C3AED', fontWeight: 600, marginTop: 10 }}>
+                Add more pets to keep them all safe
+              </p>
+              <p style={{ fontSize: 13, color: '#94A3B8', marginTop: 4 }}>
+                Each pet gets their own unique QR code tag
+              </p>
+            </div>
+          )}
+        </div>
       </div>
-      <BottomNav active="pets" onNav={nav} />
     </div>
   );
 }
