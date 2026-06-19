@@ -6,6 +6,7 @@ import type { NextRequest } from 'next/server';
 export async function GET(request: NextRequest) {
   const requestUrl = new URL(request.url);
   const code = requestUrl.searchParams.get('code');
+  const type = requestUrl.searchParams.get('type');
 
   if (code) {
     const cookieStore = await cookies();
@@ -26,6 +27,11 @@ export async function GET(request: NextRequest) {
       }
     );
     await supabase.auth.exchangeCodeForSession(code);
+  }
+
+  // Password reset links should go to the update-password page
+  if (type === 'recovery') {
+    return NextResponse.redirect(new URL('/update-password', request.url));
   }
 
   return NextResponse.redirect(new URL('/dashboard', request.url));
