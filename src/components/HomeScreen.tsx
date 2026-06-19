@@ -77,9 +77,7 @@ export default function HomeScreen({ nav }: { nav: (s: Screen) => void }) {
             style={{
               fontSize: isMobile ? 17 : 20,
               fontWeight: 800,
-              background: 'linear-gradient(90deg,#5B9BD5,#A855C8)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
+              color: '#7C3AED',
               letterSpacing: '-.5px',
             }}
           >
