@@ -21,7 +21,26 @@
       "Bash(tar xf *)",
       "Bash(cat)",
       "Bash(chmod +x .husky/pre-commit)",
-      "Bash(node -e ' *)"
+      "Bash(node -e ' *)",
+      "Bash(git stash *)",
+      "Bash(git checkout *)",
+      "Bash(git add *)",
+      "Bash(git reset *)",
+      "Bash(sed -i '' 's/type Screen = '\\\\''home'\\\\'' | '\\\\''register'\\\\'' | '\\\\''pets'\\\\'' | '\\\\''petprofile'\\\\'' | '\\\\''scan'\\\\'' | '\\\\''notif'\\\\'' | '\\\\''me'\\\\'';/type Screen = '\\\\''home'\\\\'' | '\\\\''register'\\\\'' | '\\\\''pets'\\\\'' | '\\\\''petprofile'\\\\'' | '\\\\''scan'\\\\'' | '\\\\''notif'\\\\'' | '\\\\''me'\\\\'' | '\\\\''demo'\\\\'';/g' /Users/mokshitasetti/Documents/Pawfinder-project/src/components/HomeScreen.tsx /Users/mokshitasetti/Documents/Pawfinder-project/src/components/NotifScreen.tsx /Users/mokshitasetti/Documents/Pawfinder-project/src/components/ProfileScreen.tsx /Users/mokshitasetti/Documents/Pawfinder-project/src/components/ScanFlowScreen.tsx)",
+      "Bash(sed -i '' 's/nav: \\(s: Screen\\) => void/nav: \\(s: Screen, petId?: string\\) => void/g' /Users/mokshitasetti/Documents/Pawfinder-project/src/components/HomeScreen.tsx /Users/mokshitasetti/Documents/Pawfinder-project/src/components/NotifScreen.tsx /Users/mokshitasetti/Documents/Pawfinder-project/src/components/ProfileScreen.tsx /Users/mokshitasetti/Documents/Pawfinder-project/src/components/ScanFlowScreen.tsx)",
+      "Bash(npx tsc *)",
+      "Bash(npm run *)",
+      "Bash(git remote *)",
+      "Bash(git push *)",
+      "Bash(gh auth *)",
+      "Bash(git branch *)",
+      "Bash(git fetch *)",
+      "Bash(git commit -m ' *)",
+      "Bash(npx vercel *)",
+      "Bash(npx next *)",
+      "Bash(node_modules/.bin/next build *)",
+      "Bash(node node_modules/next/dist/bin/next build)",
+      "Bash(node /Users/mokshitasetti/Documents/Pawfinder-project/node_modules/next/dist/bin/next build)"
     ]
   }
 }
