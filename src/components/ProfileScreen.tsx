@@ -15,7 +15,7 @@ type Screen =
   | 'demo'
   | 'directory';
 
-type Modal = 'contact' | 'security' | null;
+type Modal = 'contact' | 'security' | 'settings' | null;
 
 const inputStyle: React.CSSProperties = {
   width: '100%',
@@ -37,29 +37,76 @@ const labelStyle: React.CSSProperties = {
   marginBottom: 5,
 };
 
+function Toggle({ on, onChange }: { on: boolean; onChange: (v: boolean) => void }) {
+  return (
+    <div
+      onClick={() => onChange(!on)}
+      style={{
+        width: 44,
+        height: 24,
+        borderRadius: 100,
+        background: on ? '#8B5CF6' : '#CBD5E1',
+        position: 'relative',
+        cursor: 'pointer',
+        flexShrink: 0,
+        transition: 'background .2s',
+      }}
+    >
+      <div
+        style={{
+          position: 'absolute',
+          top: 3,
+          left: on ? 23 : 3,
+          width: 18,
+          height: 18,
+          borderRadius: '50%',
+          background: '#fff',
+          boxShadow: '0 1px 4px rgba(0,0,0,.2)',
+          transition: 'left .2s',
+        }}
+      />
+    </div>
+  );
+}
+
 export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
+  const [address, setAddress] = useState('');
   const [petCount, setPetCount] = useState(0);
   const [loaded, setLoaded] = useState(false);
   const [modal, setModal] = useState<Modal>(null);
 
-  // Contact Info form state
+  // Contact Info form
   const [editName, setEditName] = useState('');
   const [editPhone, setEditPhone] = useState('');
+  const [editAddress, setEditAddress] = useState('');
   const [contactSaving, setContactSaving] = useState(false);
   const [contactMsg, setContactMsg] = useState('');
 
-  // Security form state
-  const [currentPw, setCurrentPw] = useState('');
+  // Security form
   const [newPw, setNewPw] = useState('');
   const [confirmPw, setConfirmPw] = useState('');
   const [pwSaving, setPwSaving] = useState(false);
   const [pwMsg, setPwMsg] = useState('');
   const [pwError, setPwError] = useState('');
 
+  // Settings — initialise from localStorage lazily to avoid SSR mismatch
+  const [darkMode, setDarkMode] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return localStorage.getItem('pf_dark') === '1';
+  });
+  const [emailNotifs, setEmailNotifs] = useState(() => {
+    if (typeof window === 'undefined') return true;
+    const v = localStorage.getItem('pf_notifs');
+    return v === null ? true : v === '1';
+  });
+
   useEffect(() => {
+    // Sync dark mode class on mount
+    document.body.classList.toggle('dark', darkMode);
+
     (async () => {
       const {
         data: { user },
@@ -69,14 +116,14 @@ export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
         return;
       }
       setEmail(user.email ?? '');
-      const metaName = user.user_metadata?.name as string | undefined;
-      const metaPhone = user.user_metadata?.phone as string | undefined;
-      if (metaName) setName(metaName);
+      const meta = user.user_metadata as Record<string, string> | undefined;
+      if (meta?.name) setName(meta.name);
       else {
         const { data } = await supabase.from('users').select('name').eq('id', user.id).single();
         if (data?.name) setName(data.name);
       }
-      if (metaPhone) setPhone(metaPhone);
+      if (meta?.phone) setPhone(meta.phone);
+      if (meta?.address) setAddress(meta.address);
       const { count } = await supabase
         .from('pets')
         .select('id', { count: 'exact', head: true })
@@ -86,9 +133,21 @@ export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
     })();
   }, []);
 
+  const toggleDark = (v: boolean) => {
+    setDarkMode(v);
+    localStorage.setItem('pf_dark', v ? '1' : '0');
+    document.body.classList.toggle('dark', v);
+  };
+
+  const toggleNotifs = (v: boolean) => {
+    setEmailNotifs(v);
+    localStorage.setItem('pf_notifs', v ? '1' : '0');
+  };
+
   const openContact = () => {
     setEditName(name);
     setEditPhone(phone);
+    setEditAddress(address);
     setContactMsg('');
     setModal('contact');
   };
@@ -97,11 +156,12 @@ export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
     setContactSaving(true);
     setContactMsg('');
     const { error } = await supabase.auth.updateUser({
-      data: { name: editName, phone: editPhone },
+      data: { name: editName, phone: editPhone, address: editAddress },
     });
     if (!error) {
       setName(editName);
       setPhone(editPhone);
+      setAddress(editAddress);
       setContactMsg('Saved!');
     } else {
       setContactMsg(error.message);
@@ -110,7 +170,6 @@ export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
   };
 
   const openSecurity = () => {
-    setCurrentPw('');
     setNewPw('');
     setConfirmPw('');
     setPwMsg('');
@@ -133,7 +192,6 @@ export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
     const { error } = await supabase.auth.updateUser({ password: newPw });
     if (!error) {
       setPwMsg('Password updated!');
-      setCurrentPw('');
       setNewPw('');
       setConfirmPw('');
     } else {
@@ -166,7 +224,7 @@ export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
     {
       icon: <IcoPhone size={18} color="#60A5FA" />,
       label: 'Contact Info',
-      sub: 'Update name & phone',
+      sub: 'Name, phone, address',
       onClick: openContact,
     },
     {
@@ -178,8 +236,8 @@ export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
     {
       icon: <IcoSettings size={18} color="#94A3B8" />,
       label: 'Settings',
-      sub: 'App preferences',
-      onClick: undefined,
+      sub: 'Dark mode & notifications',
+      onClick: () => setModal('settings'),
     },
   ];
 
@@ -289,9 +347,12 @@ export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
             >
               {name || 'My Profile'}
             </h2>
-            <p style={{ fontSize: 14, color: '#64748B', marginBottom: 4 }}>{email}</p>
-            {phone && <p style={{ fontSize: 13, color: '#94A3B8', marginBottom: 12 }}>{phone}</p>}
-            {!phone && <div style={{ marginBottom: 12 }} />}
+            <p style={{ fontSize: 14, color: '#64748B', marginBottom: 2 }}>{email}</p>
+            {phone && <p style={{ fontSize: 13, color: '#94A3B8', marginBottom: 2 }}>{phone}</p>}
+            {address && (
+              <p style={{ fontSize: 13, color: '#94A3B8', marginBottom: 12 }}>{address}</p>
+            )}
+            {!phone && !address && <div style={{ marginBottom: 12 }} />}
             <PfBadge>
               {petCount} Pet{petCount !== 1 ? 's' : ''} Registered
             </PfBadge>
@@ -299,10 +360,7 @@ export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             {items.map(({ icon, label, sub, onClick }) => (
-              <PfCard
-                key={label}
-                style={{ padding: '18px 22px', cursor: onClick ? 'pointer' : 'default' }}
-              >
+              <PfCard key={label} style={{ padding: '18px 22px', cursor: 'pointer' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 16 }} onClick={onClick}>
                   <div
                     style={{
@@ -349,7 +407,7 @@ export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
         </div>
       </div>
 
-      {/* Modal backdrop */}
+      {/* Modal */}
       {modal && (
         <div
           onClick={() => setModal(null)}
@@ -371,28 +429,41 @@ export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
               borderRadius: 24,
               padding: 32,
               width: '100%',
-              maxWidth: 440,
+              maxWidth: 460,
               boxShadow: '0 20px 60px rgba(0,0,0,.15)',
+              maxHeight: '90vh',
+              overflowY: 'auto',
             }}
           >
-            {/* Contact Info Modal */}
+            {/* Contact Info */}
             {modal === 'contact' && (
               <>
-                <h2 style={{ fontSize: 20, fontWeight: 800, color: '#1E293B', marginBottom: 6 }}>
+                <h2 style={{ fontSize: 20, fontWeight: 800, color: '#1E293B', marginBottom: 4 }}>
                   Contact Info
                 </h2>
                 <p style={{ fontSize: 13, color: '#64748B', marginBottom: 24 }}>
                   This info helps pet finders reach you.
                 </p>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
                   <div>
-                    <label style={labelStyle}>Name</label>
+                    <label style={labelStyle}>Full Name</label>
                     <input
                       style={inputStyle}
                       value={editName}
                       onChange={(e) => setEditName(e.target.value)}
                       placeholder="Your full name"
                     />
+                  </div>
+                  <div>
+                    <label style={labelStyle}>Email</label>
+                    <input
+                      style={{ ...inputStyle, background: '#F8FAFC', color: '#94A3B8' }}
+                      value={email}
+                      readOnly
+                    />
+                    <p style={{ fontSize: 11, color: '#94A3B8', marginTop: 4 }}>
+                      Email cannot be changed here
+                    </p>
                   </div>
                   <div>
                     <label style={labelStyle}>Phone Number</label>
@@ -402,6 +473,15 @@ export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
                       onChange={(e) => setEditPhone(e.target.value)}
                       placeholder="+1 234 567 8900"
                       type="tel"
+                    />
+                  </div>
+                  <div>
+                    <label style={labelStyle}>Address</label>
+                    <input
+                      style={inputStyle}
+                      value={editAddress}
+                      onChange={(e) => setEditAddress(e.target.value)}
+                      placeholder="Your city or full address"
                     />
                   </div>
                   {contactMsg && (
@@ -460,16 +540,16 @@ export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
               </>
             )}
 
-            {/* Security Modal */}
+            {/* Security */}
             {modal === 'security' && (
               <>
-                <h2 style={{ fontSize: 20, fontWeight: 800, color: '#1E293B', marginBottom: 6 }}>
+                <h2 style={{ fontSize: 20, fontWeight: 800, color: '#1E293B', marginBottom: 4 }}>
                   Change Password
                 </h2>
                 <p style={{ fontSize: 13, color: '#64748B', marginBottom: 24 }}>
                   Choose a strong password of at least 6 characters.
                 </p>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
                   <div>
                     <label style={labelStyle}>New Password</label>
                     <input
@@ -556,6 +636,72 @@ export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
                     </button>
                   </div>
                 </div>
+              </>
+            )}
+
+            {/* Settings */}
+            {modal === 'settings' && (
+              <>
+                <h2 style={{ fontSize: 20, fontWeight: 800, color: '#1E293B', marginBottom: 4 }}>
+                  Settings
+                </h2>
+                <p style={{ fontSize: 13, color: '#64748B', marginBottom: 24 }}>
+                  Customise your PawFinder experience.
+                </p>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+                  {[
+                    {
+                      label: 'Dark Mode',
+                      sub: 'Switch to a dark colour scheme',
+                      value: darkMode,
+                      onChange: toggleDark,
+                    },
+                    {
+                      label: 'Email Notifications',
+                      sub: 'Get emailed when someone reports finding your pet',
+                      value: emailNotifs,
+                      onChange: toggleNotifs,
+                    },
+                  ].map(({ label, sub, value, onChange }, i, arr) => (
+                    <div
+                      key={label}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        gap: 16,
+                        padding: '18px 0',
+                        borderBottom: i < arr.length - 1 ? '1px solid #F1F5F9' : 'none',
+                      }}
+                    >
+                      <div>
+                        <div style={{ fontSize: 15, fontWeight: 600, color: '#1E293B' }}>
+                          {label}
+                        </div>
+                        <div style={{ fontSize: 13, color: '#94A3B8', marginTop: 2 }}>{sub}</div>
+                      </div>
+                      <Toggle on={value} onChange={onChange} />
+                    </div>
+                  ))}
+                </div>
+                <button
+                  onClick={() => setModal(null)}
+                  style={{
+                    width: '100%',
+                    marginTop: 24,
+                    padding: '12px',
+                    borderRadius: 12,
+                    border: '1.5px solid #E5E7EB',
+                    background: '#fff',
+                    fontSize: 14,
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                    color: '#64748B',
+                    fontFamily: 'Inter, sans-serif',
+                  }}
+                >
+                  Done
+                </button>
               </>
             )}
           </div>

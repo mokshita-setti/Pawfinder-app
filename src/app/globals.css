@@ -50,6 +50,16 @@ body {
   display: flex;
 }
 
+/* ── Dark mode ── */
+body.dark {
+  filter: invert(1) hue-rotate(180deg);
+}
+body.dark img,
+body.dark video,
+body.dark [style*='background-image'] {
+  filter: invert(1) hue-rotate(180deg);
+}
+
 @media (max-width: 768px) {
   .pf-page-pad {
     padding: 24px 16px;
