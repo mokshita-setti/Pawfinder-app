@@ -19,6 +19,7 @@ export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [petCount, setPetCount] = useState(0);
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -40,8 +41,14 @@ export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
         .select('id', { count: 'exact', head: true })
         .eq('user_id', user.id);
       setPetCount(count ?? 0);
+      setLoaded(true);
     })();
   }, []);
+
+  const signOut = async () => {
+    await supabase.auth.signOut();
+    nav('home');
+  };
 
   const initials = name
     ? name
@@ -107,7 +114,7 @@ export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
               }}
             >
               <span style={{ fontSize: 32, fontWeight: 800, color: '#fff' }}>
-                {initials || '?'}
+                {loaded ? initials || '?' : '…'}
               </span>
             </div>
             <h2
@@ -157,6 +164,25 @@ export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
               </PfCard>
             ))}
           </div>
+
+          <button
+            onClick={signOut}
+            style={{
+              width: '100%',
+              marginTop: 24,
+              padding: '14px',
+              borderRadius: 14,
+              background: '#FEF2F2',
+              border: '1.5px solid #FECACA',
+              color: '#DC2626',
+              fontSize: 15,
+              fontWeight: 700,
+              cursor: 'pointer',
+              fontFamily: 'Inter, sans-serif',
+            }}
+          >
+            Sign Out
+          </button>
         </div>
       </div>
     </div>
