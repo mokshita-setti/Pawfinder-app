@@ -59,6 +59,62 @@ export default function PetProfileScreen({
         setLoading(false);
         return;
       }
+      // Demo pet fallback — no Supabase lookup needed
+      const DEMO: Record<string, Pet> = {
+        'PF-DEMO01': {
+          pet_id: 'PF-DEMO01',
+          pet_name: 'Leo',
+          breed: 'Golden Retriever',
+          age: '4 Years Old',
+          medical_info: 'Allergic to chicken.',
+          photo_url: null,
+          qr_code_url: `${process.env.NEXT_PUBLIC_APP_URL ?? ''}/pet/PF-DEMO01`,
+          status: 'safe',
+          notes: JSON.stringify({
+            ownerName: 'Sarah Johnson',
+            phone: '+91 98765 43210',
+            emergency: '+91 91234 56789',
+            address: '12 MG Road, Mumbai, Maharashtra',
+          }),
+        },
+        'PF-DEMO02': {
+          pet_id: 'PF-DEMO02',
+          pet_name: 'Bruno',
+          breed: 'Shih Tzu',
+          age: '2 Years Old',
+          medical_info: 'On daily medication for thyroid. Very shy.',
+          photo_url: null,
+          qr_code_url: `${process.env.NEXT_PUBLIC_APP_URL ?? ''}/pet/PF-DEMO02`,
+          status: 'missing',
+          notes: JSON.stringify({
+            ownerName: 'Rahul Mehta',
+            phone: '+91 91234 56789',
+            emergency: '+91 98765 43210',
+            address: '7 Park Street, Kolkata',
+          }),
+        },
+        'PF-DEMO03': {
+          pet_id: 'PF-DEMO03',
+          pet_name: 'Luna',
+          breed: 'Persian Cat',
+          age: '1 Year Old',
+          medical_info: 'Indoor cat. No known allergies.',
+          photo_url: null,
+          qr_code_url: `${process.env.NEXT_PUBLIC_APP_URL ?? ''}/pet/PF-DEMO03`,
+          status: 'safe',
+          notes: JSON.stringify({
+            ownerName: 'Priya Sharma',
+            phone: '+91 99887 76543',
+            emergency: '+91 98765 11223',
+            address: '22 Linking Road, Mumbai',
+          }),
+        },
+      };
+      if (DEMO[petId]) {
+        setPet(DEMO[petId]);
+        setLoading(false);
+        return;
+      }
       const { data } = await supabase
         .from('pets')
         .select('pet_id,pet_name,breed,age,medical_info,photo_url,qr_code_url,status,notes')
