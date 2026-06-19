@@ -26,7 +26,10 @@ export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
       const {
         data: { user },
       } = await supabase.auth.getUser();
-      if (!user) return;
+      if (!user) {
+        setLoaded(true);
+        return;
+      }
       setEmail(user.email ?? '');
       // Get name from user metadata or users table
       const metaName = user.user_metadata?.name as string | undefined;
@@ -85,6 +88,70 @@ export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
       onClick: undefined,
     },
   ];
+
+  if (loaded && !email)
+    return (
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          minHeight: '100dvh',
+          background: '#F8FAFC',
+        }}
+      >
+        <TopNav active="me" onNav={nav} />
+        <div
+          style={{
+            flex: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: 32,
+            textAlign: 'center',
+          }}
+        >
+          <div
+            style={{
+              width: 88,
+              height: 88,
+              borderRadius: '50%',
+              background: 'linear-gradient(135deg,#A78BFA,#8B5CF6)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginBottom: 20,
+              boxShadow: '0 6px 24px rgba(139,92,246,.3)',
+            }}
+          >
+            <span style={{ fontSize: 36 }}>🐾</span>
+          </div>
+          <h2 style={{ fontSize: 22, fontWeight: 800, color: '#1E293B', marginBottom: 8 }}>
+            You&apos;re not signed in
+          </h2>
+          <p style={{ fontSize: 14, color: '#64748B', marginBottom: 28 }}>
+            Sign in to manage your pets and view your profile.
+          </p>
+          <a
+            href="/login"
+            style={{
+              display: 'inline-block',
+              padding: '14px 36px',
+              borderRadius: 100,
+              background: 'linear-gradient(135deg,#A78BFA,#8B5CF6)',
+              color: '#fff',
+              fontWeight: 700,
+              fontSize: 15,
+              textDecoration: 'none',
+              boxShadow: '0 4px 14px rgba(139,92,246,.3)',
+              fontFamily: 'Inter, sans-serif',
+            }}
+          >
+            Sign In
+          </a>
+        </div>
+      </div>
+    );
 
   return (
     <div
