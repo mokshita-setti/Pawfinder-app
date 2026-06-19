@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { PawIcon, IcoUpload, IcoCheck } from './Icons';
 import { PfBtn, PfInput, PfTextarea, TopNav } from './UI';
 import { supabase } from '@/lib/supabase';
@@ -22,6 +22,9 @@ export default function RegisterScreen({ nav }: { nav: (s: Screen) => void }) {
   const [done, setDone] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [photoFile, setPhotoFile] = useState<File | null>(null);
+  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
+  const fileRef = useRef<HTMLInputElement>(null);
   const isMobile = useIsMobile();
 
   useEffect(() => {
@@ -59,7 +62,24 @@ export default function RegisterScreen({ nav }: { nav: (s: Screen) => void }) {
       return;
     }
 
-    const petId = 'PF-' + Math.floor(Math.random() * 900000 + 100000);
+    const petId = `PF-${Date.now().toString(36).toUpperCase()}`;
+    const qr_code_url = `${process.env.NEXT_PUBLIC_APP_URL ?? window.location.origin}/pet/${petId}`;
+
+    let photo_url: string | null = null;
+    if (photoFile) {
+      const ext = photoFile.name.split('.').pop();
+      const path = `${user.id}/${Date.now()}.${ext}`;
+      const { error: upErr } = await supabase.storage
+        .from('pet-photos')
+        .upload(path, photoFile, { upsert: true });
+      if (upErr) {
+        setError(upErr.message);
+        setLoading(false);
+        return;
+      }
+      const { data: urlData } = supabase.storage.from('pet-photos').getPublicUrl(path);
+      photo_url = urlData.publicUrl;
+    }
 
     const { error: insertError } = await supabase.from('pets').insert({
       user_id: user.id,
@@ -68,6 +88,9 @@ export default function RegisterScreen({ nav }: { nav: (s: Screen) => void }) {
       breed: f.breed.trim() || null,
       age: f.age.trim() || null,
       medical_info: f.medNotes.trim() || null,
+      photo_url,
+      qr_code_url,
+      status: 'safe',
       notes: JSON.stringify({
         ownerName: f.ownerName.trim(),
         phone: f.phone.trim(),
@@ -231,7 +254,20 @@ export default function RegisterScreen({ nav }: { nav: (s: Screen) => void }) {
                 >
                   Pet Photo <span style={{ color: '#94A3B8', fontWeight: 400 }}>(Optional)</span>
                 </label>
+                <input
+                  ref={fileRef}
+                  type="file"
+                  accept="image/*"
+                  style={{ display: 'none' }}
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (!file) return;
+                    setPhotoFile(file);
+                    setPhotoPreview(URL.createObjectURL(file));
+                  }}
+                />
                 <div
+                  onClick={() => fileRef.current?.click()}
                   style={{
                     border: '2px dashed #DDD6FE',
                     borderRadius: 16,
@@ -241,19 +277,42 @@ export default function RegisterScreen({ nav }: { nav: (s: Screen) => void }) {
                     cursor: 'pointer',
                   }}
                 >
-                  <IcoUpload size={28} color="#A78BFA" />
-                  <p
-                    style={{
-                      fontSize: 14,
-                      fontWeight: 600,
-                      color: '#8B5CF6',
-                      marginTop: 8,
-                      marginBottom: 3,
-                    }}
-                  >
-                    Upload Photo
-                  </p>
-                  <p style={{ fontSize: 12, color: '#94A3B8' }}>JPG, PNG up to 5MB</p>
+                  {photoPreview ? (
+                    <>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={photoPreview}
+                        alt="Preview"
+                        style={{
+                          width: 80,
+                          height: 80,
+                          borderRadius: '50%',
+                          objectFit: 'cover',
+                          border: '3px solid #DDD6FE',
+                          marginBottom: 8,
+                        }}
+                      />
+                      <p style={{ fontSize: 12, color: '#8B5CF6', fontWeight: 600 }}>
+                        Tap to change
+                      </p>
+                    </>
+                  ) : (
+                    <>
+                      <IcoUpload size={28} color="#A78BFA" />
+                      <p
+                        style={{
+                          fontSize: 14,
+                          fontWeight: 600,
+                          color: '#8B5CF6',
+                          marginTop: 8,
+                          marginBottom: 3,
+                        }}
+                      >
+                        Upload Photo
+                      </p>
+                      <p style={{ fontSize: 12, color: '#94A3B8' }}>JPG, PNG up to 5MB</p>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
