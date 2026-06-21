@@ -424,6 +424,7 @@ export default function HomeScreen({ nav }: { nav: (s: Screen) => void }) {
             <img
               src="https://images.unsplash.com/photo-1633722715463-d30f4f325e24?w=700&auto=format&fit=crop&q=80"
               alt="Leo the Golden Retriever"
+              fetchPriority="high"
               style={{
                 width: '100%',
                 height: '100%',

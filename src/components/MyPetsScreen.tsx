@@ -579,6 +579,7 @@ export default function MyPetsScreen({
                           <img
                             src={pet.photo_url}
                             alt={pet.pet_name}
+                            loading="lazy"
                             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                           />
                         ) : (

@@ -1,15 +1,17 @@
 'use client';
 import { useState } from 'react';
+import dynamic from 'next/dynamic';
 import { useIsMobile } from '@/hooks/useIsMobile';
 import HomeScreen from '@/components/HomeScreen';
-import RegisterScreen from '@/components/RegisterScreen';
-import MyPetsScreen from '@/components/MyPetsScreen';
-import PetProfileScreen from '@/components/PetProfileScreen';
-import ScanFlowScreen from '@/components/ScanFlowScreen';
-import NotifScreen from '@/components/NotifScreen';
-import ProfileScreen from '@/components/ProfileScreen';
-import DemoProfilesScreen from '@/components/DemoProfilesScreen';
-import PetsDirectoryScreen from '@/components/PetsDirectoryScreen';
+
+const RegisterScreen = dynamic(() => import('@/components/RegisterScreen'));
+const MyPetsScreen = dynamic(() => import('@/components/MyPetsScreen'));
+const PetProfileScreen = dynamic(() => import('@/components/PetProfileScreen'));
+const ScanFlowScreen = dynamic(() => import('@/components/ScanFlowScreen'));
+const NotifScreen = dynamic(() => import('@/components/NotifScreen'));
+const ProfileScreen = dynamic(() => import('@/components/ProfileScreen'));
+const DemoProfilesScreen = dynamic(() => import('@/components/DemoProfilesScreen'));
+const PetsDirectoryScreen = dynamic(() => import('@/components/PetsDirectoryScreen'));
 
 type Screen =
   | 'home'
@@ -38,22 +40,33 @@ export default function Home() {
   const isMobile = useIsMobile();
   const nav = (to: Screen) => setCur(to);
 
-  const screens: Record<Screen, React.ReactNode> = {
-    home: <HomeScreen nav={nav} />,
-    register: <RegisterScreen nav={nav} />,
-    pets: <MyPetsScreen nav={nav} onSelectPet={(id) => setActivePetId(id)} />,
-    petprofile: <PetProfileScreen nav={nav} petId={activePetId} />,
-    scan: <ScanFlowScreen nav={nav} />,
-    notif: <NotifScreen nav={nav} />,
-    me: <ProfileScreen nav={nav} />,
-    demo: <DemoProfilesScreen nav={nav} />,
-    directory: <PetsDirectoryScreen nav={nav} />,
-  };
+  function renderScreen() {
+    switch (cur) {
+      case 'home':
+        return <HomeScreen nav={nav} />;
+      case 'register':
+        return <RegisterScreen nav={nav} />;
+      case 'pets':
+        return <MyPetsScreen nav={nav} onSelectPet={(id) => setActivePetId(id)} />;
+      case 'petprofile':
+        return <PetProfileScreen nav={nav} petId={activePetId} />;
+      case 'scan':
+        return <ScanFlowScreen nav={nav} />;
+      case 'notif':
+        return <NotifScreen nav={nav} />;
+      case 'me':
+        return <ProfileScreen nav={nav} />;
+      case 'demo':
+        return <DemoProfilesScreen nav={nav} />;
+      case 'directory':
+        return <PetsDirectoryScreen nav={nav} />;
+    }
+  }
 
   return (
     <>
       <div style={{ minHeight: '100dvh', display: 'flex', flexDirection: 'column' }}>
-        {screens[cur]}
+        {renderScreen()}
       </div>
 
       {/* Screen switcher — dev only, hidden on mobile */}
