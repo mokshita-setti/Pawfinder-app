@@ -1,5 +1,42 @@
 @import 'tailwindcss';
 
+/* ── PawFinder design tokens ── */
+:root {
+  /* Brand */
+  --pf-purple: #8b5cf6;
+  --pf-purple-light: #a78bfa;
+  --pf-purple-dark: #7c3aed;
+  --pf-purple-tint: #ede9fe;
+  --pf-purple-muted: #ddd6fe;
+  --pf-purple-bg: #f5f3ff;
+
+  /* Ink */
+  --pf-ink: #1e293b;
+  --pf-ink-muted: #64748b;
+  --pf-ink-subtle: #94a3b8;
+
+  /* Surface */
+  --pf-bg: #f8fafc;
+  --pf-surface: #ffffff;
+  --pf-border: #f1f5f9;
+  --pf-border-strong: #e5e7eb;
+
+  /* Gradient */
+  --pf-grad: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%);
+
+  /* Shadow */
+  --pf-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --pf-shadow-md: 0 2px 16px rgba(0, 0, 0, 0.055);
+  --pf-shadow-purple: 0 4px 16px rgba(139, 92, 246, 0.35);
+  --pf-shadow-cta: 0 4px 14px rgba(139, 92, 246, 0.3);
+
+  /* Radius */
+  --pf-r-pill: 100px;
+  --pf-r-card: 20px;
+  --pf-r-input: 13px;
+  --pf-r-sm: 10px;
+}
+
 *,
 *::before,
 *::after {

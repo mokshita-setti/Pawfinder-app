@@ -43,7 +43,7 @@ export const PfBtn = ({
     justifyContent: 'center',
     gap: '7px',
     padding: small ? '10px 18px' : '14px 20px',
-    borderRadius: '100px',
+    borderRadius: 'var(--pf-r-pill)',
     border: 'none',
     cursor: disabled ? 'not-allowed' : 'pointer',
     fontFamily: "'Inter', -apple-system, sans-serif",
@@ -57,17 +57,21 @@ export const PfBtn = ({
   };
   const variants: Record<string, React.CSSProperties> = {
     primary: {
-      background: 'linear-gradient(135deg,#A78BFA 0%,#8B5CF6 100%)',
+      background: 'var(--pf-grad)',
       color: '#fff',
-      boxShadow: '0 4px 16px rgba(139,92,246,.35)',
+      boxShadow: 'var(--pf-shadow-purple)',
     },
     secondary: {
-      background: '#fff',
-      color: '#8B5CF6',
-      border: '1.5px solid #E5E7EB',
-      boxShadow: '0 2px 8px rgba(0,0,0,.06)',
+      background: 'var(--pf-surface)',
+      color: 'var(--pf-purple)',
+      border: '1.5px solid var(--pf-border-strong)',
+      boxShadow: 'var(--pf-shadow-sm)',
     },
-    outline: { background: 'transparent', color: '#8B5CF6', border: '1.5px solid #DDD6FE' },
+    outline: {
+      background: 'transparent',
+      color: 'var(--pf-purple)',
+      border: '1.5px solid var(--pf-purple-muted)',
+    },
   };
   return (
     <button style={{ ...base, ...variants[variant] }} onClick={onClick} disabled={disabled}>
@@ -99,13 +103,15 @@ export const PfInput = ({
           display: 'block',
           fontSize: '12.5px',
           fontWeight: '600',
-          color: '#1E293B',
+          color: 'var(--pf-ink)',
           marginBottom: '5px',
         }}
       >
         {label}
         {optional && (
-          <span style={{ color: '#94A3B8', fontWeight: '400', marginLeft: '4px' }}>(Optional)</span>
+          <span style={{ color: 'var(--pf-ink-subtle)', fontWeight: '400', marginLeft: '4px' }}>
+            (Optional)
+          </span>
         )}
       </label>
       <input
@@ -116,11 +122,11 @@ export const PfInput = ({
         style={{
           width: '100%',
           padding: '11px 14px',
-          borderRadius: '13px',
-          border: `1.5px solid ${focused ? '#A78BFA' : '#E5E7EB'}`,
+          borderRadius: 'var(--pf-r-input)',
+          border: `1.5px solid ${focused ? 'var(--pf-purple-light)' : 'var(--pf-border-strong)'}`,
           fontSize: '13.5px',
-          color: '#1E293B',
-          background: '#fff',
+          color: 'var(--pf-ink)',
+          background: 'var(--pf-surface)',
           outline: 'none',
           fontFamily: 'inherit',
           boxSizing: 'border-box',
@@ -157,13 +163,15 @@ export const PfTextarea = ({
           display: 'block',
           fontSize: '12.5px',
           fontWeight: '600',
-          color: '#1E293B',
+          color: 'var(--pf-ink)',
           marginBottom: '5px',
         }}
       >
         {label}
         {optional && (
-          <span style={{ color: '#94A3B8', fontWeight: '400', marginLeft: '4px' }}>(Optional)</span>
+          <span style={{ color: 'var(--pf-ink-subtle)', fontWeight: '400', marginLeft: '4px' }}>
+            (Optional)
+          </span>
         )}
       </label>
       <textarea
@@ -174,11 +182,11 @@ export const PfTextarea = ({
         style={{
           width: '100%',
           padding: '11px 14px',
-          borderRadius: '13px',
-          border: `1.5px solid ${focused ? '#A78BFA' : '#E5E7EB'}`,
+          borderRadius: 'var(--pf-r-input)',
+          border: `1.5px solid ${focused ? 'var(--pf-purple-light)' : 'var(--pf-border-strong)'}`,
           fontSize: '13.5px',
-          color: '#1E293B',
-          background: '#fff',
+          color: 'var(--pf-ink)',
+          background: 'var(--pf-surface)',
           outline: 'none',
           fontFamily: 'inherit',
           resize: 'none',
@@ -203,10 +211,10 @@ export const PfCard = ({
 }) => (
   <div
     style={{
-      background: '#fff',
-      borderRadius: '20px',
-      border: '1px solid #F1F5F9',
-      boxShadow: '0 2px 16px rgba(0,0,0,.055)',
+      background: 'var(--pf-surface)',
+      borderRadius: 'var(--pf-r-card)',
+      border: '1px solid var(--pf-border)',
+      boxShadow: 'var(--pf-shadow-md)',
       padding: '18px',
       ...style,
     }}
@@ -228,8 +236,8 @@ export const PfTopBar = ({
       alignItems: 'center',
       justifyContent: 'space-between',
       padding: '13px 20px',
-      background: '#fff',
-      borderBottom: '1px solid #F1F5F9',
+      background: 'var(--pf-surface)',
+      borderBottom: '1px solid var(--pf-border)',
       flexShrink: 0,
     }}
   >
@@ -240,8 +248,8 @@ export const PfTopBar = ({
           width: 36,
           height: 36,
           borderRadius: '50%',
-          background: '#F8FAFC',
-          border: '1px solid #E5E7EB',
+          background: 'var(--pf-bg)',
+          border: '1px solid var(--pf-border-strong)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -268,11 +276,16 @@ export const PfTopBar = ({
     )}
     <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
       <span
-        style={{ fontSize: '17px', fontWeight: '800', color: '#8B5CF6', letterSpacing: '-.5px' }}
+        style={{
+          fontSize: '17px',
+          fontWeight: '800',
+          color: 'var(--pf-purple)',
+          letterSpacing: '-.5px',
+        }}
       >
         PawFinder
       </span>
-      <PawIcon size={17} color="#8B5CF6" />
+      <PawIcon size={17} color="var(--pf-purple)" />
     </div>
     {rightEl !== undefined ? (
       rightEl
@@ -282,8 +295,8 @@ export const PfTopBar = ({
           width: 36,
           height: 36,
           borderRadius: '50%',
-          background: '#F8FAFC',
-          border: '1px solid #E5E7EB',
+          background: 'var(--pf-bg)',
+          border: '1px solid var(--pf-border-strong)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -301,9 +314,9 @@ export const PfBadge = ({ children }: { children: React.ReactNode }) => (
     style={{
       display: 'inline-block',
       padding: '3px 10px',
-      borderRadius: '100px',
-      background: '#EDE9FE',
-      color: '#7C3AED',
+      borderRadius: 'var(--pf-r-pill)',
+      background: 'var(--pf-purple-tint)',
+      color: 'var(--pf-purple-dark)',
       fontSize: '11px',
       fontWeight: '600',
       letterSpacing: '.3px',
@@ -353,12 +366,12 @@ export const TopNav = ({ active, onNav }: { active: Screen; onNav: (s: Screen) =
           style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer' }}
           onClick={() => onNav('home')}
         >
-          <PawIcon size={22} color="#8B5CF6" />
+          <PawIcon size={22} color="var(--pf-purple)" />
           <span
             style={{
               fontSize: mobile ? 17 : 20,
               fontWeight: 800,
-              color: '#8B5CF6',
+              color: 'var(--pf-purple)',
               letterSpacing: '-.5px',
             }}
           >
@@ -378,12 +391,12 @@ export const TopNav = ({ active, onNav }: { active: Screen; onNav: (s: Screen) =
                     alignItems: 'center',
                     gap: 7,
                     padding: '8px 16px',
-                    borderRadius: 100,
-                    background: on ? '#F5F3FF' : 'transparent',
+                    borderRadius: 'var(--pf-r-pill)',
+                    background: on ? 'var(--pf-purple-bg)' : 'transparent',
                     border: 'none',
                     fontSize: 14,
                     fontWeight: on ? 600 : 500,
-                    color: on ? '#7C3AED' : '#64748B',
+                    color: on ? 'var(--pf-purple-dark)' : 'var(--pf-ink-muted)',
                     cursor: 'pointer',
                     transition: 'all .15s',
                     fontFamily: 'Inter, sans-serif',
@@ -404,7 +417,7 @@ export const TopNav = ({ active, onNav }: { active: Screen; onNav: (s: Screen) =
               width: 36,
               height: 36,
               borderRadius: '50%',
-              background: 'linear-gradient(135deg,#A78BFA,#8B5CF6)',
+              background: 'var(--pf-grad)',
               color: '#fff',
               border: 'none',
               fontSize: 20,
@@ -413,7 +426,7 @@ export const TopNav = ({ active, onNav }: { active: Screen; onNav: (s: Screen) =
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              boxShadow: '0 2px 8px rgba(139,92,246,.35)',
+              boxShadow: 'var(--pf-shadow-purple)',
             }}
           >
             +
@@ -423,14 +436,14 @@ export const TopNav = ({ active, onNav }: { active: Screen; onNav: (s: Screen) =
             onClick={() => onNav('register')}
             style={{
               padding: '10px 22px',
-              borderRadius: 100,
-              background: 'linear-gradient(135deg,#A78BFA,#8B5CF6)',
+              borderRadius: 'var(--pf-r-pill)',
+              background: 'var(--pf-grad)',
               color: '#fff',
               border: 'none',
               fontSize: 14,
               fontWeight: 600,
               cursor: 'pointer',
-              boxShadow: '0 4px 14px rgba(139,92,246,.3)',
+              boxShadow: 'var(--pf-shadow-cta)',
               fontFamily: 'Inter, sans-serif',
             }}
           >
@@ -448,8 +461,8 @@ export const TopNav = ({ active, onNav }: { active: Screen; onNav: (s: Screen) =
             right: 0,
             zIndex: 40,
             display: 'flex',
-            background: '#fff',
-            borderTop: '1px solid #F1F5F9',
+            background: 'var(--pf-surface)',
+            borderTop: '1px solid var(--pf-border)',
             paddingBottom: 'env(safe-area-inset-bottom, 0px)',
             boxShadow: '0 -4px 20px rgba(0,0,0,.05)',
           }}
@@ -482,7 +495,7 @@ export const TopNav = ({ active, onNav }: { active: Screen; onNav: (s: Screen) =
                       width: 44,
                       height: 30,
                       borderRadius: 15,
-                      background: on ? '#EDE9FE' : 'transparent',
+                      background: on ? 'var(--pf-purple-tint)' : 'transparent',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
@@ -495,7 +508,7 @@ export const TopNav = ({ active, onNav }: { active: Screen; onNav: (s: Screen) =
                     style={{
                       fontSize: 10,
                       fontWeight: on ? 600 : 400,
-                      color: on ? '#8B5CF6' : '#94A3B8',
+                      color: on ? 'var(--pf-purple)' : 'var(--pf-ink-subtle)',
                     }}
                   >
                     {label}
@@ -520,8 +533,8 @@ export const BottomNav = ({ active, onNav }: { active: Screen; onNav: (s: Screen
     <div
       style={{
         display: 'flex',
-        background: '#fff',
-        borderTop: '1px solid #F1F5F9',
+        background: 'var(--pf-surface)',
+        borderTop: '1px solid var(--pf-border)',
         paddingBottom: '6px',
         flexShrink: 0,
         boxShadow: '0 -4px 20px rgba(0,0,0,.05)',
@@ -550,7 +563,7 @@ export const BottomNav = ({ active, onNav }: { active: Screen; onNav: (s: Screen
                 width: 44,
                 height: 30,
                 borderRadius: '15px',
-                background: on ? '#EDE9FE' : 'transparent',
+                background: on ? 'var(--pf-purple-tint)' : 'transparent',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -563,7 +576,7 @@ export const BottomNav = ({ active, onNav }: { active: Screen; onNav: (s: Screen
               style={{
                 fontSize: '10px',
                 fontWeight: on ? '600' : '400',
-                color: on ? '#8B5CF6' : '#94A3B8',
+                color: on ? 'var(--pf-purple)' : 'var(--pf-ink-subtle)',
               }}
             >
               {label}
