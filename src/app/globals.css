@@ -81,6 +81,12 @@ body.dark [style*='background-image'] {
   filter: invert(1) hue-rotate(180deg);
 }
 
+@media (max-width: 767px) {
+  body {
+    padding-bottom: calc(70px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
 @media (max-width: 768px) {
   .pf-page-pad {
     padding: 24px 16px;

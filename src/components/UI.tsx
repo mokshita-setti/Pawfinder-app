@@ -332,116 +332,180 @@ export const TopNav = ({ active, onNav }: { active: Screen; onNav: (s: Screen) =
   ];
 
   return (
-    <header
-      style={{
-        position: 'sticky',
-        top: 0,
-        zIndex: 50,
-        background: 'rgba(255,255,255,0.88)',
-        backdropFilter: 'blur(16px)',
-        borderBottom: '1px solid rgba(139,92,246,.08)',
-        padding: mobile ? '0 16px' : '0 40px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        height: 64,
-        flexShrink: 0,
-      }}
-    >
-      <div
-        style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer' }}
-        onClick={() => onNav('home')}
+    <>
+      <header
+        style={{
+          position: 'sticky',
+          top: 0,
+          zIndex: 50,
+          background: 'rgba(255,255,255,0.88)',
+          backdropFilter: 'blur(16px)',
+          borderBottom: '1px solid rgba(139,92,246,.08)',
+          padding: mobile ? '0 16px' : '0 40px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          height: 64,
+          flexShrink: 0,
+        }}
       >
-        <PawIcon size={22} color="#8B5CF6" />
-        <span
+        <div
+          style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer' }}
+          onClick={() => onNav('home')}
+        >
+          <PawIcon size={22} color="#8B5CF6" />
+          <span
+            style={{
+              fontSize: mobile ? 17 : 20,
+              fontWeight: 800,
+              color: '#8B5CF6',
+              letterSpacing: '-.5px',
+            }}
+          >
+            PawFinder
+          </span>
+        </div>
+        {!mobile && (
+          <nav style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+            {tabs.map(({ id, label, Icon }) => {
+              const on = active === id;
+              return (
+                <button
+                  key={id}
+                  onClick={() => onNav(id)}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 7,
+                    padding: '8px 16px',
+                    borderRadius: 100,
+                    background: on ? '#F5F3FF' : 'transparent',
+                    border: 'none',
+                    fontSize: 14,
+                    fontWeight: on ? 600 : 500,
+                    color: on ? '#7C3AED' : '#64748B',
+                    cursor: 'pointer',
+                    transition: 'all .15s',
+                    fontFamily: 'Inter, sans-serif',
+                  }}
+                >
+                  <Icon active={on} />
+                  {label}
+                </button>
+              );
+            })}
+          </nav>
+        )}
+        {mobile ? (
+          <button
+            onClick={() => onNav('register')}
+            aria-label="Register a pet"
+            style={{
+              width: 36,
+              height: 36,
+              borderRadius: '50%',
+              background: 'linear-gradient(135deg,#A78BFA,#8B5CF6)',
+              color: '#fff',
+              border: 'none',
+              fontSize: 20,
+              lineHeight: 1,
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              boxShadow: '0 2px 8px rgba(139,92,246,.35)',
+            }}
+          >
+            +
+          </button>
+        ) : (
+          <button
+            onClick={() => onNav('register')}
+            style={{
+              padding: '10px 22px',
+              borderRadius: 100,
+              background: 'linear-gradient(135deg,#A78BFA,#8B5CF6)',
+              color: '#fff',
+              border: 'none',
+              fontSize: 14,
+              fontWeight: 600,
+              cursor: 'pointer',
+              boxShadow: '0 4px 14px rgba(139,92,246,.3)',
+              fontFamily: 'Inter, sans-serif',
+            }}
+          >
+            + Register Pet
+          </button>
+        )}
+      </header>
+      {mobile && (
+        <nav
+          aria-label="Main navigation"
           style={{
-            fontSize: mobile ? 17 : 20,
-            fontWeight: 800,
-            color: '#8B5CF6',
-            letterSpacing: '-.5px',
+            position: 'fixed',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            zIndex: 40,
+            display: 'flex',
+            background: '#fff',
+            borderTop: '1px solid #F1F5F9',
+            paddingBottom: 'env(safe-area-inset-bottom, 0px)',
+            boxShadow: '0 -4px 20px rgba(0,0,0,.05)',
           }}
         >
-          PawFinder
-        </span>
-      </div>
-      {!mobile && (
-        <nav style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-          {tabs.map(({ id, label, Icon }) => {
-            const on = active === id;
-            return (
-              <button
-                key={id}
-                onClick={() => onNav(id)}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 7,
-                  padding: '8px 16px',
-                  borderRadius: 100,
-                  background: on ? '#F5F3FF' : 'transparent',
-                  border: 'none',
-                  fontSize: 14,
-                  fontWeight: on ? 600 : 500,
-                  color: on ? '#7C3AED' : '#64748B',
-                  cursor: 'pointer',
-                  transition: 'all .15s',
-                  fontFamily: 'Inter, sans-serif',
-                }}
-              >
-                <Icon active={on} />
-                {label}
-              </button>
-            );
-          })}
+          {tabs
+            .filter((t) => t.id !== 'directory')
+            .map(({ id, label, Icon }) => {
+              const on = active === id;
+              return (
+                <button
+                  key={id}
+                  onClick={() => onNav(id)}
+                  aria-label={label}
+                  aria-current={on ? 'page' : undefined}
+                  style={{
+                    flex: 1,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: 3,
+                    padding: '9px 0 3px',
+                    background: 'transparent',
+                    border: 'none',
+                    cursor: 'pointer',
+                    minHeight: 56,
+                  }}
+                >
+                  <div
+                    style={{
+                      width: 44,
+                      height: 30,
+                      borderRadius: 15,
+                      background: on ? '#EDE9FE' : 'transparent',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      transition: 'background .2s',
+                    }}
+                  >
+                    <Icon active={on} />
+                  </div>
+                  <span
+                    style={{
+                      fontSize: 10,
+                      fontWeight: on ? 600 : 400,
+                      color: on ? '#8B5CF6' : '#94A3B8',
+                    }}
+                  >
+                    {label}
+                  </span>
+                </button>
+              );
+            })}
         </nav>
       )}
-      {mobile ? (
-        <div style={{ display: 'flex', gap: 4 }}>
-          {tabs.map(({ id, label, Icon }) => {
-            const on = active === id;
-            return (
-              <button
-                key={id}
-                aria-label={label}
-                aria-current={on ? 'page' : undefined}
-                onClick={() => onNav(id)}
-                style={{
-                  width: 44,
-                  height: 44,
-                  borderRadius: '50%',
-                  background: on ? '#F5F3FF' : 'transparent',
-                  border: 'none',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <Icon active={on} />
-              </button>
-            );
-          })}
-        </div>
-      ) : (
-        <button
-          onClick={() => onNav('register')}
-          style={{
-            padding: '10px 22px',
-            borderRadius: 100,
-            background: 'linear-gradient(135deg,#A78BFA,#8B5CF6)',
-            color: '#fff',
-            border: 'none',
-            fontSize: 14,
-            fontWeight: 600,
-            cursor: 'pointer',
-            boxShadow: '0 4px 14px rgba(139,92,246,.3)',
-            fontFamily: 'Inter, sans-serif',
-          }}
-        >
-          + Register Pet
-        </button>
-      )}
-    </header>
+    </>
   );
 };
 
