@@ -87,6 +87,63 @@ body {
   display: flex;
 }
 
+/* ── Animation easing tokens ── */
+:root {
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ── Screen entrance ── */
+@keyframes pf-screen-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.pf-screen-enter {
+  animation: pf-screen-in 220ms var(--ease-out-quint) both;
+}
+
+/* ── Modal entrance ── */
+@keyframes pf-modal-backdrop-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes pf-modal-card-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+.pf-backdrop-enter {
+  animation: pf-modal-backdrop-in 180ms ease both;
+}
+.pf-modal-enter {
+  animation: pf-modal-card-in 260ms var(--ease-out-quint) both;
+}
+
+/* ── Button press feedback ── */
+.pf-btn {
+  transition:
+    transform 100ms ease,
+    box-shadow 100ms ease !important;
+}
+.pf-btn:active {
+  transform: scale(0.97) !important;
+}
+
 /* ── Focus ring ── */
 button:focus-visible,
 input:focus-visible,

@@ -425,6 +425,7 @@ export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
       {/* Modal */}
       {modal && (
         <div
+          className="pf-backdrop-enter"
           onClick={() => setModal(null)}
           style={{
             position: 'fixed',
@@ -438,6 +439,7 @@ export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
           }}
         >
           <div
+            className="pf-modal-enter"
             onClick={(e) => e.stopPropagation()}
             style={{
               background: '#fff',

@@ -74,7 +74,12 @@ export const PfBtn = ({
     },
   };
   return (
-    <button style={{ ...base, ...variants[variant] }} onClick={onClick} disabled={disabled}>
+    <button
+      className="pf-btn"
+      style={{ ...base, ...variants[variant] }}
+      onClick={onClick}
+      disabled={disabled}
+    >
       {children}
     </button>
   );

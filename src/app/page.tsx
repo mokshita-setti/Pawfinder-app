@@ -65,7 +65,11 @@ export default function Home() {
 
   return (
     <>
-      <div style={{ minHeight: '100dvh', display: 'flex', flexDirection: 'column' }}>
+      <div
+        key={cur}
+        className="pf-screen-enter"
+        style={{ minHeight: '100dvh', display: 'flex', flexDirection: 'column' }}
+      >
         {renderScreen()}
       </div>
 
