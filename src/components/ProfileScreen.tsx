@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { PawIcon, IcoPhone, IcoShield, IcoSettings, IcoArrowRight } from './Icons';
 import { TopNav, PfCard, PfBadge } from './UI';
 import { supabase } from '@/lib/supabase';
@@ -77,14 +77,46 @@ export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
   const [petCount, setPetCount] = useState(0);
   const [loaded, setLoaded] = useState(false);
   const [modal, setModal] = useState<Modal>(null);
+  const modalRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     if (!modal) return;
+    // Remember what triggered the modal so we can restore focus on close
+    triggerRef.current = document.activeElement as HTMLElement;
+    // Move focus into the modal
+    const focusable = modalRef.current?.querySelector<HTMLElement>(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    );
+    focusable?.focus();
+
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setModal(null);
+      // Tab trap: keep focus inside modal
+      if (e.key === 'Tab' && modalRef.current) {
+        const els = Array.from(
+          modalRef.current.querySelectorAll<HTMLElement>(
+            'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+          )
+        );
+        if (!els.length) return;
+        const first = els[0];
+        const last = els[els.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
     };
     document.addEventListener('keydown', onKey);
-    return () => document.removeEventListener('keydown', onKey);
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      // Restore focus to the trigger when modal closes
+      triggerRef.current?.focus();
+    };
   }, [modal]);
 
   // Contact Info form
@@ -448,6 +480,7 @@ export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
           }}
         >
           <div
+            ref={modalRef}
             role="dialog"
             aria-modal="true"
             aria-labelledby="modal-title"
@@ -518,6 +551,7 @@ export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
                   </div>
                   {contactMsg && (
                     <p
+                      role="alert"
                       style={{
                         fontSize: 13,
                         color: contactMsg === 'Saved!' ? '#059669' : '#DC2626',
@@ -607,6 +641,7 @@ export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
                   </div>
                   {pwError && (
                     <p
+                      role="alert"
                       style={{
                         fontSize: 13,
                         color: '#DC2626',
@@ -621,6 +656,7 @@ export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
                   )}
                   {pwMsg && (
                     <p
+                      role="alert"
                       style={{
                         fontSize: 13,
                         color: '#059669',
