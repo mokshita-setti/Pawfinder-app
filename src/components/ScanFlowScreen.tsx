@@ -30,7 +30,7 @@ export default function ScanFlowScreen({ nav }: { nav: (s: Screen) => void }) {
           display: 'flex',
           flexDirection: 'column',
           minHeight: '100dvh',
-          background: '#F8FAFC',
+          background: 'var(--pf-bg)',
         }}
       >
         <TopNav active="scan" onNav={nav} />
@@ -51,7 +51,7 @@ export default function ScanFlowScreen({ nav }: { nav: (s: Screen) => void }) {
               width: 140,
               height: 140,
               borderRadius: '50%',
-              background: 'linear-gradient(135deg,#EDE9FE,#DDD6FE)',
+              background: 'linear-gradient(135deg,var(--pf-purple-tint),var(--pf-purple-muted))',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -59,20 +59,27 @@ export default function ScanFlowScreen({ nav }: { nav: (s: Screen) => void }) {
               boxShadow: '0 8px 36px rgba(139,92,246,.2)',
             }}
           >
-            <PawIcon size={72} color="#8B5CF6" />
+            <PawIcon size={72} color="var(--pf-purple)" />
           </div>
           <h2
             style={{
               fontSize: 28,
               fontWeight: 800,
-              color: '#1E293B',
+              color: 'var(--pf-ink)',
               letterSpacing: '-.5px',
               marginBottom: 12,
             }}
           >
             You found Leo!
           </h2>
-          <p style={{ fontSize: 16, color: '#64748B', lineHeight: 1.6, marginBottom: 40 }}>
+          <p
+            style={{
+              fontSize: 16,
+              color: 'var(--pf-ink-muted)',
+              lineHeight: 1.6,
+              marginBottom: 40,
+            }}
+          >
             Thank you for helping this pet.
           </p>
           <div style={{ width: '100%', maxWidth: 320 }}>
@@ -91,7 +98,7 @@ export default function ScanFlowScreen({ nav }: { nav: (s: Screen) => void }) {
           display: 'flex',
           flexDirection: 'column',
           minHeight: '100dvh',
-          background: '#F8FAFC',
+          background: 'var(--pf-bg)',
         }}
       >
         <TopNav active="scan" onNav={nav} />
@@ -105,15 +112,15 @@ export default function ScanFlowScreen({ nav }: { nav: (s: Screen) => void }) {
                 style={{
                   fontSize: 24,
                   fontWeight: 800,
-                  color: '#8B5CF6',
+                  color: 'var(--pf-purple)',
                   letterSpacing: '-.5px',
                   marginBottom: 4,
                 }}
               >
                 Leo
               </h2>
-              <p style={{ fontSize: 15, color: '#64748B' }}>Golden Retriever</p>
-              <p style={{ fontSize: 13, color: '#94A3B8' }}>4 Years Old</p>
+              <p style={{ fontSize: 15, color: 'var(--pf-ink-muted)' }}>Golden Retriever</p>
+              <p style={{ fontSize: 13, color: 'var(--pf-ink-subtle)' }}>4 Years Old</p>
             </PfCard>
             <PfCard style={{ marginBottom: 20 }}>
               {[
@@ -128,17 +135,21 @@ export default function ScanFlowScreen({ nav }: { nav: (s: Screen) => void }) {
                     justifyContent: 'space-between',
                     alignItems: 'center',
                     padding: '12px 0',
-                    borderBottom: '1px solid #F8FAFC',
+                    borderBottom: '1px solid var(--pf-bg)',
                   }}
                 >
-                  <span style={{ fontSize: 13, color: '#94A3B8', fontWeight: 500 }}>{label}</span>
-                  <span style={{ fontSize: 13.5, color: '#1E293B', fontWeight: 500 }}>{value}</span>
+                  <span style={{ fontSize: 13, color: 'var(--pf-ink-subtle)', fontWeight: 500 }}>
+                    {label}
+                  </span>
+                  <span style={{ fontSize: 13.5, color: 'var(--pf-ink)', fontWeight: 500 }}>
+                    {value}
+                  </span>
                 </div>
               ))}
             </PfCard>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
               <PfBtn variant="secondary" small>
-                <IcoPhone size={14} color="#8B5CF6" /> Call Owner
+                <IcoPhone size={14} color="var(--pf-purple)" /> Call Owner
               </PfBtn>
               <PfBtn variant="primary" small onClick={() => go('form')}>
                 I Found This Pet
@@ -156,7 +167,7 @@ export default function ScanFlowScreen({ nav }: { nav: (s: Screen) => void }) {
           display: 'flex',
           flexDirection: 'column',
           minHeight: '100dvh',
-          background: '#F8FAFC',
+          background: 'var(--pf-bg)',
         }}
       >
         <TopNav active="scan" onNav={nav} />
@@ -166,16 +177,16 @@ export default function ScanFlowScreen({ nav }: { nav: (s: Screen) => void }) {
               style={{
                 fontSize: 28,
                 fontWeight: 800,
-                color: '#1E293B',
+                color: 'var(--pf-ink)',
                 letterSpacing: '-.5px',
                 marginBottom: 6,
               }}
             >
               I Found This Pet
             </h1>
-            <p style={{ fontSize: 15, color: '#64748B', marginBottom: 32 }}>
-              Please help us reunite <strong style={{ color: '#8B5CF6' }}>Leo</strong> with her
-              family.
+            <p style={{ fontSize: 15, color: 'var(--pf-ink-muted)', marginBottom: 32 }}>
+              Please help us reunite <strong style={{ color: 'var(--pf-purple)' }}>Leo</strong> with
+              her family.
             </p>
             <PfInput
               label="Your Name"
@@ -217,7 +228,7 @@ export default function ScanFlowScreen({ nav }: { nav: (s: Screen) => void }) {
         display: 'flex',
         flexDirection: 'column',
         minHeight: '100dvh',
-        background: '#F8FAFC',
+        background: 'var(--pf-bg)',
       }}
     >
       <TopNav active="scan" onNav={nav} />
@@ -237,7 +248,7 @@ export default function ScanFlowScreen({ nav }: { nav: (s: Screen) => void }) {
             width: 108,
             height: 108,
             borderRadius: '50%',
-            background: 'linear-gradient(135deg,#EDE9FE,#DDD6FE)',
+            background: 'linear-gradient(135deg,var(--pf-purple-tint),var(--pf-purple-muted))',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -251,14 +262,16 @@ export default function ScanFlowScreen({ nav }: { nav: (s: Screen) => void }) {
           style={{
             fontSize: 30,
             fontWeight: 800,
-            color: '#1E293B',
+            color: 'var(--pf-ink)',
             letterSpacing: '-.6px',
             marginBottom: 12,
           }}
         >
           Thank You!
         </h2>
-        <p style={{ fontSize: 16, color: '#64748B', lineHeight: 1.65, marginBottom: 16 }}>
+        <p
+          style={{ fontSize: 16, color: 'var(--pf-ink-muted)', lineHeight: 1.65, marginBottom: 16 }}
+        >
           The owner has been notified.
           <br />
           You&apos;re amazing!

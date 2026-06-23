@@ -193,7 +193,7 @@ export default function MyPetsScreen({
           display: 'flex',
           flexDirection: 'column',
           minHeight: '100dvh',
-          background: '#F8FAFC',
+          background: 'var(--pf-bg)',
         }}
       >
         <TopNav active="pets" onNav={nav} />
@@ -203,7 +203,7 @@ export default function MyPetsScreen({
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            color: '#94A3B8',
+            color: 'var(--pf-ink-subtle)',
             fontSize: 15,
           }}
         >
@@ -218,7 +218,7 @@ export default function MyPetsScreen({
         display: 'flex',
         flexDirection: 'column',
         minHeight: '100dvh',
-        background: '#F8FAFC',
+        background: 'var(--pf-bg)',
       }}
     >
       <TopNav active="pets" onNav={nav} />
@@ -240,7 +240,7 @@ export default function MyPetsScreen({
         >
           <div
             style={{
-              background: '#fff',
+              background: 'var(--pf-surface)',
               borderRadius: 24,
               padding: 32,
               width: '100%',
@@ -248,7 +248,7 @@ export default function MyPetsScreen({
               boxShadow: '0 20px 60px rgba(0,0,0,.2)',
             }}
           >
-            <h2 style={{ fontSize: 20, fontWeight: 800, color: '#1E293B', marginBottom: 20 }}>
+            <h2 style={{ fontSize: 20, fontWeight: 800, color: 'var(--pf-ink)', marginBottom: 20 }}>
               Edit {editingPet.pet_name}
             </h2>
             {[
@@ -262,7 +262,7 @@ export default function MyPetsScreen({
                     display: 'block',
                     fontSize: 12.5,
                     fontWeight: 600,
-                    color: '#1E293B',
+                    color: 'var(--pf-ink)',
                     marginBottom: 5,
                   }}
                 >
@@ -292,7 +292,7 @@ export default function MyPetsScreen({
                   display: 'block',
                   fontSize: 12.5,
                   fontWeight: 600,
-                  color: '#1E293B',
+                  color: 'var(--pf-ink)',
                   marginBottom: 5,
                 }}
               >
@@ -324,12 +324,12 @@ export default function MyPetsScreen({
                   padding: '13px',
                   borderRadius: 12,
                   border: '1.5px solid #E2E8F0',
-                  background: '#fff',
+                  background: 'var(--pf-surface)',
                   fontSize: 14,
                   fontWeight: 600,
                   cursor: 'pointer',
                   fontFamily: 'Inter, sans-serif',
-                  color: '#64748B',
+                  color: 'var(--pf-ink-muted)',
                 }}
               >
                 Cancel
@@ -342,12 +342,12 @@ export default function MyPetsScreen({
                   padding: '13px',
                   borderRadius: 12,
                   border: 'none',
-                  background: 'linear-gradient(135deg,#A78BFA,#8B5CF6)',
+                  background: 'linear-gradient(135deg,var(--pf-purple-light),var(--pf-purple))',
                   fontSize: 14,
                   fontWeight: 700,
                   cursor: saving ? 'not-allowed' : 'pointer',
                   fontFamily: 'Inter, sans-serif',
-                  color: '#fff',
+                  color: 'var(--pf-surface)',
                   opacity: saving ? 0.7 : 1,
                 }}
               >
@@ -376,14 +376,14 @@ export default function MyPetsScreen({
                 style={{
                   fontSize: 'clamp(22px,3vw,32px)',
                   fontWeight: 800,
-                  color: '#1E293B',
+                  color: 'var(--pf-ink)',
                   letterSpacing: '-.8px',
                   marginBottom: 4,
                 }}
               >
                 Welcome back{ownerName ? `, ${ownerName.split(' ')[0]}` : ''}! 👋
               </h1>
-              <p style={{ fontSize: 14, color: '#64748B' }}>
+              <p style={{ fontSize: 14, color: 'var(--pf-ink-muted)' }}>
                 Manage your pets and view found reports.
               </p>
             </div>
@@ -395,18 +395,18 @@ export default function MyPetsScreen({
                 gap: 6,
                 padding: '12px 20px',
                 borderRadius: 100,
-                background: 'linear-gradient(135deg,#A78BFA,#8B5CF6)',
+                background: 'linear-gradient(135deg,var(--pf-purple-light),var(--pf-purple))',
                 border: 'none',
                 cursor: 'pointer',
                 fontSize: 13,
                 fontWeight: 600,
-                color: '#fff',
+                color: 'var(--pf-surface)',
                 boxShadow: '0 4px 14px rgba(139,92,246,.3)',
                 fontFamily: 'Inter, sans-serif',
                 whiteSpace: 'nowrap',
               }}
             >
-              <IcoPlus size={14} color="#fff" /> Add Pet
+              <IcoPlus size={14} color="var(--pf-surface)" /> Add Pet
             </button>
           </div>
 
@@ -421,7 +421,12 @@ export default function MyPetsScreen({
               }}
             >
               {[
-                { label: 'Total Pets', value: pets.length, color: '#8B5CF6', bg: '#F5F3FF' },
+                {
+                  label: 'Total Pets',
+                  value: pets.length,
+                  color: 'var(--pf-purple)',
+                  bg: 'var(--pf-purple-bg)',
+                },
                 {
                   label: 'Missing',
                   value: missingCount,
@@ -433,10 +438,10 @@ export default function MyPetsScreen({
                 <div
                   key={label}
                   style={{
-                    background: '#fff',
+                    background: 'var(--pf-surface)',
                     borderRadius: 16,
                     padding: '16px 20px',
-                    border: '1px solid #F1F5F9',
+                    border: '1px solid var(--pf-border)',
                     boxShadow: '0 2px 8px rgba(0,0,0,.04)',
                   }}
                 >
@@ -447,7 +452,7 @@ export default function MyPetsScreen({
                     style={{
                       fontSize: 12,
                       fontWeight: 600,
-                      color: '#94A3B8',
+                      color: 'var(--pf-ink-subtle)',
                       background: bg,
                       display: 'inline-block',
                       padding: '2px 8px',
@@ -489,24 +494,24 @@ export default function MyPetsScreen({
               style={{
                 textAlign: 'center',
                 padding: '60px 32px',
-                background: '#fff',
+                background: 'var(--pf-surface)',
                 borderRadius: 20,
-                border: '1px solid #F1F5F9',
+                border: '1px solid var(--pf-border)',
               }}
             >
-              <PawIcon size={48} color="#DDD6FE" />
+              <PawIcon size={48} color="var(--pf-purple-muted)" />
               <h3
                 style={{
                   fontSize: 20,
                   fontWeight: 700,
-                  color: '#1E293B',
+                  color: 'var(--pf-ink)',
                   marginTop: 16,
                   marginBottom: 8,
                 }}
               >
                 No pets yet
               </h3>
-              <p style={{ fontSize: 15, color: '#94A3B8', marginBottom: 24 }}>
+              <p style={{ fontSize: 15, color: 'var(--pf-ink-subtle)', marginBottom: 24 }}>
                 Register your first pet to get their QR tag.
               </p>
               <button
@@ -514,12 +519,12 @@ export default function MyPetsScreen({
                 style={{
                   padding: '12px 28px',
                   borderRadius: 100,
-                  background: 'linear-gradient(135deg,#A78BFA,#8B5CF6)',
+                  background: 'linear-gradient(135deg,var(--pf-purple-light),var(--pf-purple))',
                   border: 'none',
                   cursor: 'pointer',
                   fontSize: 14,
                   fontWeight: 600,
-                  color: '#fff',
+                  color: 'var(--pf-surface)',
                   fontFamily: 'Inter, sans-serif',
                 }}
               >
@@ -542,9 +547,9 @@ export default function MyPetsScreen({
                 <div
                   key={pet.id}
                   style={{
-                    background: '#fff',
+                    background: 'var(--pf-surface)',
                     borderRadius: 20,
-                    border: `1px solid ${isMissing ? '#FECACA' : '#F1F5F9'}`,
+                    border: `1px solid ${isMissing ? '#FECACA' : 'var(--pf-border)'}`,
                     boxShadow: '0 2px 12px rgba(0,0,0,.05)',
                     overflow: 'hidden',
                     transition: 'box-shadow .2s',
@@ -566,8 +571,9 @@ export default function MyPetsScreen({
                           height: 72,
                           borderRadius: '50%',
                           overflow: 'hidden',
-                          border: `2.5px solid ${isMissing ? '#FECACA' : '#EDE9FE'}`,
-                          background: 'linear-gradient(135deg,#EDE9FE,#DDD6FE)',
+                          border: `2.5px solid ${isMissing ? '#FECACA' : 'var(--pf-purple-tint)'}`,
+                          background:
+                            'linear-gradient(135deg,var(--pf-purple-tint),var(--pf-purple-muted))',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
@@ -583,7 +589,7 @@ export default function MyPetsScreen({
                             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                           />
                         ) : (
-                          <PawIcon size={30} color="#A78BFA" />
+                          <PawIcon size={30} color="var(--pf-purple-light)" />
                         )}
                       </div>
 
@@ -598,7 +604,7 @@ export default function MyPetsScreen({
                             marginBottom: 4,
                           }}
                         >
-                          <span style={{ fontSize: 18, fontWeight: 700, color: '#1E293B' }}>
+                          <span style={{ fontSize: 18, fontWeight: 700, color: 'var(--pf-ink)' }}>
                             {pet.pet_name}
                           </span>
                           <span
@@ -615,12 +621,16 @@ export default function MyPetsScreen({
                           </span>
                         </div>
                         {pet.breed && (
-                          <p style={{ fontSize: 13, color: '#64748B', marginBottom: 1 }}>
+                          <p
+                            style={{ fontSize: 13, color: 'var(--pf-ink-muted)', marginBottom: 1 }}
+                          >
                             {pet.breed}
                           </p>
                         )}
                         {pet.age && (
-                          <p style={{ fontSize: 12, color: '#94A3B8', marginBottom: 6 }}>
+                          <p
+                            style={{ fontSize: 12, color: 'var(--pf-ink-subtle)', marginBottom: 6 }}
+                          >
                             {pet.age}
                           </p>
                         )}
@@ -641,7 +651,7 @@ export default function MyPetsScreen({
                         gap: 8,
                         marginTop: 16,
                         paddingTop: 16,
-                        borderTop: '1px solid #F8FAFC',
+                        borderTop: '1px solid var(--pf-bg)',
                       }}
                     >
                       {/* Toggle status */}
@@ -681,16 +691,16 @@ export default function MyPetsScreen({
                           gap: 6,
                           padding: '8px 16px',
                           borderRadius: 100,
-                          border: '1.5px solid #DDD6FE',
-                          background: '#F5F3FF',
-                          color: '#7C3AED',
+                          border: '1.5px solid var(--pf-purple-muted)',
+                          background: 'var(--pf-purple-bg)',
+                          color: 'var(--pf-purple-dark)',
                           fontSize: 12,
                           fontWeight: 700,
                           cursor: 'pointer',
                           fontFamily: 'Inter, sans-serif',
                         }}
                       >
-                        <IcoEdit size={12} color="#7C3AED" /> Edit
+                        <IcoEdit size={12} color="var(--pf-purple-dark)" /> Edit
                       </button>
 
                       {/* Download QR */}
@@ -724,8 +734,8 @@ export default function MyPetsScreen({
                           padding: '8px 16px',
                           borderRadius: 100,
                           border: '1.5px solid #E2E8F0',
-                          background: isExpanded ? '#F8FAFC' : '#fff',
-                          color: '#64748B',
+                          background: isExpanded ? 'var(--pf-bg)' : 'var(--pf-surface)',
+                          color: 'var(--pf-ink-muted)',
                           fontSize: 12,
                           fontWeight: 700,
                           cursor: 'pointer',
@@ -763,13 +773,17 @@ export default function MyPetsScreen({
                     {/* Reports panel */}
                     {isExpanded && (
                       <div
-                        style={{ marginTop: 16, paddingTop: 16, borderTop: '1px solid #F1F5F9' }}
+                        style={{
+                          marginTop: 16,
+                          paddingTop: 16,
+                          borderTop: '1px solid var(--pf-border)',
+                        }}
                       >
                         <h4
                           style={{
                             fontSize: 13,
                             fontWeight: 700,
-                            color: '#64748B',
+                            color: 'var(--pf-ink-muted)',
                             marginBottom: 12,
                             textTransform: 'uppercase',
                             letterSpacing: '.5px',
@@ -781,7 +795,7 @@ export default function MyPetsScreen({
                           <p
                             style={{
                               fontSize: 13,
-                              color: '#94A3B8',
+                              color: 'var(--pf-ink-subtle)',
                               textAlign: 'center',
                               padding: '20px 0',
                             }}
@@ -794,10 +808,10 @@ export default function MyPetsScreen({
                               <div
                                 key={r.id}
                                 style={{
-                                  background: '#F8FAFC',
+                                  background: 'var(--pf-bg)',
                                   borderRadius: 12,
                                   padding: '14px 16px',
-                                  border: '1px solid #F1F5F9',
+                                  border: '1px solid var(--pf-border)',
                                 }}
                               >
                                 <div
@@ -807,10 +821,16 @@ export default function MyPetsScreen({
                                     marginBottom: 6,
                                   }}
                                 >
-                                  <span style={{ fontSize: 13, fontWeight: 700, color: '#1E293B' }}>
+                                  <span
+                                    style={{
+                                      fontSize: 13,
+                                      fontWeight: 700,
+                                      color: 'var(--pf-ink)',
+                                    }}
+                                  >
                                     {r.finder_name}
                                   </span>
-                                  <span style={{ fontSize: 11, color: '#94A3B8' }}>
+                                  <span style={{ fontSize: 11, color: 'var(--pf-ink-subtle)' }}>
                                     {new Date(r.created_at).toLocaleDateString('en-IN', {
                                       day: 'numeric',
                                       month: 'short',
@@ -819,12 +839,24 @@ export default function MyPetsScreen({
                                   </span>
                                 </div>
                                 {r.finder_phone && (
-                                  <p style={{ fontSize: 12, color: '#64748B', marginBottom: 3 }}>
+                                  <p
+                                    style={{
+                                      fontSize: 12,
+                                      color: 'var(--pf-ink-muted)',
+                                      marginBottom: 3,
+                                    }}
+                                  >
                                     📞 {r.finder_phone}
                                   </p>
                                 )}
                                 {r.location && (
-                                  <p style={{ fontSize: 12, color: '#64748B', marginBottom: 3 }}>
+                                  <p
+                                    style={{
+                                      fontSize: 12,
+                                      color: 'var(--pf-ink-muted)',
+                                      marginBottom: 3,
+                                    }}
+                                  >
                                     📍 {r.location}
                                   </p>
                                 )}

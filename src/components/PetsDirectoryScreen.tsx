@@ -99,7 +99,7 @@ export default function PetsDirectoryScreen({ nav }: { nav: (s: Screen) => void 
         display: 'flex',
         flexDirection: 'column',
         minHeight: '100dvh',
-        background: '#F8FAFC',
+        background: 'var(--pf-bg)',
       }}
     >
       <TopNav active="directory" onNav={nav} />
@@ -122,14 +122,14 @@ export default function PetsDirectoryScreen({ nav }: { nav: (s: Screen) => void 
                   style={{
                     fontSize: 'clamp(22px,3vw,32px)',
                     fontWeight: 800,
-                    color: '#1E293B',
+                    color: 'var(--pf-ink)',
                     letterSpacing: '-.8px',
                     marginBottom: 4,
                   }}
                 >
                   Pet Directory
                 </h1>
-                <p style={{ fontSize: 14, color: '#64748B' }}>
+                <p style={{ fontSize: 14, color: 'var(--pf-ink-muted)' }}>
                   {loading
                     ? 'Loading…'
                     : `${pets.length} registered pet${pets.length !== 1 ? 's' : ''}`}
@@ -176,7 +176,7 @@ export default function PetsDirectoryScreen({ nav }: { nav: (s: Screen) => void 
                 height={16}
                 viewBox="0 0 24 24"
                 fill="none"
-                stroke="#94A3B8"
+                stroke="var(--pf-ink-subtle)"
                 strokeWidth={2.5}
                 strokeLinecap="round"
               >
@@ -196,9 +196,9 @@ export default function PetsDirectoryScreen({ nav }: { nav: (s: Screen) => void 
                   fontSize: 14,
                   fontFamily: 'Inter, sans-serif',
                   outline: 'none',
-                  background: '#fff',
+                  background: 'var(--pf-surface)',
                   boxSizing: 'border-box',
-                  color: '#1E293B',
+                  color: 'var(--pf-ink)',
                 }}
               />
             </div>
@@ -219,7 +219,7 @@ export default function PetsDirectoryScreen({ nav }: { nav: (s: Screen) => void 
                           ? '#FECACA'
                           : s === 'safe'
                             ? '#6EE7B7'
-                            : '#DDD6FE'
+                            : 'var(--pf-purple-muted)'
                         : '#E2E8F0',
                     background:
                       statusFilter === s
@@ -227,16 +227,16 @@ export default function PetsDirectoryScreen({ nav }: { nav: (s: Screen) => void 
                           ? '#FEF2F2'
                           : s === 'safe'
                             ? '#ECFDF5'
-                            : '#EDE9FE'
-                        : '#fff',
+                            : 'var(--pf-purple-tint)'
+                        : 'var(--pf-surface)',
                     color:
                       statusFilter === s
                         ? s === 'missing'
                           ? '#DC2626'
                           : s === 'safe'
                             ? '#059669'
-                            : '#7C3AED'
-                        : '#64748B',
+                            : 'var(--pf-purple-dark)'
+                        : 'var(--pf-ink-muted)',
                     fontSize: 13,
                     fontWeight: 600,
                     cursor: 'pointer',
@@ -260,8 +260,8 @@ export default function PetsDirectoryScreen({ nav }: { nav: (s: Screen) => void 
                 border: '1.5px solid #E2E8F0',
                 fontSize: 13,
                 fontFamily: 'Inter, sans-serif',
-                background: '#fff',
-                color: '#1E293B',
+                background: 'var(--pf-surface)',
+                color: 'var(--pf-ink)',
                 cursor: 'pointer',
                 outline: 'none',
                 fontWeight: 500,
@@ -288,10 +288,10 @@ export default function PetsDirectoryScreen({ nav }: { nav: (s: Screen) => void 
                 <div
                   key={i}
                   style={{
-                    background: '#fff',
+                    background: 'var(--pf-surface)',
                     borderRadius: 20,
                     padding: 20,
-                    border: '1px solid #F1F5F9',
+                    border: '1px solid var(--pf-border)',
                     animation: 'pulse 1.5s ease-in-out infinite',
                   }}
                 >
@@ -301,7 +301,7 @@ export default function PetsDirectoryScreen({ nav }: { nav: (s: Screen) => void 
                         width: 56,
                         height: 56,
                         borderRadius: '50%',
-                        background: '#F1F5F9',
+                        background: 'var(--pf-border)',
                         flexShrink: 0,
                       }}
                     />
@@ -309,14 +309,19 @@ export default function PetsDirectoryScreen({ nav }: { nav: (s: Screen) => void 
                       <div
                         style={{
                           height: 14,
-                          background: '#F1F5F9',
+                          background: 'var(--pf-border)',
                           borderRadius: 6,
                           marginBottom: 8,
                           width: '60%',
                         }}
                       />
                       <div
-                        style={{ height: 12, background: '#F1F5F9', borderRadius: 6, width: '80%' }}
+                        style={{
+                          height: 12,
+                          background: 'var(--pf-border)',
+                          borderRadius: 6,
+                          width: '80%',
+                        }}
                       />
                     </div>
                   </div>
@@ -329,12 +334,14 @@ export default function PetsDirectoryScreen({ nav }: { nav: (s: Screen) => void 
           {!loading && filtered.length === 0 && (
             <div style={{ textAlign: 'center', padding: '60px 20px' }}>
               <div style={{ fontSize: 48, marginBottom: 16 }}>🐾</div>
-              <h2 style={{ fontSize: 20, fontWeight: 700, color: '#1E293B', marginBottom: 8 }}>
+              <h2
+                style={{ fontSize: 20, fontWeight: 700, color: 'var(--pf-ink)', marginBottom: 8 }}
+              >
                 {search || statusFilter !== 'all'
                   ? 'No pets match your search'
                   : 'No pets registered yet'}
               </h2>
-              <p style={{ fontSize: 14, color: '#94A3B8', marginBottom: 24 }}>
+              <p style={{ fontSize: 14, color: 'var(--pf-ink-subtle)', marginBottom: 24 }}>
                 {search || statusFilter !== 'all'
                   ? 'Try a different search or filter.'
                   : 'Be the first to register your pet!'}
@@ -348,8 +355,8 @@ export default function PetsDirectoryScreen({ nav }: { nav: (s: Screen) => void 
                   style={{
                     padding: '10px 24px',
                     borderRadius: 100,
-                    background: '#EDE9FE',
-                    color: '#7C3AED',
+                    background: 'var(--pf-purple-tint)',
+                    color: 'var(--pf-purple-dark)',
                     border: 'none',
                     fontWeight: 600,
                     fontSize: 14,
@@ -379,9 +386,9 @@ export default function PetsDirectoryScreen({ nav }: { nav: (s: Screen) => void 
                   <div
                     key={pet.pet_id}
                     style={{
-                      background: '#fff',
+                      background: 'var(--pf-surface)',
                       borderRadius: 20,
-                      border: '1px solid #F1F5F9',
+                      border: '1px solid var(--pf-border)',
                       boxShadow: '0 2px 12px rgba(0,0,0,.05)',
                       overflow: 'hidden',
                       transition: 'box-shadow .2s, transform .2s',
@@ -412,7 +419,7 @@ export default function PetsDirectoryScreen({ nav }: { nav: (s: Screen) => void 
                           style={{
                             fontSize: 11,
                             fontWeight: 800,
-                            color: '#fff',
+                            color: 'var(--pf-surface)',
                             letterSpacing: '.8px',
                             textTransform: 'uppercase',
                           }}
@@ -433,8 +440,9 @@ export default function PetsDirectoryScreen({ nav }: { nav: (s: Screen) => void 
                             height: 60,
                             borderRadius: '50%',
                             overflow: 'hidden',
-                            border: '2.5px solid #EDE9FE',
-                            background: 'linear-gradient(135deg,#EDE9FE,#DDD6FE)',
+                            border: '2.5px solid var(--pf-purple-tint)',
+                            background:
+                              'linear-gradient(135deg,var(--pf-purple-tint),var(--pf-purple-muted))',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
@@ -450,7 +458,12 @@ export default function PetsDirectoryScreen({ nav }: { nav: (s: Screen) => void 
                               style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                             />
                           ) : (
-                            <svg width={28} height={28} viewBox="0 0 24 24" fill="#A78BFA">
+                            <svg
+                              width={28}
+                              height={28}
+                              viewBox="0 0 24 24"
+                              fill="var(--pf-purple-light)"
+                            >
                               <circle cx="5" cy="7" r="2.5" />
                               <circle cx="19" cy="7" r="2.5" />
                               <circle cx="9" cy="3.5" r="2.5" />
@@ -474,7 +487,7 @@ export default function PetsDirectoryScreen({ nav }: { nav: (s: Screen) => void 
                               style={{
                                 fontSize: 16,
                                 fontWeight: 700,
-                                color: '#1E293B',
+                                color: 'var(--pf-ink)',
                                 whiteSpace: 'nowrap',
                               }}
                             >
@@ -498,7 +511,7 @@ export default function PetsDirectoryScreen({ nav }: { nav: (s: Screen) => void 
                             <p
                               style={{
                                 fontSize: 13,
-                                color: '#64748B',
+                                color: 'var(--pf-ink-muted)',
                                 marginBottom: 1,
                                 overflow: 'hidden',
                                 textOverflow: 'ellipsis',
@@ -508,7 +521,9 @@ export default function PetsDirectoryScreen({ nav }: { nav: (s: Screen) => void 
                               {pet.breed}
                             </p>
                           )}
-                          {pet.age && <p style={{ fontSize: 12, color: '#94A3B8' }}>{pet.age}</p>}
+                          {pet.age && (
+                            <p style={{ fontSize: 12, color: 'var(--pf-ink-subtle)' }}>{pet.age}</p>
+                          )}
                         </div>
                       </div>
 
@@ -519,17 +534,23 @@ export default function PetsDirectoryScreen({ nav }: { nav: (s: Screen) => void 
                           alignItems: 'center',
                           justifyContent: 'space-between',
                           paddingTop: 12,
-                          borderTop: '1px solid #F8FAFC',
+                          borderTop: '1px solid var(--pf-bg)',
                         }}
                       >
-                        <span style={{ fontSize: 11, color: '#94A3B8', fontFamily: 'monospace' }}>
+                        <span
+                          style={{
+                            fontSize: 11,
+                            color: 'var(--pf-ink-subtle)',
+                            fontFamily: 'monospace',
+                          }}
+                        >
                           {pet.pet_id}
                         </span>
                         <span
                           style={{
                             fontSize: 12,
                             fontWeight: 600,
-                            color: '#8B5CF6',
+                            color: 'var(--pf-purple)',
                             display: 'flex',
                             alignItems: 'center',
                             gap: 4,
@@ -541,7 +562,7 @@ export default function PetsDirectoryScreen({ nav }: { nav: (s: Screen) => void 
                             height={12}
                             viewBox="0 0 24 24"
                             fill="none"
-                            stroke="#8B5CF6"
+                            stroke="var(--pf-purple)"
                             strokeWidth={2.5}
                             strokeLinecap="round"
                             strokeLinejoin="round"
@@ -559,7 +580,14 @@ export default function PetsDirectoryScreen({ nav }: { nav: (s: Screen) => void 
 
           {/* Results count */}
           {!loading && filtered.length > 0 && (search || statusFilter !== 'all') && (
-            <p style={{ textAlign: 'center', fontSize: 13, color: '#94A3B8', marginTop: 24 }}>
+            <p
+              style={{
+                textAlign: 'center',
+                fontSize: 13,
+                color: 'var(--pf-ink-subtle)',
+                marginTop: 24,
+              }}
+            >
               Showing {filtered.length} of {pets.length} pets
             </p>
           )}

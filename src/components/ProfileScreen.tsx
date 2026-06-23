@@ -21,9 +21,9 @@ const inputStyle: React.CSSProperties = {
   width: '100%',
   padding: '11px 14px',
   borderRadius: 12,
-  border: '1.5px solid #E5E7EB',
+  border: '1.5px solid var(--pf-border-strong)',
   fontSize: 14,
-  color: '#1E293B',
+  color: 'var(--pf-ink)',
   outline: 'none',
   fontFamily: 'Inter, sans-serif',
   boxSizing: 'border-box',
@@ -33,7 +33,7 @@ const labelStyle: React.CSSProperties = {
   display: 'block',
   fontSize: 12.5,
   fontWeight: 600,
-  color: '#1E293B',
+  color: 'var(--pf-ink)',
   marginBottom: 5,
 };
 
@@ -45,7 +45,7 @@ function Toggle({ on, onChange }: { on: boolean; onChange: (v: boolean) => void 
         width: 44,
         height: 24,
         borderRadius: 100,
-        background: on ? '#8B5CF6' : '#CBD5E1',
+        background: on ? 'var(--pf-purple)' : '#CBD5E1',
         position: 'relative',
         cursor: 'pointer',
         flexShrink: 0,
@@ -60,7 +60,7 @@ function Toggle({ on, onChange }: { on: boolean; onChange: (v: boolean) => void 
           width: 18,
           height: 18,
           borderRadius: '50%',
-          background: '#fff',
+          background: 'var(--pf-surface)',
           boxShadow: '0 1px 4px rgba(0,0,0,.2)',
           transition: 'left .2s',
         }}
@@ -257,7 +257,7 @@ export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
 
   const items = [
     {
-      icon: <PawIcon size={18} color="#8B5CF6" />,
+      icon: <PawIcon size={18} color="var(--pf-purple)" />,
       label: 'My Pets',
       sub: `${petCount} registered`,
       onClick: () => nav('pets'),
@@ -275,7 +275,7 @@ export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
       onClick: openSecurity,
     },
     {
-      icon: <IcoSettings size={18} color="#94A3B8" />,
+      icon: <IcoSettings size={18} color="var(--pf-ink-subtle)" />,
       label: 'Settings',
       sub: 'Dark mode & notifications',
       onClick: () => setModal('settings'),
@@ -289,7 +289,7 @@ export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
           display: 'flex',
           flexDirection: 'column',
           minHeight: '100dvh',
-          background: '#F8FAFC',
+          background: 'var(--pf-bg)',
         }}
       >
         <TopNav active="me" onNav={nav} />
@@ -309,7 +309,7 @@ export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
               width: 88,
               height: 88,
               borderRadius: '50%',
-              background: 'linear-gradient(135deg,#A78BFA,#8B5CF6)',
+              background: 'linear-gradient(135deg,var(--pf-purple-light),var(--pf-purple))',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -319,10 +319,10 @@ export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
           >
             <span style={{ fontSize: 36 }}>🐾</span>
           </div>
-          <h2 style={{ fontSize: 22, fontWeight: 800, color: '#1E293B', marginBottom: 8 }}>
+          <h2 style={{ fontSize: 22, fontWeight: 800, color: 'var(--pf-ink)', marginBottom: 8 }}>
             You&apos;re not signed in
           </h2>
-          <p style={{ fontSize: 14, color: '#64748B', marginBottom: 28 }}>
+          <p style={{ fontSize: 14, color: 'var(--pf-ink-muted)', marginBottom: 28 }}>
             Sign in to manage your pets and view your profile.
           </p>
           <a
@@ -331,8 +331,8 @@ export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
               display: 'inline-block',
               padding: '14px 36px',
               borderRadius: 100,
-              background: 'linear-gradient(135deg,#A78BFA,#8B5CF6)',
-              color: '#fff',
+              background: 'linear-gradient(135deg,var(--pf-purple-light),var(--pf-purple))',
+              color: 'var(--pf-surface)',
               fontWeight: 700,
               fontSize: 15,
               textDecoration: 'none',
@@ -352,7 +352,7 @@ export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
         display: 'flex',
         flexDirection: 'column',
         minHeight: '100dvh',
-        background: '#F8FAFC',
+        background: 'var(--pf-bg)',
       }}
     >
       <TopNav active="me" onNav={nav} />
@@ -365,7 +365,7 @@ export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
                 width: 96,
                 height: 96,
                 borderRadius: '50%',
-                background: 'linear-gradient(135deg,#A78BFA,#8B5CF6)',
+                background: 'linear-gradient(135deg,var(--pf-purple-light),var(--pf-purple))',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -373,7 +373,7 @@ export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
                 boxShadow: '0 6px 24px rgba(139,92,246,.3)',
               }}
             >
-              <span style={{ fontSize: 32, fontWeight: 800, color: '#fff' }}>
+              <span style={{ fontSize: 32, fontWeight: 800, color: 'var(--pf-surface)' }}>
                 {loaded ? initials || '?' : '…'}
               </span>
             </div>
@@ -381,17 +381,23 @@ export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
               style={{
                 fontSize: 24,
                 fontWeight: 800,
-                color: '#1E293B',
+                color: 'var(--pf-ink)',
                 letterSpacing: '-.5px',
                 marginBottom: 4,
               }}
             >
               {name || 'My Profile'}
             </h2>
-            <p style={{ fontSize: 14, color: '#64748B', marginBottom: 2 }}>{email}</p>
-            {phone && <p style={{ fontSize: 13, color: '#94A3B8', marginBottom: 2 }}>{phone}</p>}
+            <p style={{ fontSize: 14, color: 'var(--pf-ink-muted)', marginBottom: 2 }}>{email}</p>
+            {phone && (
+              <p style={{ fontSize: 13, color: 'var(--pf-ink-subtle)', marginBottom: 2 }}>
+                {phone}
+              </p>
+            )}
             {address && (
-              <p style={{ fontSize: 13, color: '#94A3B8', marginBottom: 12 }}>{address}</p>
+              <p style={{ fontSize: 13, color: 'var(--pf-ink-subtle)', marginBottom: 12 }}>
+                {address}
+              </p>
             )}
             {!phone && !address && <div style={{ marginBottom: 12 }} />}
             <PfBadge>
@@ -423,7 +429,7 @@ export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
                       width: 44,
                       height: 44,
                       borderRadius: 13,
-                      background: '#F8FAFC',
+                      background: 'var(--pf-bg)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
@@ -433,8 +439,12 @@ export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
                     {icon}
                   </div>
                   <div style={{ flex: 1 }}>
-                    <div style={{ fontSize: 15, fontWeight: 600, color: '#1E293B' }}>{label}</div>
-                    <div style={{ fontSize: 13, color: '#94A3B8', marginTop: 2 }}>{sub}</div>
+                    <div style={{ fontSize: 15, fontWeight: 600, color: 'var(--pf-ink)' }}>
+                      {label}
+                    </div>
+                    <div style={{ fontSize: 13, color: 'var(--pf-ink-subtle)', marginTop: 2 }}>
+                      {sub}
+                    </div>
                   </div>
                   <IcoArrowRight size={16} color="#CBD5E1" />
                 </button>
@@ -487,7 +497,7 @@ export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
             className="pf-modal-enter"
             onClick={(e) => e.stopPropagation()}
             style={{
-              background: '#fff',
+              background: 'var(--pf-surface)',
               borderRadius: 24,
               padding: 32,
               width: '100%',
@@ -502,11 +512,11 @@ export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
               <>
                 <h2
                   id="modal-title"
-                  style={{ fontSize: 20, fontWeight: 800, color: '#1E293B', marginBottom: 4 }}
+                  style={{ fontSize: 20, fontWeight: 800, color: 'var(--pf-ink)', marginBottom: 4 }}
                 >
                   Contact Info
                 </h2>
-                <p style={{ fontSize: 13, color: '#64748B', marginBottom: 24 }}>
+                <p style={{ fontSize: 13, color: 'var(--pf-ink-muted)', marginBottom: 24 }}>
                   This info helps pet finders reach you.
                 </p>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
@@ -522,11 +532,15 @@ export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
                   <div>
                     <label style={labelStyle}>Email</label>
                     <input
-                      style={{ ...inputStyle, background: '#F8FAFC', color: '#94A3B8' }}
+                      style={{
+                        ...inputStyle,
+                        background: 'var(--pf-bg)',
+                        color: 'var(--pf-ink-subtle)',
+                      }}
                       value={email}
                       readOnly
                     />
-                    <p style={{ fontSize: 11, color: '#94A3B8', marginTop: 4 }}>
+                    <p style={{ fontSize: 11, color: 'var(--pf-ink-subtle)', marginTop: 4 }}>
                       Email cannot be changed here
                     </p>
                   </div>
@@ -572,12 +586,12 @@ export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
                         flex: 1,
                         padding: '12px',
                         borderRadius: 12,
-                        border: '1.5px solid #E5E7EB',
-                        background: '#fff',
+                        border: '1.5px solid var(--pf-border-strong)',
+                        background: 'var(--pf-surface)',
                         fontSize: 14,
                         fontWeight: 600,
                         cursor: 'pointer',
-                        color: '#64748B',
+                        color: 'var(--pf-ink-muted)',
                         fontFamily: 'Inter, sans-serif',
                       }}
                     >
@@ -591,8 +605,9 @@ export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
                         padding: '12px',
                         borderRadius: 12,
                         border: 'none',
-                        background: 'linear-gradient(135deg,#A78BFA,#8B5CF6)',
-                        color: '#fff',
+                        background:
+                          'linear-gradient(135deg,var(--pf-purple-light),var(--pf-purple))',
+                        color: 'var(--pf-surface)',
                         fontSize: 14,
                         fontWeight: 700,
                         cursor: 'pointer',
@@ -611,11 +626,11 @@ export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
               <>
                 <h2
                   id="modal-title"
-                  style={{ fontSize: 20, fontWeight: 800, color: '#1E293B', marginBottom: 4 }}
+                  style={{ fontSize: 20, fontWeight: 800, color: 'var(--pf-ink)', marginBottom: 4 }}
                 >
                   Change Password
                 </h2>
-                <p style={{ fontSize: 13, color: '#64748B', marginBottom: 24 }}>
+                <p style={{ fontSize: 13, color: 'var(--pf-ink-muted)', marginBottom: 24 }}>
                   Choose a strong password of at least 6 characters.
                 </p>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
@@ -676,12 +691,12 @@ export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
                         flex: 1,
                         padding: '12px',
                         borderRadius: 12,
-                        border: '1.5px solid #E5E7EB',
-                        background: '#fff',
+                        border: '1.5px solid var(--pf-border-strong)',
+                        background: 'var(--pf-surface)',
                         fontSize: 14,
                         fontWeight: 600,
                         cursor: 'pointer',
-                        color: '#64748B',
+                        color: 'var(--pf-ink-muted)',
                         fontFamily: 'Inter, sans-serif',
                       }}
                     >
@@ -695,8 +710,9 @@ export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
                         padding: '12px',
                         borderRadius: 12,
                         border: 'none',
-                        background: 'linear-gradient(135deg,#A78BFA,#8B5CF6)',
-                        color: '#fff',
+                        background:
+                          'linear-gradient(135deg,var(--pf-purple-light),var(--pf-purple))',
+                        color: 'var(--pf-surface)',
                         fontSize: 14,
                         fontWeight: 700,
                         cursor: 'pointer',
@@ -715,11 +731,11 @@ export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
               <>
                 <h2
                   id="modal-title"
-                  style={{ fontSize: 20, fontWeight: 800, color: '#1E293B', marginBottom: 4 }}
+                  style={{ fontSize: 20, fontWeight: 800, color: 'var(--pf-ink)', marginBottom: 4 }}
                 >
                   Settings
                 </h2>
-                <p style={{ fontSize: 13, color: '#64748B', marginBottom: 24 }}>
+                <p style={{ fontSize: 13, color: 'var(--pf-ink-muted)', marginBottom: 24 }}>
                   Customise your PawFinder experience.
                 </p>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
@@ -745,14 +761,16 @@ export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
                         justifyContent: 'space-between',
                         gap: 16,
                         padding: '18px 0',
-                        borderBottom: i < arr.length - 1 ? '1px solid #F1F5F9' : 'none',
+                        borderBottom: i < arr.length - 1 ? '1px solid var(--pf-border)' : 'none',
                       }}
                     >
                       <div>
-                        <div style={{ fontSize: 15, fontWeight: 600, color: '#1E293B' }}>
+                        <div style={{ fontSize: 15, fontWeight: 600, color: 'var(--pf-ink)' }}>
                           {label}
                         </div>
-                        <div style={{ fontSize: 13, color: '#94A3B8', marginTop: 2 }}>{sub}</div>
+                        <div style={{ fontSize: 13, color: 'var(--pf-ink-subtle)', marginTop: 2 }}>
+                          {sub}
+                        </div>
                       </div>
                       <Toggle on={value} onChange={onChange} />
                     </div>
@@ -765,12 +783,12 @@ export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
                     marginTop: 24,
                     padding: '12px',
                     borderRadius: 12,
-                    border: '1.5px solid #E5E7EB',
-                    background: '#fff',
+                    border: '1.5px solid var(--pf-border-strong)',
+                    background: 'var(--pf-surface)',
                     fontSize: 14,
                     fontWeight: 600,
                     cursor: 'pointer',
-                    color: '#64748B',
+                    color: 'var(--pf-ink-muted)',
                     fontFamily: 'Inter, sans-serif',
                   }}
                 >

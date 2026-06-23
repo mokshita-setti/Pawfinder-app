@@ -64,14 +64,14 @@ export default function DemoScreen({ nav }: { nav: (s: Screen, petId?: string) =
         display: 'flex',
         flexDirection: 'column',
         fontFamily: 'Inter, -apple-system, sans-serif',
-        background: '#F8FAFC',
+        background: 'var(--pf-bg)',
       }}
     >
       {/* Header */}
       <div
         style={{
-          background: '#fff',
-          borderBottom: '1px solid #F1F5F9',
+          background: 'var(--pf-surface)',
+          borderBottom: '1px solid var(--pf-border)',
           padding: '0 24px',
           height: 64,
           display: 'flex',
@@ -89,8 +89,8 @@ export default function DemoScreen({ nav }: { nav: (s: Screen, petId?: string) =
             width: 36,
             height: 36,
             borderRadius: '50%',
-            background: '#F8FAFC',
-            border: '1px solid #E5E7EB',
+            background: 'var(--pf-bg)',
+            border: '1px solid var(--pf-border-strong)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -100,8 +100,15 @@ export default function DemoScreen({ nav }: { nav: (s: Screen, petId?: string) =
           <IcoArrowLeft size={18} />
         </button>
         <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-          <PawIcon size={18} color="#8B5CF6" />
-          <span style={{ fontSize: 17, fontWeight: 800, color: '#1E293B', letterSpacing: '-.4px' }}>
+          <PawIcon size={18} color="var(--pf-purple)" />
+          <span
+            style={{
+              fontSize: 17,
+              fontWeight: 800,
+              color: 'var(--pf-ink)',
+              letterSpacing: '-.4px',
+            }}
+          >
             Demo Profiles
           </span>
         </div>
@@ -118,7 +125,14 @@ export default function DemoScreen({ nav }: { nav: (s: Screen, petId?: string) =
           boxSizing: 'border-box',
         }}
       >
-        <p style={{ fontSize: 13.5, color: '#64748B', marginBottom: 24, lineHeight: 1.6 }}>
+        <p
+          style={{
+            fontSize: 13.5,
+            color: 'var(--pf-ink-muted)',
+            marginBottom: 24,
+            lineHeight: 1.6,
+          }}
+        >
           These are sample pet profiles to show how PawFinder works. Register your own pet to get a
           real QR tag.
         </p>
@@ -130,9 +144,9 @@ export default function DemoScreen({ nav }: { nav: (s: Screen, petId?: string) =
               <div
                 key={pet.id}
                 style={{
-                  background: '#fff',
+                  background: 'var(--pf-surface)',
                   borderRadius: 20,
-                  border: '1px solid #F1F5F9',
+                  border: '1px solid var(--pf-border)',
                   boxShadow: '0 2px 16px rgba(0,0,0,.055)',
                   overflow: 'hidden',
                 }}
@@ -152,7 +166,7 @@ export default function DemoScreen({ nav }: { nav: (s: Screen, petId?: string) =
                       height: 64,
                       borderRadius: '50%',
                       overflow: 'hidden',
-                      border: '3px solid #EDE9FE',
+                      border: '3px solid var(--pf-purple-tint)',
                       flexShrink: 0,
                     }}
                   >
@@ -167,7 +181,7 @@ export default function DemoScreen({ nav }: { nav: (s: Screen, petId?: string) =
                   </div>
                   <div style={{ flex: 1 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 3 }}>
-                      <span style={{ fontSize: 16, fontWeight: 700, color: '#1E293B' }}>
+                      <span style={{ fontSize: 16, fontWeight: 700, color: 'var(--pf-ink)' }}>
                         {pet.name}
                       </span>
                       <span
@@ -183,7 +197,7 @@ export default function DemoScreen({ nav }: { nav: (s: Screen, petId?: string) =
                         {s.label}
                       </span>
                     </div>
-                    <p style={{ fontSize: 13, color: '#64748B' }}>
+                    <p style={{ fontSize: 13, color: 'var(--pf-ink-muted)' }}>
                       {pet.breed} · {pet.age}
                     </p>
                   </div>
@@ -192,7 +206,7 @@ export default function DemoScreen({ nav }: { nav: (s: Screen, petId?: string) =
                 {/* Details */}
                 <div
                   style={{
-                    borderTop: '1px solid #F8FAFC',
+                    borderTop: '1px solid var(--pf-bg)',
                     padding: '12px 18px',
                     display: 'flex',
                     flexDirection: 'column',
@@ -200,23 +214,44 @@ export default function DemoScreen({ nav }: { nav: (s: Screen, petId?: string) =
                   }}
                 >
                   <div style={{ display: 'flex', gap: 8 }}>
-                    <span style={{ fontSize: 12, color: '#94A3B8', width: 60, flexShrink: 0 }}>
+                    <span
+                      style={{
+                        fontSize: 12,
+                        color: 'var(--pf-ink-subtle)',
+                        width: 60,
+                        flexShrink: 0,
+                      }}
+                    >
                       Owner
                     </span>
-                    <span style={{ fontSize: 12, fontWeight: 600, color: '#1E293B' }}>
+                    <span style={{ fontSize: 12, fontWeight: 600, color: 'var(--pf-ink)' }}>
                       {pet.owner}
                     </span>
                   </div>
                   <div style={{ display: 'flex', gap: 8 }}>
-                    <span style={{ fontSize: 12, color: '#94A3B8', width: 60, flexShrink: 0 }}>
+                    <span
+                      style={{
+                        fontSize: 12,
+                        color: 'var(--pf-ink-subtle)',
+                        width: 60,
+                        flexShrink: 0,
+                      }}
+                    >
                       Phone
                     </span>
-                    <span style={{ fontSize: 12, fontWeight: 600, color: '#1E293B' }}>
+                    <span style={{ fontSize: 12, fontWeight: 600, color: 'var(--pf-ink)' }}>
                       {pet.phone}
                     </span>
                   </div>
                   <div style={{ display: 'flex', gap: 8 }}>
-                    <span style={{ fontSize: 12, color: '#94A3B8', width: 60, flexShrink: 0 }}>
+                    <span
+                      style={{
+                        fontSize: 12,
+                        color: 'var(--pf-ink-subtle)',
+                        width: 60,
+                        flexShrink: 0,
+                      }}
+                    >
                       Notes
                     </span>
                     <span style={{ fontSize: 12, color: '#475569', lineHeight: 1.5 }}>
@@ -228,14 +263,16 @@ export default function DemoScreen({ nav }: { nav: (s: Screen, petId?: string) =
                 {/* Pet ID */}
                 <div
                   style={{
-                    borderTop: '1px solid #F8FAFC',
+                    borderTop: '1px solid var(--pf-bg)',
                     padding: '10px 18px',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',
                   }}
                 >
-                  <span style={{ fontSize: 11, color: '#94A3B8', fontFamily: 'monospace' }}>
+                  <span
+                    style={{ fontSize: 11, color: 'var(--pf-ink-subtle)', fontFamily: 'monospace' }}
+                  >
                     {pet.id}
                   </span>
                   <button
@@ -244,13 +281,13 @@ export default function DemoScreen({ nav }: { nav: (s: Screen, petId?: string) =
                       display: 'flex',
                       alignItems: 'center',
                       gap: 4,
-                      background: '#EDE9FE',
+                      background: 'var(--pf-purple-tint)',
                       border: 'none',
                       borderRadius: 100,
                       padding: '6px 14px',
                       fontSize: 12,
                       fontWeight: 600,
-                      color: '#7C3AED',
+                      color: 'var(--pf-purple-dark)',
                       cursor: 'pointer',
                       fontFamily: 'inherit',
                     }}
@@ -267,24 +304,26 @@ export default function DemoScreen({ nav }: { nav: (s: Screen, petId?: string) =
         <div
           style={{
             marginTop: 32,
-            background: 'linear-gradient(135deg,#EDE9FE,#DDD6FE)',
+            background: 'linear-gradient(135deg,var(--pf-purple-tint),var(--pf-purple-muted))',
             borderRadius: 20,
             padding: '24px',
             textAlign: 'center',
           }}
         >
-          <PawIcon size={24} color="#8B5CF6" />
-          <p style={{ fontSize: 15, fontWeight: 700, color: '#1E293B', margin: '12px 0 6px' }}>
+          <PawIcon size={24} color="var(--pf-purple)" />
+          <p
+            style={{ fontSize: 15, fontWeight: 700, color: 'var(--pf-ink)', margin: '12px 0 6px' }}
+          >
             Ready to protect your pet?
           </p>
-          <p style={{ fontSize: 13, color: '#64748B', marginBottom: 16 }}>
+          <p style={{ fontSize: 13, color: 'var(--pf-ink-muted)', marginBottom: 16 }}>
             Register your pet and get a unique QR tag in minutes.
           </p>
           <button
             onClick={() => nav('register')}
             style={{
-              background: '#8B5CF6',
-              color: '#fff',
+              background: 'var(--pf-purple)',
+              color: 'var(--pf-surface)',
               border: 'none',
               borderRadius: 100,
               padding: '12px 28px',

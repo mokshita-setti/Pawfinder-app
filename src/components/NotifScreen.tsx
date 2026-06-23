@@ -86,7 +86,7 @@ export default function NotifScreen({ nav }: { nav: (s: Screen) => void }) {
         display: 'flex',
         flexDirection: 'column',
         minHeight: '100dvh',
-        background: '#F8FAFC',
+        background: 'var(--pf-bg)',
       }}
     >
       <TopNav active="notif" onNav={nav} />
@@ -98,14 +98,14 @@ export default function NotifScreen({ nav }: { nav: (s: Screen) => void }) {
               style={{
                 fontSize: 28,
                 fontWeight: 800,
-                color: '#1E293B',
+                color: 'var(--pf-ink)',
                 letterSpacing: '-.6px',
                 marginBottom: 4,
               }}
             >
               Alerts
             </h1>
-            <p style={{ fontSize: 14, color: '#64748B' }}>
+            <p style={{ fontSize: 14, color: 'var(--pf-ink-muted)' }}>
               {loading
                 ? 'Loading…'
                 : reports.length === 0
@@ -120,24 +120,29 @@ export default function NotifScreen({ nav }: { nav: (s: Screen) => void }) {
                 <div
                   key={i}
                   style={{
-                    background: '#fff',
+                    background: 'var(--pf-surface)',
                     borderRadius: 16,
                     padding: 20,
-                    border: '1px solid #F1F5F9',
+                    border: '1px solid var(--pf-border)',
                     animation: 'pulse 1.5s ease-in-out infinite',
                   }}
                 >
                   <div
                     style={{
                       height: 14,
-                      background: '#F1F5F9',
+                      background: 'var(--pf-border)',
                       borderRadius: 6,
                       width: '50%',
                       marginBottom: 10,
                     }}
                   />
                   <div
-                    style={{ height: 12, background: '#F1F5F9', borderRadius: 6, width: '80%' }}
+                    style={{
+                      height: 12,
+                      background: 'var(--pf-border)',
+                      borderRadius: 6,
+                      width: '80%',
+                    }}
                   />
                 </div>
               ))}
@@ -149,9 +154,9 @@ export default function NotifScreen({ nav }: { nav: (s: Screen) => void }) {
               style={{
                 textAlign: 'center',
                 padding: '60px 32px',
-                background: '#fff',
+                background: 'var(--pf-surface)',
                 borderRadius: 20,
-                border: '1px solid #F1F5F9',
+                border: '1px solid var(--pf-border)',
               }}
             >
               <div
@@ -159,7 +164,7 @@ export default function NotifScreen({ nav }: { nav: (s: Screen) => void }) {
                   width: 80,
                   height: 80,
                   borderRadius: '50%',
-                  background: '#EDE9FE',
+                  background: 'var(--pf-purple-tint)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -171,7 +176,7 @@ export default function NotifScreen({ nav }: { nav: (s: Screen) => void }) {
                   height={36}
                   viewBox="0 0 24 24"
                   fill="none"
-                  stroke="#8B5CF6"
+                  stroke="var(--pf-purple)"
                   strokeWidth={2}
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -180,10 +185,12 @@ export default function NotifScreen({ nav }: { nav: (s: Screen) => void }) {
                   <path d="M13.73 21a2 2 0 0 1-3.46 0" />
                 </svg>
               </div>
-              <h2 style={{ fontSize: 20, fontWeight: 700, color: '#1E293B', marginBottom: 8 }}>
+              <h2
+                style={{ fontSize: 20, fontWeight: 700, color: 'var(--pf-ink)', marginBottom: 8 }}
+              >
                 All caught up!
               </h2>
-              <p style={{ fontSize: 14, color: '#94A3B8', lineHeight: 1.6 }}>
+              <p style={{ fontSize: 14, color: 'var(--pf-ink-subtle)', lineHeight: 1.6 }}>
                 No reports yet. We&apos;ll notify you when someone finds your pet.
               </p>
             </div>
@@ -195,9 +202,9 @@ export default function NotifScreen({ nav }: { nav: (s: Screen) => void }) {
                 <div
                   key={r.id}
                   style={{
-                    background: '#fff',
+                    background: 'var(--pf-surface)',
                     borderRadius: 18,
-                    border: '1px solid #F1F5F9',
+                    border: '1px solid var(--pf-border)',
                     boxShadow: '0 2px 10px rgba(0,0,0,.04)',
                     overflow: 'hidden',
                   }}
@@ -205,7 +212,8 @@ export default function NotifScreen({ nav }: { nav: (s: Screen) => void }) {
                   {/* Header */}
                   <div
                     style={{
-                      background: 'linear-gradient(135deg,#EDE9FE,#F5F3FF)',
+                      background:
+                        'linear-gradient(135deg,var(--pf-purple-tint),var(--pf-purple-bg))',
                       padding: '14px 20px',
                       display: 'flex',
                       justifyContent: 'space-between',
@@ -214,11 +222,13 @@ export default function NotifScreen({ nav }: { nav: (s: Screen) => void }) {
                   >
                     <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                       <span style={{ fontSize: 16 }}>🐾</span>
-                      <span style={{ fontSize: 13, fontWeight: 700, color: '#7C3AED' }}>
+                      <span
+                        style={{ fontSize: 13, fontWeight: 700, color: 'var(--pf-purple-dark)' }}
+                      >
                         Someone found <strong>{r.pet_name}</strong>!
                       </span>
                     </div>
-                    <span style={{ fontSize: 11, color: '#94A3B8', fontWeight: 500 }}>
+                    <span style={{ fontSize: 11, color: 'var(--pf-ink-subtle)', fontWeight: 500 }}>
                       {timeAgo(r.created_at)}
                     </span>
                   </div>
@@ -233,16 +243,30 @@ export default function NotifScreen({ nav }: { nav: (s: Screen) => void }) {
                     }}
                   >
                     <div style={{ display: 'flex', gap: 8 }}>
-                      <span style={{ fontSize: 12, color: '#94A3B8', width: 60, flexShrink: 0 }}>
+                      <span
+                        style={{
+                          fontSize: 12,
+                          color: 'var(--pf-ink-subtle)',
+                          width: 60,
+                          flexShrink: 0,
+                        }}
+                      >
                         Finder
                       </span>
-                      <span style={{ fontSize: 13, fontWeight: 600, color: '#1E293B' }}>
+                      <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--pf-ink)' }}>
                         {r.finder_name}
                       </span>
                     </div>
                     {r.finder_phone && (
                       <div style={{ display: 'flex', gap: 8 }}>
-                        <span style={{ fontSize: 12, color: '#94A3B8', width: 60, flexShrink: 0 }}>
+                        <span
+                          style={{
+                            fontSize: 12,
+                            color: 'var(--pf-ink-subtle)',
+                            width: 60,
+                            flexShrink: 0,
+                          }}
+                        >
                           Phone
                         </span>
                         <a
@@ -250,7 +274,7 @@ export default function NotifScreen({ nav }: { nav: (s: Screen) => void }) {
                           style={{
                             fontSize: 13,
                             fontWeight: 600,
-                            color: '#8B5CF6',
+                            color: 'var(--pf-purple)',
                             textDecoration: 'none',
                           }}
                         >
@@ -260,7 +284,14 @@ export default function NotifScreen({ nav }: { nav: (s: Screen) => void }) {
                     )}
                     {r.location && (
                       <div style={{ display: 'flex', gap: 8 }}>
-                        <span style={{ fontSize: 12, color: '#94A3B8', width: 60, flexShrink: 0 }}>
+                        <span
+                          style={{
+                            fontSize: 12,
+                            color: 'var(--pf-ink-subtle)',
+                            width: 60,
+                            flexShrink: 0,
+                          }}
+                        >
                           Location
                         </span>
                         <span style={{ fontSize: 13, color: '#475569' }}>{r.location}</span>
@@ -271,7 +302,7 @@ export default function NotifScreen({ nav }: { nav: (s: Screen) => void }) {
                         style={{
                           marginTop: 8,
                           padding: '10px 14px',
-                          background: '#F8FAFC',
+                          background: 'var(--pf-bg)',
                           borderRadius: 10,
                           fontSize: 13,
                           color: '#475569',
@@ -294,8 +325,9 @@ export default function NotifScreen({ nav }: { nav: (s: Screen) => void }) {
                           marginTop: 10,
                           padding: '11px',
                           borderRadius: 12,
-                          background: 'linear-gradient(135deg,#A78BFA,#8B5CF6)',
-                          color: '#fff',
+                          background:
+                            'linear-gradient(135deg,var(--pf-purple-light),var(--pf-purple))',
+                          color: 'var(--pf-surface)',
                           textDecoration: 'none',
                           fontSize: 13,
                           fontWeight: 700,

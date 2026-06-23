@@ -37,7 +37,7 @@ const DEMO_PETS = [
     breed: 'Shih Tzu',
     age: '2 Years Old',
     status: 'safe',
-    color: '#8B5CF6',
+    color: 'var(--pf-purple)',
     emoji: '🐶',
     ownerName: 'Rahul Sharma',
     phone: '+91 90123 45678',
@@ -77,7 +77,7 @@ export default function DemoProfilesScreen({ nav }: { nav: (s: Screen) => void }
           display: 'flex',
           flexDirection: 'column',
           minHeight: '100dvh',
-          background: '#F8FAFC',
+          background: 'var(--pf-bg)',
         }}
       >
         <TopNav active="home" onNav={nav} />
@@ -90,7 +90,7 @@ export default function DemoProfilesScreen({ nav }: { nav: (s: Screen) => void }
                 gap: 8,
                 marginBottom: 28,
                 fontSize: 14,
-                color: '#94A3B8',
+                color: 'var(--pf-ink-subtle)',
               }}
             >
               <button
@@ -99,7 +99,7 @@ export default function DemoProfilesScreen({ nav }: { nav: (s: Screen) => void }
                   background: 'none',
                   border: 'none',
                   cursor: 'pointer',
-                  color: '#8B5CF6',
+                  color: 'var(--pf-purple)',
                   fontWeight: 600,
                   fontSize: 14,
                   fontFamily: 'Inter, sans-serif',
@@ -108,7 +108,7 @@ export default function DemoProfilesScreen({ nav }: { nav: (s: Screen) => void }
                 Demo Profiles
               </button>
               <span>›</span>
-              <span style={{ color: '#1E293B', fontWeight: 600 }}>{selected.pet_name}</span>
+              <span style={{ color: 'var(--pf-ink)', fontWeight: 600 }}>{selected.pet_name}</span>
               <span
                 style={{
                   marginLeft: 8,
@@ -167,17 +167,17 @@ export default function DemoProfilesScreen({ nav }: { nav: (s: Screen) => void }
                         style={{
                           fontSize: 28,
                           fontWeight: 800,
-                          color: '#8B5CF6',
+                          color: 'var(--pf-purple)',
                           letterSpacing: '-.5px',
                           marginBottom: 4,
                         }}
                       >
                         {selected.pet_name}
                       </h1>
-                      <p style={{ fontSize: 15, color: '#64748B', marginBottom: 2 }}>
+                      <p style={{ fontSize: 15, color: 'var(--pf-ink-muted)', marginBottom: 2 }}>
                         {selected.breed}
                       </p>
-                      <p style={{ fontSize: 13, color: '#94A3B8', marginBottom: 10 }}>
+                      <p style={{ fontSize: 13, color: 'var(--pf-ink-subtle)', marginBottom: 10 }}>
                         {selected.age}
                       </p>
                       <PfBadge>ID: {selected.pet_id}</PfBadge>
@@ -186,7 +186,14 @@ export default function DemoProfilesScreen({ nav }: { nav: (s: Screen) => void }
                 </PfCard>
 
                 <PfCard style={{ padding: '20px 24px' }}>
-                  <h3 style={{ fontSize: 15, fontWeight: 700, color: '#1E293B', marginBottom: 16 }}>
+                  <h3
+                    style={{
+                      fontSize: 15,
+                      fontWeight: 700,
+                      color: 'var(--pf-ink)',
+                      marginBottom: 16,
+                    }}
+                  >
                     Pet Information
                   </h3>
                   {[
@@ -206,19 +213,24 @@ export default function DemoProfilesScreen({ nav }: { nav: (s: Screen) => void }
                         justifyContent: 'space-between',
                         alignItems: 'flex-start',
                         padding: '10px 0',
-                        borderBottom: '1px solid #F8FAFC',
+                        borderBottom: '1px solid var(--pf-bg)',
                         gap: isMobile ? 2 : 0,
                       }}
                     >
                       <span
-                        style={{ fontSize: 12, color: '#94A3B8', fontWeight: 500, flexShrink: 0 }}
+                        style={{
+                          fontSize: 12,
+                          color: 'var(--pf-ink-subtle)',
+                          fontWeight: 500,
+                          flexShrink: 0,
+                        }}
                       >
                         {label}
                       </span>
                       <span
                         style={{
                           fontSize: 13.5,
-                          color: '#1E293B',
+                          color: 'var(--pf-ink)',
                           fontWeight: 500,
                           textAlign: isMobile ? 'left' : 'right',
                           whiteSpace: 'pre-line',
@@ -233,13 +245,20 @@ export default function DemoProfilesScreen({ nav }: { nav: (s: Screen) => void }
 
               <div>
                 <PfCard style={{ padding: 32, textAlign: 'center' }}>
-                  <h3 style={{ fontSize: 16, fontWeight: 700, color: '#1E293B', marginBottom: 20 }}>
+                  <h3
+                    style={{
+                      fontSize: 16,
+                      fontWeight: 700,
+                      color: 'var(--pf-ink)',
+                      marginBottom: 20,
+                    }}
+                  >
                     QR Code Tag
                   </h3>
                   <div
                     style={{
                       display: 'inline-block',
-                      border: '1.5px solid #EDE9FE',
+                      border: '1.5px solid var(--pf-purple-tint)',
                       borderRadius: 20,
                       padding: 16,
                       background: '#FAFAFF',
@@ -250,11 +269,11 @@ export default function DemoProfilesScreen({ nav }: { nav: (s: Screen) => void }
                       value={qrUrl}
                       size={200}
                       bgColor="#FAFAFF"
-                      fgColor="#1E293B"
+                      fgColor="var(--pf-ink)"
                       level="M"
                     />
                   </div>
-                  <p style={{ fontSize: 13, color: '#94A3B8', marginBottom: 8 }}>
+                  <p style={{ fontSize: 13, color: 'var(--pf-ink-subtle)', marginBottom: 8 }}>
                     This is a demo QR. Real pets get their own unique code.
                   </p>
                   <div
@@ -285,7 +304,7 @@ export default function DemoProfilesScreen({ nav }: { nav: (s: Screen) => void }
         display: 'flex',
         flexDirection: 'column',
         minHeight: '100dvh',
-        background: '#F8FAFC',
+        background: 'var(--pf-bg)',
       }}
     >
       <TopNav active="home" onNav={nav} />
@@ -298,7 +317,7 @@ export default function DemoProfilesScreen({ nav }: { nav: (s: Screen) => void }
               gap: 8,
               marginBottom: 28,
               fontSize: 14,
-              color: '#94A3B8',
+              color: 'var(--pf-ink-subtle)',
             }}
           >
             <button
@@ -307,7 +326,7 @@ export default function DemoProfilesScreen({ nav }: { nav: (s: Screen) => void }
                 background: 'none',
                 border: 'none',
                 cursor: 'pointer',
-                color: '#8B5CF6',
+                color: 'var(--pf-purple)',
                 fontWeight: 600,
                 fontSize: 14,
                 fontFamily: 'Inter, sans-serif',
@@ -316,7 +335,7 @@ export default function DemoProfilesScreen({ nav }: { nav: (s: Screen) => void }
               Home
             </button>
             <span>›</span>
-            <span style={{ color: '#1E293B', fontWeight: 600 }}>Demo Profiles</span>
+            <span style={{ color: 'var(--pf-ink)', fontWeight: 600 }}>Demo Profiles</span>
           </div>
 
           <div style={{ marginBottom: 36 }}>
@@ -337,14 +356,14 @@ export default function DemoProfilesScreen({ nav }: { nav: (s: Screen) => void }
               style={{
                 fontSize: 32,
                 fontWeight: 800,
-                color: '#1E293B',
+                color: 'var(--pf-ink)',
                 letterSpacing: '-.8px',
                 marginBottom: 6,
               }}
             >
               Demo Pet Profiles
             </h1>
-            <p style={{ fontSize: 15, color: '#64748B' }}>
+            <p style={{ fontSize: 15, color: 'var(--pf-ink-muted)' }}>
               Click any pet to see what their QR profile looks like when scanned.
             </p>
           </div>
@@ -379,14 +398,21 @@ export default function DemoProfilesScreen({ nav }: { nav: (s: Screen) => void }
                   </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div
-                      style={{ fontSize: 20, fontWeight: 700, color: '#8B5CF6', marginBottom: 3 }}
+                      style={{
+                        fontSize: 20,
+                        fontWeight: 700,
+                        color: 'var(--pf-purple)',
+                        marginBottom: 3,
+                      }}
                     >
                       {pet.pet_name}
                     </div>
-                    <div style={{ fontSize: 14, color: '#64748B', marginBottom: 2 }}>
+                    <div style={{ fontSize: 14, color: 'var(--pf-ink-muted)', marginBottom: 2 }}>
                       {pet.breed}
                     </div>
-                    <div style={{ fontSize: 13, color: '#94A3B8', marginBottom: 8 }}>{pet.age}</div>
+                    <div style={{ fontSize: 13, color: 'var(--pf-ink-subtle)', marginBottom: 8 }}>
+                      {pet.age}
+                    </div>
                     <PfBadge>ID: {pet.pet_id}</PfBadge>
                   </div>
                 </div>
@@ -397,12 +423,12 @@ export default function DemoProfilesScreen({ nav }: { nav: (s: Screen) => void }
                     width: '100%',
                     padding: '10px',
                     borderRadius: 12,
-                    background: '#F5F3FF',
+                    background: 'var(--pf-purple-bg)',
                     border: 'none',
                     cursor: 'pointer',
                     fontSize: 13,
                     fontWeight: 600,
-                    color: '#7C3AED',
+                    color: 'var(--pf-purple-dark)',
                     fontFamily: 'Inter, sans-serif',
                   }}
                 >
@@ -416,7 +442,7 @@ export default function DemoProfilesScreen({ nav }: { nav: (s: Screen) => void }
             style={{
               marginTop: 32,
               padding: '20px 24px',
-              background: 'linear-gradient(135deg,#EDE9FE,#F5F3FF)',
+              background: 'linear-gradient(135deg,var(--pf-purple-tint),var(--pf-purple-bg))',
               borderRadius: 16,
               display: 'flex',
               flexDirection: isMobile ? 'column' : 'row',
@@ -424,12 +450,19 @@ export default function DemoProfilesScreen({ nav }: { nav: (s: Screen) => void }
               gap: 16,
             }}
           >
-            <PawIcon size={28} color="#8B5CF6" />
+            <PawIcon size={28} color="var(--pf-purple)" />
             <div>
-              <p style={{ fontSize: 14, fontWeight: 700, color: '#7C3AED', marginBottom: 4 }}>
+              <p
+                style={{
+                  fontSize: 14,
+                  fontWeight: 700,
+                  color: 'var(--pf-purple-dark)',
+                  marginBottom: 4,
+                }}
+              >
                 Ready to register your pet?
               </p>
-              <p style={{ fontSize: 13, color: '#64748B' }}>
+              <p style={{ fontSize: 13, color: 'var(--pf-ink-muted)' }}>
                 Get a real QR tag for your pet in under 2 minutes.
               </p>
             </div>
@@ -440,8 +473,8 @@ export default function DemoProfilesScreen({ nav }: { nav: (s: Screen) => void }
                 width: isMobile ? '100%' : 'auto',
                 padding: '10px 22px',
                 borderRadius: 100,
-                background: 'linear-gradient(135deg,#A78BFA,#8B5CF6)',
-                color: '#fff',
+                background: 'linear-gradient(135deg,var(--pf-purple-light),var(--pf-purple))',
+                color: 'var(--pf-surface)',
                 border: 'none',
                 cursor: 'pointer',
                 fontSize: 14,

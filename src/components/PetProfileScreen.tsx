@@ -91,7 +91,7 @@ export default function PetProfileScreen({
           display: 'flex',
           flexDirection: 'column',
           minHeight: '100dvh',
-          background: '#F8FAFC',
+          background: 'var(--pf-bg)',
         }}
       >
         <TopNav active="pets" onNav={nav} />
@@ -101,7 +101,7 @@ export default function PetProfileScreen({
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            color: '#94A3B8',
+            color: 'var(--pf-ink-subtle)',
             fontSize: 15,
           }}
         >
@@ -117,7 +117,7 @@ export default function PetProfileScreen({
           display: 'flex',
           flexDirection: 'column',
           minHeight: '100dvh',
-          background: '#F8FAFC',
+          background: 'var(--pf-bg)',
         }}
       >
         <TopNav active="pets" onNav={nav} />
@@ -129,7 +129,7 @@ export default function PetProfileScreen({
             justifyContent: 'center',
             flexDirection: 'column',
             gap: 12,
-            color: '#94A3B8',
+            color: 'var(--pf-ink-subtle)',
             fontSize: 15,
           }}
         >
@@ -137,7 +137,7 @@ export default function PetProfileScreen({
           <button
             onClick={() => nav('pets')}
             style={{
-              color: '#8B5CF6',
+              color: 'var(--pf-purple)',
               background: 'none',
               border: 'none',
               cursor: 'pointer',
@@ -169,7 +169,7 @@ export default function PetProfileScreen({
         display: 'flex',
         flexDirection: 'column',
         minHeight: '100dvh',
-        background: '#F8FAFC',
+        background: 'var(--pf-bg)',
       }}
     >
       <TopNav active="pets" onNav={nav} />
@@ -183,7 +183,7 @@ export default function PetProfileScreen({
               gap: 8,
               marginBottom: 28,
               fontSize: 14,
-              color: '#94A3B8',
+              color: 'var(--pf-ink-subtle)',
             }}
           >
             <button
@@ -192,7 +192,7 @@ export default function PetProfileScreen({
                 background: 'none',
                 border: 'none',
                 cursor: 'pointer',
-                color: '#8B5CF6',
+                color: 'var(--pf-purple)',
                 fontWeight: 600,
                 fontSize: 14,
                 fontFamily: 'Inter, sans-serif',
@@ -201,7 +201,7 @@ export default function PetProfileScreen({
               My Pets
             </button>
             <span>›</span>
-            <span style={{ color: '#1E293B', fontWeight: 600 }}>{pet.pet_name}</span>
+            <span style={{ color: 'var(--pf-ink)', fontWeight: 600 }}>{pet.pet_name}</span>
           </div>
 
           <div
@@ -217,13 +217,14 @@ export default function PetProfileScreen({
                         width: 96,
                         height: 96,
                         borderRadius: '50%',
-                        background: 'linear-gradient(135deg,#EDE9FE,#DDD6FE)',
+                        background:
+                          'linear-gradient(135deg,var(--pf-purple-tint),var(--pf-purple-muted))',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
                       }}
                     >
-                      <svg width={48} height={48} viewBox="0 0 24 24" fill="#8B5CF6">
+                      <svg width={48} height={48} viewBox="0 0 24 24" fill="var(--pf-purple)">
                         <path d="M4.5 10.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm15 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM9 6a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm6 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM12 22c-4 0-7-2.5-7-6 0-2 1.5-4 3.5-5s3.5-1 3.5-1 1.5 0 3.5 1 3.5 3 3.5 5c0 3.5-3 6-7 6z" />
                       </svg>
                     </div>
@@ -245,7 +246,7 @@ export default function PetProfileScreen({
                       style={{
                         fontSize: 28,
                         fontWeight: 800,
-                        color: '#8B5CF6',
+                        color: 'var(--pf-purple)',
                         letterSpacing: '-.5px',
                         marginBottom: 4,
                       }}
@@ -253,10 +254,14 @@ export default function PetProfileScreen({
                       {pet.pet_name}
                     </h1>
                     {pet.breed && (
-                      <p style={{ fontSize: 15, color: '#64748B', marginBottom: 2 }}>{pet.breed}</p>
+                      <p style={{ fontSize: 15, color: 'var(--pf-ink-muted)', marginBottom: 2 }}>
+                        {pet.breed}
+                      </p>
                     )}
                     {pet.age && (
-                      <p style={{ fontSize: 13, color: '#94A3B8', marginBottom: 10 }}>{pet.age}</p>
+                      <p style={{ fontSize: 13, color: 'var(--pf-ink-subtle)', marginBottom: 10 }}>
+                        {pet.age}
+                      </p>
                     )}
                     <PfBadge>ID: {pet.pet_id}</PfBadge>
                   </div>
@@ -264,7 +269,14 @@ export default function PetProfileScreen({
               </PfCard>
 
               <PfCard style={{ padding: '20px 24px' }}>
-                <h3 style={{ fontSize: 15, fontWeight: 700, color: '#1E293B', marginBottom: 16 }}>
+                <h3
+                  style={{
+                    fontSize: 15,
+                    fontWeight: 700,
+                    color: 'var(--pf-ink)',
+                    marginBottom: 16,
+                  }}
+                >
                   Pet Information
                 </h3>
                 {infoRows.map(({ label, value, icon }) => (
@@ -276,12 +288,17 @@ export default function PetProfileScreen({
                       justifyContent: 'space-between',
                       alignItems: 'flex-start',
                       padding: '10px 0',
-                      borderBottom: '1px solid #F8FAFC',
+                      borderBottom: '1px solid var(--pf-bg)',
                       gap: isMobile ? 2 : 0,
                     }}
                   >
                     <span
-                      style={{ fontSize: 12, color: '#94A3B8', fontWeight: 500, flexShrink: 0 }}
+                      style={{
+                        fontSize: 12,
+                        color: 'var(--pf-ink-subtle)',
+                        fontWeight: 500,
+                        flexShrink: 0,
+                      }}
                     >
                       {label}
                     </span>
@@ -296,7 +313,7 @@ export default function PetProfileScreen({
                       <span
                         style={{
                           fontSize: 13.5,
-                          color: '#1E293B',
+                          color: 'var(--pf-ink)',
                           fontWeight: 500,
                           textAlign: isMobile ? 'left' : 'right',
                           whiteSpace: 'pre-line',
@@ -312,10 +329,10 @@ export default function PetProfileScreen({
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
                 <PfBtn variant="secondary" small>
-                  <IcoEdit size={14} color="#8B5CF6" /> Edit Profile
+                  <IcoEdit size={14} color="var(--pf-purple)" /> Edit Profile
                 </PfBtn>
                 <PfBtn variant="primary" small>
-                  <IcoShare size={14} color="#fff" /> Share Profile
+                  <IcoShare size={14} color="var(--pf-surface)" /> Share Profile
                 </PfBtn>
               </div>
             </div>
@@ -323,13 +340,20 @@ export default function PetProfileScreen({
             {/* Right — QR code */}
             <div>
               <PfCard style={{ padding: 32, textAlign: 'center' }}>
-                <h3 style={{ fontSize: 16, fontWeight: 700, color: '#1E293B', marginBottom: 20 }}>
+                <h3
+                  style={{
+                    fontSize: 16,
+                    fontWeight: 700,
+                    color: 'var(--pf-ink)',
+                    marginBottom: 20,
+                  }}
+                >
                   QR Code Tag
                 </h3>
                 <div
                   style={{
                     display: 'inline-block',
-                    border: '1.5px solid #EDE9FE',
+                    border: '1.5px solid var(--pf-purple-tint)',
                     borderRadius: 20,
                     padding: 16,
                     background: '#FAFAFF',
@@ -342,7 +366,7 @@ export default function PetProfileScreen({
                       value={qrUrl}
                       size={200}
                       bgColor="#FAFAFF"
-                      fgColor="#1E293B"
+                      fgColor="var(--pf-ink)"
                       level="M"
                     />
                   ) : (
@@ -350,12 +374,12 @@ export default function PetProfileScreen({
                       style={{
                         width: 200,
                         height: 200,
-                        background: '#EDE9FE',
+                        background: 'var(--pf-purple-tint)',
                         borderRadius: 12,
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        color: '#94A3B8',
+                        color: 'var(--pf-ink-subtle)',
                         fontSize: 13,
                       }}
                     >
@@ -363,7 +387,7 @@ export default function PetProfileScreen({
                     </div>
                   )}
                 </div>
-                <p style={{ fontSize: 13, color: '#94A3B8', marginBottom: 16 }}>
+                <p style={{ fontSize: 13, color: 'var(--pf-ink-subtle)', marginBottom: 16 }}>
                   Anyone can scan this to view {pet.pet_name}&apos;s profile and reach you instantly
                 </p>
                 <button
@@ -374,8 +398,8 @@ export default function PetProfileScreen({
                     gap: 6,
                     padding: '10px 24px',
                     borderRadius: 100,
-                    background: 'linear-gradient(135deg,#A78BFA,#8B5CF6)',
-                    color: '#fff',
+                    background: 'linear-gradient(135deg,var(--pf-purple-light),var(--pf-purple))',
+                    color: 'var(--pf-surface)',
                     border: 'none',
                     cursor: 'pointer',
                     fontSize: 14,
@@ -384,7 +408,7 @@ export default function PetProfileScreen({
                     boxShadow: '0 4px 14px rgba(139,92,246,.3)',
                   }}
                 >
-                  <IcoDownload size={14} color="#fff" /> Download QR
+                  <IcoDownload size={14} color="var(--pf-surface)" /> Download QR
                 </button>
               </PfCard>
             </div>

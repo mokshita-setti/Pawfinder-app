@@ -125,7 +125,7 @@ export default function RegisterScreen({ nav }: { nav: (s: Screen) => void }) {
           minHeight: '100dvh',
           display: 'flex',
           flexDirection: 'column',
-          background: '#F8FAFC',
+          background: 'var(--pf-bg)',
         }}
       >
         <TopNav active="register" onNav={nav} />
@@ -146,7 +146,7 @@ export default function RegisterScreen({ nav }: { nav: (s: Screen) => void }) {
               width: 96,
               height: 96,
               borderRadius: '50%',
-              background: 'linear-gradient(135deg,#EDE9FE,#DDD6FE)',
+              background: 'linear-gradient(135deg,var(--pf-purple-tint),var(--pf-purple-muted))',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -155,10 +155,17 @@ export default function RegisterScreen({ nav }: { nav: (s: Screen) => void }) {
           >
             <IcoCheck size={52} />
           </div>
-          <h2 style={{ fontSize: 28, fontWeight: 800, color: '#1E293B', letterSpacing: '-.5px' }}>
+          <h2
+            style={{
+              fontSize: 28,
+              fontWeight: 800,
+              color: 'var(--pf-ink)',
+              letterSpacing: '-.5px',
+            }}
+          >
             Pet Registered!
           </h2>
-          <p style={{ fontSize: 15, color: '#64748B' }}>Taking you to your pets…</p>
+          <p style={{ fontSize: 15, color: 'var(--pf-ink-muted)' }}>Taking you to your pets…</p>
         </div>
       </div>
     );
@@ -169,7 +176,7 @@ export default function RegisterScreen({ nav }: { nav: (s: Screen) => void }) {
         display: 'flex',
         flexDirection: 'column',
         minHeight: '100dvh',
-        background: '#F8FAFC',
+        background: 'var(--pf-bg)',
       }}
     >
       <TopNav active="register" onNav={nav} />
@@ -181,14 +188,14 @@ export default function RegisterScreen({ nav }: { nav: (s: Screen) => void }) {
               style={{
                 fontSize: 32,
                 fontWeight: 800,
-                color: '#1E293B',
+                color: 'var(--pf-ink)',
                 letterSpacing: '-.8px',
                 marginBottom: 6,
               }}
             >
               Register Your Pet
             </h1>
-            <p style={{ fontSize: 15, color: '#64748B' }}>
+            <p style={{ fontSize: 15, color: 'var(--pf-ink-muted)' }}>
               Create a profile for your pet in minutes.
             </p>
           </div>
@@ -222,10 +229,10 @@ export default function RegisterScreen({ nav }: { nav: (s: Screen) => void }) {
                 style={{
                   fontSize: 16,
                   fontWeight: 700,
-                  color: '#1E293B',
+                  color: 'var(--pf-ink)',
                   marginBottom: 20,
                   paddingBottom: 12,
-                  borderBottom: '1px solid #F1F5F9',
+                  borderBottom: '1px solid var(--pf-border)',
                 }}
               >
                 Pet Information
@@ -257,11 +264,12 @@ export default function RegisterScreen({ nav }: { nav: (s: Screen) => void }) {
                     display: 'block',
                     fontSize: 12.5,
                     fontWeight: 600,
-                    color: '#1E293B',
+                    color: 'var(--pf-ink)',
                     marginBottom: 6,
                   }}
                 >
-                  Pet Photo <span style={{ color: '#94A3B8', fontWeight: 400 }}>(Optional)</span>
+                  Pet Photo{' '}
+                  <span style={{ color: 'var(--pf-ink-subtle)', fontWeight: 400 }}>(Optional)</span>
                 </label>
                 <input
                   ref={fileRef}
@@ -278,7 +286,7 @@ export default function RegisterScreen({ nav }: { nav: (s: Screen) => void }) {
                 <div
                   onClick={() => fileRef.current?.click()}
                   style={{
-                    border: '2px dashed #DDD6FE',
+                    border: '2px dashed var(--pf-purple-muted)',
                     borderRadius: 16,
                     padding: '32px 24px',
                     textAlign: 'center',
@@ -297,29 +305,31 @@ export default function RegisterScreen({ nav }: { nav: (s: Screen) => void }) {
                           height: 80,
                           borderRadius: '50%',
                           objectFit: 'cover',
-                          border: '3px solid #DDD6FE',
+                          border: '3px solid var(--pf-purple-muted)',
                           marginBottom: 8,
                         }}
                       />
-                      <p style={{ fontSize: 12, color: '#8B5CF6', fontWeight: 600 }}>
+                      <p style={{ fontSize: 12, color: 'var(--pf-purple)', fontWeight: 600 }}>
                         Tap to change
                       </p>
                     </>
                   ) : (
                     <>
-                      <IcoUpload size={28} color="#A78BFA" />
+                      <IcoUpload size={28} color="var(--pf-purple-light)" />
                       <p
                         style={{
                           fontSize: 14,
                           fontWeight: 600,
-                          color: '#8B5CF6',
+                          color: 'var(--pf-purple)',
                           marginTop: 8,
                           marginBottom: 3,
                         }}
                       >
                         Upload Photo
                       </p>
-                      <p style={{ fontSize: 12, color: '#94A3B8' }}>JPG, PNG up to 5MB</p>
+                      <p style={{ fontSize: 12, color: 'var(--pf-ink-subtle)' }}>
+                        JPG, PNG up to 5MB
+                      </p>
                     </>
                   )}
                 </div>
@@ -332,10 +342,10 @@ export default function RegisterScreen({ nav }: { nav: (s: Screen) => void }) {
                 style={{
                   fontSize: 16,
                   fontWeight: 700,
-                  color: '#1E293B',
+                  color: 'var(--pf-ink)',
                   marginBottom: 20,
                   paddingBottom: 12,
-                  borderBottom: '1px solid #F1F5F9',
+                  borderBottom: '1px solid var(--pf-border)',
                 }}
               >
                 Owner & Contact Details
@@ -370,25 +380,25 @@ export default function RegisterScreen({ nav }: { nav: (s: Screen) => void }) {
               <div
                 style={{
                   marginTop: 24,
-                  background: 'linear-gradient(135deg,#EDE9FE,#F5F3FF)',
+                  background: 'linear-gradient(135deg,var(--pf-purple-tint),var(--pf-purple-bg))',
                   borderRadius: 16,
                   padding: '24px 20px',
                   textAlign: 'center',
                 }}
               >
-                <PawIcon size={28} color="#8B5CF6" />
+                <PawIcon size={28} color="var(--pf-purple)" />
                 <p
                   style={{
                     fontSize: 14,
                     fontWeight: 700,
-                    color: '#7C3AED',
+                    color: 'var(--pf-purple-dark)',
                     marginTop: 10,
                     marginBottom: 6,
                   }}
                 >
                   Your pet gets a unique QR tag
                 </p>
-                <p style={{ fontSize: 13, color: '#64748B', lineHeight: 1.6 }}>
+                <p style={{ fontSize: 13, color: 'var(--pf-ink-muted)', lineHeight: 1.6 }}>
                   Once registered, download and print your pet&apos;s QR code to attach to their
                   collar.
                 </p>
@@ -396,7 +406,8 @@ export default function RegisterScreen({ nav }: { nav: (s: Screen) => void }) {
 
               <div style={{ marginTop: 28 }}>
                 <PfBtn variant="primary" onClick={handleRegister} disabled={loading}>
-                  <PawIcon size={15} color="#fff" /> {loading ? 'Registering…' : 'Register Pet'}
+                  <PawIcon size={15} color="var(--pf-surface)" />{' '}
+                  {loading ? 'Registering…' : 'Register Pet'}
                 </PfBtn>
               </div>
             </div>
