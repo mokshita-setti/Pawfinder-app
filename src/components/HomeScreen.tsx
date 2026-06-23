@@ -47,7 +47,7 @@ export default function HomeScreen({ nav }: { nav: (s: Screen) => void }) {
         display: 'flex',
         flexDirection: 'column',
         minHeight: '100dvh',
-        background: '#F8FAFC',
+        background: 'var(--pf-bg)',
         overflowX: 'hidden',
       }}
     >
@@ -68,22 +68,31 @@ export default function HomeScreen({ nav }: { nav: (s: Screen) => void }) {
         }}
       >
         {/* Logo */}
-        <div
-          style={{ display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer' }}
+        <button
+          aria-label="Go to home"
           onClick={() => nav('home')}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 10,
+            cursor: 'pointer',
+            background: 'none',
+            border: 'none',
+            padding: 0,
+          }}
         >
           <PawFinderLogo size={36} hideText />
           <span
             style={{
               fontSize: isMobile ? 17 : 20,
               fontWeight: 800,
-              color: '#7C3AED',
+              color: 'var(--pf-purple-dark)',
               letterSpacing: '-.5px',
             }}
           >
             PawFinder
           </span>
-        </div>
+        </button>
 
         {/* Nav items — hidden on mobile */}
         {!isMobile && (
@@ -107,18 +116,18 @@ export default function HomeScreen({ nav }: { nav: (s: Screen) => void }) {
                   border: 'none',
                   fontSize: 14,
                   fontWeight: 500,
-                  color: '#64748B',
+                  color: 'var(--pf-ink-muted)',
                   cursor: 'pointer',
                   transition: 'all .15s',
                   fontFamily: 'Inter, sans-serif',
                 }}
                 onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLButtonElement).style.background = '#F5F3FF';
-                  (e.currentTarget as HTMLButtonElement).style.color = '#7C3AED';
+                  (e.currentTarget as HTMLButtonElement).style.background = 'var(--pf-purple-bg)';
+                  (e.currentTarget as HTMLButtonElement).style.color = 'var(--pf-purple-dark)';
                 }}
                 onMouseLeave={(e) => {
                   (e.currentTarget as HTMLButtonElement).style.background = 'transparent';
-                  (e.currentTarget as HTMLButtonElement).style.color = '#64748B';
+                  (e.currentTarget as HTMLButtonElement).style.color = 'var(--pf-ink-muted)';
                 }}
               >
                 <Icon active={false} />
@@ -163,7 +172,7 @@ export default function HomeScreen({ nav }: { nav: (s: Screen) => void }) {
               padding: '10px 22px',
               borderRadius: 100,
               background: 'linear-gradient(135deg,#A78BFA,#8B5CF6)',
-              color: '#fff',
+              color: 'var(--pf-surface)',
               border: 'none',
               fontSize: 14,
               fontWeight: 600,
@@ -212,14 +221,21 @@ export default function HomeScreen({ nav }: { nav: (s: Screen) => void }) {
                 style={{
                   fontSize: 22,
                   fontWeight: 800,
-                  color: '#8B5CF6',
+                  color: 'var(--pf-purple)',
                   letterSpacing: '-.5px',
                   lineHeight: 1,
                 }}
               >
                 PawFinder
               </div>
-              <div style={{ fontSize: 12, color: '#94A3B8', letterSpacing: '.4px', marginTop: 3 }}>
+              <div
+                style={{
+                  fontSize: 12,
+                  color: 'var(--pf-ink-subtle)',
+                  letterSpacing: '.4px',
+                  marginTop: 3,
+                }}
+              >
                 Scan. Identify. Reunite.
               </div>
             </div>
@@ -229,7 +245,7 @@ export default function HomeScreen({ nav }: { nav: (s: Screen) => void }) {
             style={{
               fontSize: isMobile ? 38 : 52,
               fontWeight: 900,
-              color: '#7C3AED',
+              color: 'var(--pf-purple-dark)',
               lineHeight: 1.1,
               letterSpacing: isMobile ? '-1px' : '-2px',
               marginBottom: 20,
@@ -249,9 +265,9 @@ export default function HomeScreen({ nav }: { nav: (s: Screen) => void }) {
             }}
           >
             PawFinder gives every pet a{' '}
-            <strong style={{ color: '#1E293B' }}>unique QR code tag</strong>. If your pet is ever
-            lost, anyone who finds them can scan the tag with any smartphone to instantly see your
-            contact info — no app needed.
+            <strong style={{ color: 'var(--pf-ink)' }}>unique QR code tag</strong>. If your pet is
+            ever lost, anyone who finds them can scan the tag with any smartphone to instantly see
+            your contact info — no app needed.
           </p>
 
           {/* CTA buttons */}
@@ -273,7 +289,7 @@ export default function HomeScreen({ nav }: { nav: (s: Screen) => void }) {
                 padding: '14px 28px',
                 borderRadius: 100,
                 background: 'linear-gradient(135deg,#A78BFA,#8B5CF6)',
-                color: '#fff',
+                color: 'var(--pf-surface)',
                 border: 'none',
                 fontSize: 15,
                 fontWeight: 600,
@@ -293,8 +309,8 @@ export default function HomeScreen({ nav }: { nav: (s: Screen) => void }) {
                 gap: 8,
                 padding: '14px 24px',
                 borderRadius: 100,
-                background: '#fff',
-                color: '#7C3AED',
+                background: 'var(--pf-surface)',
+                color: 'var(--pf-purple-dark)',
                 border: '1.5px solid #DDD6FE',
                 fontSize: 15,
                 fontWeight: 600,
@@ -329,8 +345,8 @@ export default function HomeScreen({ nav }: { nav: (s: Screen) => void }) {
                 gap: 8,
                 padding: '14px 24px',
                 borderRadius: 100,
-                background: '#fff',
-                color: '#64748B',
+                background: 'var(--pf-surface)',
+                color: 'var(--pf-ink-muted)',
                 border: '1.5px solid #E5E7EB',
                 fontSize: 15,
                 fontWeight: 600,
@@ -370,7 +386,7 @@ export default function HomeScreen({ nav }: { nav: (s: Screen) => void }) {
                 top: -16,
                 left: -20,
                 zIndex: 2,
-                background: '#fff',
+                background: 'var(--pf-surface)',
                 borderRadius: 20,
                 padding: '10px 16px',
                 boxShadow: '0 8px 24px rgba(0,0,0,.10)',
@@ -379,7 +395,7 @@ export default function HomeScreen({ nav }: { nav: (s: Screen) => void }) {
                 gap: 6,
                 fontSize: 14,
                 fontWeight: 700,
-                color: '#1E293B',
+                color: 'var(--pf-ink)',
                 whiteSpace: 'nowrap',
               }}
             >
@@ -395,7 +411,7 @@ export default function HomeScreen({ nav }: { nav: (s: Screen) => void }) {
                 bottom: 10,
                 right: -20,
                 zIndex: 2,
-                background: '#fff',
+                background: 'var(--pf-surface)',
                 borderRadius: 16,
                 padding: '12px 16px',
                 boxShadow: '0 8px 24px rgba(0,0,0,.10)',
@@ -437,27 +453,31 @@ export default function HomeScreen({ nav }: { nav: (s: Screen) => void }) {
       </section>
 
       {/* About PawFinder */}
-      <section style={{ padding: isMobile ? '40px 20px' : '64px 80px', background: '#fff' }}>
+      <section
+        style={{ padding: isMobile ? '40px 20px' : '64px 80px', background: 'var(--pf-surface)' }}
+      >
         <div style={{ maxWidth: 900, margin: '0 auto', textAlign: 'center' }}>
           <div
             style={{
               display: 'inline-flex',
               alignItems: 'center',
               gap: 6,
-              background: '#F5F3FF',
+              background: 'var(--pf-purple-bg)',
               borderRadius: 100,
               padding: '6px 16px 6px 10px',
               marginBottom: 20,
             }}
           >
             <HeartFill size={13} color="#EC4899" />
-            <span style={{ fontSize: 12, fontWeight: 600, color: '#7C3AED' }}>About PawFinder</span>
+            <span style={{ fontSize: 12, fontWeight: 600, color: 'var(--pf-purple-dark)' }}>
+              About PawFinder
+            </span>
           </div>
           <h2
             style={{
               fontSize: 36,
               fontWeight: 900,
-              color: '#1E293B',
+              color: 'var(--pf-ink)',
               letterSpacing: '-1px',
               marginBottom: 8,
             }}
@@ -468,7 +488,7 @@ export default function HomeScreen({ nav }: { nav: (s: Screen) => void }) {
             style={{
               fontSize: 36,
               fontWeight: 900,
-              color: '#7C3AED',
+              color: 'var(--pf-purple-dark)',
               letterSpacing: '-1px',
               marginBottom: 20,
             }}
@@ -486,8 +506,9 @@ export default function HomeScreen({ nav }: { nav: (s: Screen) => void }) {
           >
             PawFinder was created to help families reunite with their pets faster. When a pet gets
             lost, every minute matters. PawFinder uses{' '}
-            <strong style={{ color: '#1E293B' }}>QR code technology</strong> to create a digital
-            identity for your pet — so anyone who finds them can instantly reach you, no app needed.
+            <strong style={{ color: 'var(--pf-ink)' }}>QR code technology</strong> to create a
+            digital identity for your pet — so anyone who finds them can instantly reach you, no app
+            needed.
           </p>
         </div>
       </section>
@@ -500,7 +521,7 @@ export default function HomeScreen({ nav }: { nav: (s: Screen) => void }) {
               style={{
                 fontSize: 28,
                 fontWeight: 800,
-                color: '#1E293B',
+                color: 'var(--pf-ink)',
                 letterSpacing: '-.8px',
                 marginBottom: 12,
               }}
@@ -520,7 +541,7 @@ export default function HomeScreen({ nav }: { nav: (s: Screen) => void }) {
               <PawIcon size={14} color="#8B5CF6" />
               <div style={{ height: 1, width: 48, background: '#CBD5E1' }} />
             </div>
-            <p style={{ fontSize: 14, color: '#64748B' }}>
+            <p style={{ fontSize: 14, color: 'var(--pf-ink-muted)' }}>
               Four simple steps to keep your pet safe — forever.
             </p>
           </div>
@@ -532,13 +553,16 @@ export default function HomeScreen({ nav }: { nav: (s: Screen) => void }) {
             }}
           >
             {HOW_STEPS.map(({ num, label, desc }, i) => (
-              <div key={num} style={{ background: '#fff', borderRadius: 20, padding: '24px 20px' }}>
+              <div
+                key={num}
+                style={{ background: 'var(--pf-surface)', borderRadius: 20, padding: '24px 20px' }}
+              >
                 <div
                   style={{
                     width: 52,
                     height: 52,
                     borderRadius: '50%',
-                    background: `linear-gradient(135deg,${i < 2 ? '#60A5FA' : '#A78BFA'} 0%,#8B5CF6 100%)`,
+                    background: `linear-gradient(135deg,${i < 2 ? '#60A5FA' : 'var(--pf-purple-light)'} 0%,#8B5CF6 100%)`,
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -548,10 +572,19 @@ export default function HomeScreen({ nav }: { nav: (s: Screen) => void }) {
                 >
                   {STEP_SVGS[i]}
                 </div>
-                <p style={{ fontSize: 13, fontWeight: 700, color: '#8B5CF6', marginBottom: 6 }}>
+                <p
+                  style={{
+                    fontSize: 13,
+                    fontWeight: 700,
+                    color: 'var(--pf-purple)',
+                    marginBottom: 6,
+                  }}
+                >
                   {num}. {label}
                 </p>
-                <p style={{ fontSize: 12.5, color: '#64748B', lineHeight: 1.6 }}>{desc}</p>
+                <p style={{ fontSize: 12.5, color: 'var(--pf-ink-muted)', lineHeight: 1.6 }}>
+                  {desc}
+                </p>
               </div>
             ))}
           </div>
@@ -559,14 +592,16 @@ export default function HomeScreen({ nav }: { nav: (s: Screen) => void }) {
       </section>
 
       {/* Why a QR Code? */}
-      <section style={{ padding: isMobile ? '40px 20px' : '64px 80px', background: '#fff' }}>
+      <section
+        style={{ padding: isMobile ? '40px 20px' : '64px 80px', background: 'var(--pf-surface)' }}
+      >
         <div style={{ maxWidth: 860, margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: 36 }}>
             <h2
               style={{
                 fontSize: 28,
                 fontWeight: 800,
-                color: '#1E293B',
+                color: 'var(--pf-ink)',
                 letterSpacing: '-.8px',
                 marginBottom: 12,
               }}
@@ -576,7 +611,7 @@ export default function HomeScreen({ nav }: { nav: (s: Screen) => void }) {
             <p
               style={{
                 fontSize: 14,
-                color: '#64748B',
+                color: 'var(--pf-ink-muted)',
                 lineHeight: 1.7,
                 maxWidth: 520,
                 margin: '0 auto',
@@ -591,7 +626,7 @@ export default function HomeScreen({ nav }: { nav: (s: Screen) => void }) {
               <div
                 key={label}
                 style={{
-                  background: '#F8FAFC',
+                  background: 'var(--pf-bg)',
                   borderRadius: 18,
                   padding: '20px 24px',
                   display: 'flex',
@@ -605,7 +640,7 @@ export default function HomeScreen({ nav }: { nav: (s: Screen) => void }) {
                     width: 48,
                     height: 48,
                     borderRadius: 14,
-                    background: '#fff',
+                    background: 'var(--pf-surface)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -616,10 +651,19 @@ export default function HomeScreen({ nav }: { nav: (s: Screen) => void }) {
                   {WHY_SVGS[i]}
                 </div>
                 <div>
-                  <p style={{ fontSize: 14, fontWeight: 700, color: '#1E293B', marginBottom: 4 }}>
+                  <p
+                    style={{
+                      fontSize: 14,
+                      fontWeight: 700,
+                      color: 'var(--pf-ink)',
+                      marginBottom: 4,
+                    }}
+                  >
                     {label}
                   </p>
-                  <p style={{ fontSize: 13, color: '#64748B', lineHeight: 1.65 }}>{desc}</p>
+                  <p style={{ fontSize: 13, color: 'var(--pf-ink-muted)', lineHeight: 1.65 }}>
+                    {desc}
+                  </p>
                 </div>
               </div>
             ))}
@@ -630,7 +674,7 @@ export default function HomeScreen({ nav }: { nav: (s: Screen) => void }) {
       {/* Footer */}
       <footer
         style={{
-          background: '#F8FAFC',
+          background: 'var(--pf-bg)',
           borderTop: '1px solid #F1F5F9',
           padding: isMobile ? '24px 20px' : '28px 80px',
           display: 'flex',
@@ -642,9 +686,11 @@ export default function HomeScreen({ nav }: { nav: (s: Screen) => void }) {
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
           <PawIcon size={16} color="#8B5CF6" />
-          <span style={{ fontSize: 14, fontWeight: 700, color: '#8B5CF6' }}>PawFinder</span>
+          <span style={{ fontSize: 14, fontWeight: 700, color: 'var(--pf-purple)' }}>
+            PawFinder
+          </span>
         </div>
-        <p style={{ fontSize: 12, color: '#94A3B8' }}>
+        <p style={{ fontSize: 12, color: 'var(--pf-ink-subtle)' }}>
           © 2026 PawFinder. Keeping pets safe, one scan at a time.
         </p>
         <button
@@ -657,7 +703,7 @@ export default function HomeScreen({ nav }: { nav: (s: Screen) => void }) {
             borderRadius: 100,
             background: 'transparent',
             border: '1.5px solid #DDD6FE',
-            color: '#8B5CF6',
+            color: 'var(--pf-purple)',
             fontSize: 13,
             fontWeight: 600,
             cursor: 'pointer',

@@ -58,7 +58,7 @@ body {
     -apple-system,
     BlinkMacSystemFont,
     sans-serif;
-  background: #f8fafc;
+  background: var(--pf-bg);
 }
 
 ::-webkit-scrollbar {

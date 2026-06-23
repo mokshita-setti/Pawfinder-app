@@ -367,9 +367,18 @@ export const TopNav = ({ active, onNav }: { active: Screen; onNav: (s: Screen) =
           flexShrink: 0,
         }}
       >
-        <div
-          style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer' }}
+        <button
+          aria-label="Go to home"
           onClick={() => onNav('home')}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 8,
+            cursor: 'pointer',
+            background: 'none',
+            border: 'none',
+            padding: 0,
+          }}
         >
           <PawIcon size={22} color="var(--pf-purple)" />
           <span
@@ -382,7 +391,7 @@ export const TopNav = ({ active, onNav }: { active: Screen; onNav: (s: Screen) =
           >
             PawFinder
           </span>
-        </div>
+        </button>
         {!mobile && (
           <nav style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
             {tabs.map(({ id, label, Icon }) => {

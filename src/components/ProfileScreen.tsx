@@ -78,6 +78,15 @@ export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
   const [loaded, setLoaded] = useState(false);
   const [modal, setModal] = useState<Modal>(null);
 
+  useEffect(() => {
+    if (!modal) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setModal(null);
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [modal]);
+
   // Contact Info form
   const [editName, setEditName] = useState('');
   const [editPhone, setEditPhone] = useState('');
@@ -439,6 +448,9 @@ export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
           }}
         >
           <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modal-title"
             className="pf-modal-enter"
             onClick={(e) => e.stopPropagation()}
             style={{
@@ -455,7 +467,10 @@ export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
             {/* Contact Info */}
             {modal === 'contact' && (
               <>
-                <h2 style={{ fontSize: 20, fontWeight: 800, color: '#1E293B', marginBottom: 4 }}>
+                <h2
+                  id="modal-title"
+                  style={{ fontSize: 20, fontWeight: 800, color: '#1E293B', marginBottom: 4 }}
+                >
                   Contact Info
                 </h2>
                 <p style={{ fontSize: 13, color: '#64748B', marginBottom: 24 }}>
@@ -560,7 +575,10 @@ export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
             {/* Security */}
             {modal === 'security' && (
               <>
-                <h2 style={{ fontSize: 20, fontWeight: 800, color: '#1E293B', marginBottom: 4 }}>
+                <h2
+                  id="modal-title"
+                  style={{ fontSize: 20, fontWeight: 800, color: '#1E293B', marginBottom: 4 }}
+                >
                   Change Password
                 </h2>
                 <p style={{ fontSize: 13, color: '#64748B', marginBottom: 24 }}>
@@ -659,7 +677,10 @@ export default function ProfileScreen({ nav }: { nav: (s: Screen) => void }) {
             {/* Settings */}
             {modal === 'settings' && (
               <>
-                <h2 style={{ fontSize: 20, fontWeight: 800, color: '#1E293B', marginBottom: 4 }}>
+                <h2
+                  id="modal-title"
+                  style={{ fontSize: 20, fontWeight: 800, color: '#1E293B', marginBottom: 4 }}
+                >
                   Settings
                 </h2>
                 <p style={{ fontSize: 13, color: '#64748B', marginBottom: 24 }}>

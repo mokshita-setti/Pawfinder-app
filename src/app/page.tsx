@@ -34,6 +34,18 @@ const SCREEN_LABELS: { id: Screen; label: string }[] = [
   { id: 'scan', label: '⑦ Scan QR Flow' },
 ];
 
+const SCREEN_TITLES: Record<Screen, string> = {
+  home: 'Home',
+  register: 'Register a Pet',
+  pets: 'My Pets',
+  petprofile: 'Pet Profile',
+  scan: 'Scan QR Code',
+  notif: 'Alerts',
+  me: 'Profile',
+  demo: 'Demo Profiles',
+  directory: 'Pet Directory',
+};
+
 export default function Home() {
   const [cur, setCur] = useState<Screen>('home');
   const [activePetId, setActivePetId] = useState<string | undefined>();
@@ -65,13 +77,28 @@ export default function Home() {
 
   return (
     <>
+      {/* Screen title announced to screen readers on navigation */}
       <div
+        aria-live="polite"
+        aria-atomic="true"
+        style={{
+          position: 'absolute',
+          width: 1,
+          height: 1,
+          overflow: 'hidden',
+          clip: 'rect(0,0,0,0)',
+          whiteSpace: 'nowrap',
+        }}
+      >
+        {SCREEN_TITLES[cur]}
+      </div>
+      <main
         key={cur}
         className="pf-screen-enter"
         style={{ minHeight: '100dvh', display: 'flex', flexDirection: 'column' }}
       >
         {renderScreen()}
-      </div>
+      </main>
 
       {/* Screen switcher — dev only, hidden on mobile */}
       <nav
